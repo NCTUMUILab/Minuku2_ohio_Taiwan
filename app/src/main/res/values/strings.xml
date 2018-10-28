@@ -1,0 +1,52 @@
+<!--
+  ~ Copyright (c) 2016.
+  ~
+  ~ DReflect and Minuku Libraries by Shriti Raj (shritir@umich.edu) and Neeraj Kumar(neerajk@uci.edu) is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
+  ~ Based on a work at https://github.com/Shriti-UCI/Minuku-2.
+  ~
+  ~
+  ~ You are free to (only if you meet the terms mentioned below) :
+  ~
+  ~ Share — copy and redistribute the material in any medium or format
+  ~ Adapt — remix, transform, and build upon the material
+  ~
+  ~ The licensor cannot revoke these freedoms as long as you follow the license terms.
+  ~
+  ~ Under the following terms:
+  ~
+  ~ Attribution — You must give appropriate credit, provide a link to the license, and indicate if changes were made. You may do so in any reasonable manner, but not in any way that suggests the licensor endorses you or your use.
+  ~ NonCommercial — You may not use the material for commercial purposes.
+  ~ ShareAlike — If you remix, transform, or build upon the material, you must distribute your contributions under the same license as the original.
+  ~ No additional restrictions — You may not apply legal terms or technological measures that legally restrict others from doing anything the license permits.
+  -->
+
+<resources>
+
+    <string name="part_c_button_text"><font size="30">PART C</font>\n\<small>20 minutes</small></string>
+
+    <string name="app_name">OSU DMS</string>
+
+    <string name="ok">確定</string>
+    <string name="cancel">取消</string>
+    <string name="confirm">確認</string>
+
+    <string name="log_in_title">請輸入你的認證編號與電子信箱</string>
+    <string name="log_in_confirmation_number_hint">認證編號</string>
+    <string name="log_in_contact_email_hint">電子信箱</string>
+
+    <string name="page_annotate_session_duration_time">時間: </string>
+    <string name="page_annotate_session_duration_time_till_unknown"> - 未知</string>
+    <string name="page_annotate_session_duration_time_till_now"> - 現在</string>
+
+    <string name="reminder_email_check">請重新確認你的認證編號與電子信箱。如果你仍然無法登入，請聯絡 liniju@gapp.nthu.edu.tw</string>
+    <string name="reminder_must_answer_all_question">請完成上面所有的問題</string>
+    <string name="reminder_trip_deleted">這個行程已經被成功刪除</string>
+    <string name="reminder_trip_split_successfully">這個行程已經被成功拆分</string>
+    <string name="reminder_to_split_trip_by_clicking_map">請點擊地圖以選擇拆分起始點</string>
+    <string name="reminder_trips_combined_successfully">這個行程已經被成功合併</string>
+
+    <string name="dialog_delete_title">刪除</string>
+    <string name="dialog_delete_message">你確定要刪除這個行程嗎?</string>
+
+
+</resources>

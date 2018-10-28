@@ -1,0 +1,80 @@
+
+
+要開始測試Test File的話
+
+
+
+REPLAY LOCATION
+
+1.開始service的時候要讀activity資料
+
+
+2. location stream generator 用timer來Feed AR資料
+
+LocationStreamGenerator() constructor裡 uncomment
+ startReplayLocationRecordTimer();
+
+
+3. 在LocationStreamGenerator裡面的Location收到資料以後不更新
+
+comment掉
+
+//                this.latestLatitude.set(location.getLatitude());
+//                this.latestLongitude.set(location.getLongitude());
+//                latestAccuracy = location.getAccuracy();
+
+
+
+1. 把transportation mode.csv整理一下格式讓他可以被minuku 讀
+
+
+
+REPLAY ACTIVITY
+1.開始service的時候要讀activity資料
+
+ Background Service裡的 StartCommand()
+
+ uncomment以下兩行就可以一開始讀資料
+
+ FileHelper fileHelper = FileHelper.getInstance(getApplicationContext());
+ FileHelper.readTestFile();
+
+
+2. AR Service用timer來Feed AR資料
+
+ActivityRecognitionService() constructor裡 uncomment
+ startReplayARRecordTimer();
+
+
+
+
+3. 在AR Service裡面的onHandleIntent收到資料以後不更新
+
+把以下給註解掉
+
+//            mProbableActivities = result.getProbableActivities();
+//            mMostProbableActivity = result.getMostProbableActivity();
+//            detectedtime = new Date().getTime();
+
+//            Log.d(TAG, "[test ActivityRecognition]" +   mMostProbableActivity.toString());
+//            try {
+//                if (mProbableActivities != null && mMostProbableActivity != null)
+//
+//                    /*  cancel setting because we want to directly feed activity data in the test file */
+//                    //mActivityRecognitionStreamGenerator.setActivitiesandDetectedtime(mProbableActivities, mMostProbableActivity, detectedtime);
+//
+//
+//            }catch(Exception e){
+//                e.printStackTrace();
+//            }
+
+
+
+
+可使用的tag:
+
+test replay
+feed
+
+
+
