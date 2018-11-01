@@ -155,13 +155,15 @@ public class Constants {
     public static final int FINALDAY = 14; //real: 14, test: 3
 
 
+    //TODO: NEED TO CHANGE TO MUI VERSION
     public static final String CHECK_IN_URL = "http://mcog.asc.ohio-state.edu/apps/servicerec?";
     public static final String CHECK_IN_URL_USER_INFORM = "http://mcog.asc.ohio-state.edu/apps/useridcheck?";
 
-    public static final String FINAL_SURVEY_URL_NCTU = "https://nctucommunication.qualtrics.com/jfe/form/SV_aVS9WRCNnfgRNGd";
+    public static final String FINAL_SURVEY_URL_NCTU = "https://nctucommunication.qualtrics.com/jfe/form/SV_aWcHPkmdagnfgDb";
     public static final String FINAL_SURVEY_URL_OHIO = "https://osu.az1.qualtrics.com/jfe/form/SV_2bPukwuNSojU4Sx";
-    public static final String FINAL_SURVEY_URL = FINAL_SURVEY_URL_OHIO;
+    public static final String FINAL_SURVEY_URL = FINAL_SURVEY_URL_NCTU;
 
+    //TODO: NEED TO CHANGE TO MUI VERSION
     public static final String HELP_URL = "http://u.osu.edu/dailymobilitystudy/";
 
 

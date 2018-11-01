@@ -122,7 +122,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 //        Log.d(TAG, "Creating Main activity");
-
+//        setTheme(R.style.MyTheme);
+        setContentView(R.layout.activity_main);
         MultiDex.install(this);
 
         sharedPrefs = getSharedPreferences(Constants.sharedPrefString, MODE_PRIVATE);
@@ -491,12 +492,21 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
 
-                        String inputID = editText_confirmNum.getText().toString();
+                        String inputID;
 //                        Log.d(TAG,"inputID : "+inputID);
 
-                        String inputEmail = editText_Email.getText().toString();
+                        String inputEmail;
 //                        Log.d(TAG,"inputEmail : "+inputEmail);
 
+                        // TEST MODE BLOCK
+                        if (Config.testMode == true) {
+                            inputID = "123456";
+                            inputEmail = "test@mail";
+                        } else {
+                            inputID = editText_confirmNum.getText().toString();
+                            inputEmail = editText_Email.getText().toString();
+                        }
+                        // EOF TEST MODE BLOCK
                         if(Utils.isConfirmNumInvalid(inputID)){
                             Toast.makeText(MainActivity.this,"Error, please try re-entering the number provided",Toast.LENGTH_SHORT).show();
                         }else if(!Utils.isEmailEasyValid(inputEmail)){

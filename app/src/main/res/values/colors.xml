@@ -44,6 +44,8 @@
     <color name="accent_lightest">#dcdbdb</color>
     <color name="common_plus_signin_btn_text_dark_pressed">#000000</color>
 
-
-
+    <!-- THEME AREA -->
+    <color name="app_label_color">#626772</color>
+    <color name="theme_background_color">#141414</color>
+    <color name="theme_text_color">#F6E17B</color>
 </resources>
