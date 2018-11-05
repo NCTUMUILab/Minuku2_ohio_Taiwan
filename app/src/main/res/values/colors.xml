@@ -55,6 +55,10 @@
     <color name="radio_button_tint">@color/button_outline</color>
     <color name="list_view_color">@color/theme_background_color</color>
     <color name="status_bar_color">#37373F</color>
+    <color name="listed_trip_color"></color>
+    <color name="listed_trip_ongoing_text_color"></color>
+    <color name="listed_trip_not_ongoing_text_color"></color>
+
 
     <color name="survey_button_background_color_available">#33333D</color>
     <color name="survey_button_outline_color_available">#006054</color>

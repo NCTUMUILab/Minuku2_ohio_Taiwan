@@ -148,8 +148,8 @@ public class MainActivity extends AppCompatActivity {
 
             if(isFinalButtonClicked){
 
-                finalSurvey.setBackgroundColor(Color.LTGRAY);
-                finalSurvey.setTextColor(Color.DKGRAY);
+                finalSurvey.setBackground(getResources().getDrawable(R.drawable.survey_button_completed));
+                finalSurvey.setTextColor(getResources().getColor(R.color.survey_text_color_completed));
 
                 finalSurvey.setClickable(false);
             }else {
@@ -230,8 +230,8 @@ public class MainActivity extends AppCompatActivity {
 
             if(isFinalButtonClicked){
 
-                finalSurvey.setBackgroundColor(Color.LTGRAY);
-                finalSurvey.setTextColor(Color.DKGRAY);
+                finalSurvey.setBackground(getResources().getDrawable(R.drawable.survey_button_completed));
+                finalSurvey.setTextColor(getResources().getColor(R.color.survey_text_color_completed));
 
                 finalSurvey.setClickable(false);
             }else {
