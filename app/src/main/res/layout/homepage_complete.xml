@@ -3,12 +3,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#bb0000">
+    android:background="@color/theme_background_color"
+    >
 
     <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#666666"
+        android:background="@color/status_bar_color"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme">
 
@@ -16,10 +18,21 @@
             android:id="@+id/toolbar_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_gravity="left"
             android:text="DMS"
-            android:textColor="#ffffff"
-            android:textSize="24sp" />
+            android:paddingLeft="0dp"
+            android:textSize="24sp"
+            android:textColor="@color/text_color_light" />
+
+        <TextView
+            android:id="@+id/app_version"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:paddingRight="24dp"
+            android:text="v1.0.0"
+            android:textColor="@color/text_color_light"
+            android:textSize="14sp" />
 
     </android.support.v7.widget.Toolbar>
 
@@ -37,7 +50,7 @@
             android:layout_weight="1"
             android:gravity="center_vertical|center"
             android:text="認證編號:"
-            android:textColor="#ffffff"
+            android:textColor="@color/text_color_light"
             android:textSize="30sp" />
 
         <TextView
@@ -48,7 +61,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_weight="1"
             android:gravity="center_vertical|center"
-            android:textColor="#ffffff"
+            android:textColor="@color/text_color_light"
             android:textSize="30sp" />
     </LinearLayout>
 
@@ -66,7 +79,7 @@
             android:layout_gravity="center_horizontal"
             android:gravity="center"
             android:text="恭喜你! 你完成了本實驗階段"
-            android:textColor="#ffffff"
+            android:textColor="@color/text_color_light"
             android:textSize="26sp" />
 
         <LinearLayout
@@ -89,7 +102,7 @@
                 android:paddingBottom="8dp"
                 android:paddingTop="8dp"
                 android:text=""
-                android:textColor="#666666"
+                android:textColor="@color/text_color_dark"
                 />
         </LinearLayout>
 
@@ -100,7 +113,7 @@
             android:layout_gravity="center_horizontal"
             android:gravity="center"
             android:text="在收到確認完成的電子郵件前，請勿解除安裝應用程式"
-            android:textColor="#ffffff"
+            android:textColor="@color/text_color_light"
             android:textSize="26sp" />
 
     </LinearLayout>

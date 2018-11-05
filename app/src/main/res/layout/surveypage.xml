@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:weightSum="13">
+    android:weightSum="13"
+    android:background="@color/theme_background_color">
 
     <!--<Button
         android:id="@+id/triggerButton"
@@ -28,7 +29,7 @@
         android:layout_weight="1"
         android:gravity="right"
         android:text="Day "
-        android:textColor="#bb0000"
+        android:textColor="@color/text_color_light"
         android:textSize="20sp"
         android:textStyle="bold" />
 
@@ -53,6 +54,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
+                android:textColor="@color/text_color_light"
                 android:text="問卷 1"
                 android:textSize="20sp" />
 
@@ -60,8 +62,10 @@
                 android:id="@+id/survey1_button"
                 android:layout_width="200dp"
                 android:layout_height="match_parent"
+                android:background="@drawable/survey_button_available"
                 android:layout_weight="1"
-                android:textColor="@color/accent"
+                android:textColor="@color/survey_text_color_available"
+                android:text="可使用"
                 android:textSize="22sp" />
         </LinearLayout>
 
@@ -79,6 +83,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
+                android:textColor="@color/text_color_light"
                 android:text="問卷 2"
                 android:textSize="20sp" />
 
@@ -87,7 +92,9 @@
                 android:layout_width="200dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:textColor="@color/accent"
+                android:background="@drawable/survey_button_completed"
+                android:textColor="@color/survey_text_color_completed"
+                android:text="已被啟用"
                 android:textSize="22sp" />
         </LinearLayout>
 
@@ -104,6 +111,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:textColor="@color/text_color_light"
                 android:gravity="center"
                 android:text="問卷 3"
                 android:textSize="20sp" />
@@ -111,9 +119,11 @@
             <Button
                 android:id="@+id/survey3_button"
                 android:layout_width="200dp"
+                android:background="@drawable/survey_button_error"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:textColor="@color/accent"
+                android:textColor="@color/survey_text_color_error"
+                android:text="錯誤"
                 android:textSize="22sp" />
         </LinearLayout>
 
@@ -129,6 +139,7 @@
                 android:id="@+id/survey4_text"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:textColor="@color/text_color_light"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="問卷 4"
@@ -138,8 +149,10 @@
                 android:id="@+id/survey4_button"
                 android:layout_width="200dp"
                 android:layout_height="match_parent"
+                android:background="@drawable/survey_button_missed"
                 android:layout_weight="1"
-                android:textColor="@color/accent"
+                android:textColor="@color/survey_text_color_missed"
+                android:text="已錯過"
                 android:textSize="22sp" />
         </LinearLayout>
 
@@ -154,6 +167,7 @@
             <TextView
                 android:id="@+id/survey5_text"
                 android:layout_width="match_parent"
+                android:textColor="@color/text_color_light"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
@@ -165,7 +179,9 @@
                 android:layout_width="200dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:textColor="@color/accent"
+                android:background="@drawable/survey_button_unavailable"
+                android:textColor="@color/survey_text_color_unavailable"
+                android:text="尚未提供"
                 android:textSize="22sp" />
         </LinearLayout>
 
@@ -181,6 +197,7 @@
                 android:id="@+id/survey6_text"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:textColor="@color/text_color_light"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="問卷 6"
@@ -190,8 +207,9 @@
                 android:id="@+id/survey6_button"
                 android:layout_width="200dp"
                 android:layout_height="match_parent"
+                android:background="@drawable/button_style"
                 android:layout_weight="1"
-                android:textColor="@color/accent"
+                android:textColor="@color/button_text_color"
                 android:textSize="22sp" />
         </LinearLayout>
 

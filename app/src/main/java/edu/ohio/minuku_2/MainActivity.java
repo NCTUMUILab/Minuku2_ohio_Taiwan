@@ -310,9 +310,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void settingHomepageView() {
-
+        super.getTheme().applyStyle(R.style.ThemePurple, true);
         setContentView(R.layout.homepage);
-
         /* alertdialog for checking userid */
         long downloadtime = Utils.getDownloadedTime(this);
 
@@ -457,7 +456,9 @@ public class MainActivity extends AppCompatActivity {
         TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT,1.0f);
 
         final EditText editText_confirmNum = new EditText(MainActivity.this);
+        editText_confirmNum.setTextColor(getResources().getColor(R.color.text_color_light));
         editText_confirmNum.setHint(getResources().getString(R.string.log_in_confirmation_number_hint));
+        editText_confirmNum.setHintTextColor(getResources().getColor(R.color.text_color_dark));
         editText_confirmNum.setGravity(Gravity.CENTER_HORIZONTAL);
         editText_confirmNum.setLayoutParams(params);
         editText_confirmNum.setFilters(new InputFilter[] {
@@ -466,7 +467,9 @@ public class MainActivity extends AppCompatActivity {
         layout.addView(editText_confirmNum);
 
         final EditText editText_Email = new EditText(MainActivity.this);
+        editText_Email.setTextColor(getResources().getColor(R.color.text_color_light));
         editText_Email.setHint(getResources().getString(R.string.log_in_contact_email_hint));
+        editText_Email.setHintTextColor(getResources().getColor(R.color.text_color_dark));
         editText_Email.setGravity(Gravity.CENTER_HORIZONTAL);
         editText_Email.setLayoutParams(params);
         layout.addView(editText_Email);
@@ -475,12 +478,11 @@ public class MainActivity extends AppCompatActivity {
         num_6_digit = (TextView) findViewById(R.id.group_num);
 
 
-        AlertDialog.Builder dialog = new AlertDialog.Builder(MainActivity.this)
+        AlertDialog.Builder dialog = new AlertDialog.Builder(MainActivity.this, R.style.DialogTheme)
                 .setTitle(getResources().getString(R.string.log_in_title))
                 .setView(layout)
                 .setPositiveButton(R.string.ok, null)
                 .setCancelable(false);
-
         final AlertDialog mAlertDialog = dialog.create();
         mAlertDialog.setOnShowListener(new DialogInterface.OnShowListener(){
 
@@ -508,12 +510,12 @@ public class MainActivity extends AppCompatActivity {
                         }
                         // EOF TEST MODE BLOCK
                         if(Utils.isConfirmNumInvalid(inputID)){
-                            Toast.makeText(MainActivity.this,"Error, please try re-entering the number provided",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MainActivity.this,"輸入的認證編號有誤，請重新確認",Toast.LENGTH_SHORT).show();
                         }else if(!Utils.isEmailEasyValid(inputEmail)){
-                            Toast.makeText(MainActivity.this,"Error, please try re-entering your email",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MainActivity.this,"輸入的電子信箱有誤，請重新確認",Toast.LENGTH_SHORT).show();
                         }
                         else if(!haveNetworkConnection()){
-                            Toast.makeText(MainActivity.this,"Error, please connect to the network",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MainActivity.this,"請連上網路後再嘗試",Toast.LENGTH_SHORT).show();
                         }
                         else {
 

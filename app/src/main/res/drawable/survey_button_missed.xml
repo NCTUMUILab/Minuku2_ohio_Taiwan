@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="@color/survey_button_background_color_missed" />
+    <stroke android:width="5px" android:color="@color/survey_button_outline_color_missed" />
+</shape>

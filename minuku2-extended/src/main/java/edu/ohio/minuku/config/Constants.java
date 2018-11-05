@@ -156,8 +156,8 @@ public class Constants {
 
 
     //TODO: NEED TO CHANGE TO MUI VERSION
-    public static final String CHECK_IN_URL = "http://mcog.asc.ohio-state.edu/apps/servicerec?";
-    public static final String CHECK_IN_URL_USER_INFORM = "http://mcog.asc.ohio-state.edu/apps/useridcheck?";
+    public static final String CHECK_IN_URL = "https://cmogflaskbackend.minuku.org/apps/servicerec?";
+    public static final String CHECK_IN_URL_USER_INFORM = "https://cmogflaskbackend.minuku.org/apps/useridcheck?";
 
     public static final String FINAL_SURVEY_URL_NCTU = "https://nctucommunication.qualtrics.com/jfe/form/SV_aWcHPkmdagnfgDb";
     public static final String FINAL_SURVEY_URL_OHIO = "https://osu.az1.qualtrics.com/jfe/form/SV_2bPukwuNSojU4Sx";

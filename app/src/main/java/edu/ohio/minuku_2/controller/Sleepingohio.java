@@ -366,7 +366,7 @@ public class Sleepingohio extends AppCompatActivity {
             DBHelper.insertActionLogTable(ScheduleAndSampleManager.getCurrentTimeInMillis(), "Button - Setting bed time");
 
             final LayoutInflater inflater = LayoutInflater.from(mContext);
-            final AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+            final AlertDialog.Builder builder = new AlertDialog.Builder(mContext, R.style.DialogTheme);
             final View layout = inflater.inflate(R.layout.timesetting_dialog,null);
 
             final Spinner spinner_hour = (Spinner) layout.findViewById(R.id.spinner_hour);
@@ -378,15 +378,14 @@ public class Sleepingohio extends AppCompatActivity {
             final String[] ampm_options = {"am", "pm"};
 
             final ArrayAdapter<String> hourList = new ArrayAdapter<>(mContext,
-                    android.R.layout.simple_spinner_dropdown_item,
+                    R.layout.spinner_item,
                     hour_options);
-
             final ArrayAdapter<String> minList = new ArrayAdapter<>(mContext,
-                    android.R.layout.simple_spinner_dropdown_item,
+                    R.layout.spinner_item,
                     min_options);
 
             final ArrayAdapter<String> ampmList = new ArrayAdapter<>(mContext,
-                    android.R.layout.simple_spinner_dropdown_item,
+                    R.layout.spinner_item,
                     ampm_options);
 
             spinner_hour.setAdapter(hourList);
@@ -495,7 +494,7 @@ public class Sleepingohio extends AppCompatActivity {
             DBHelper.insertActionLogTable(ScheduleAndSampleManager.getCurrentTimeInMillis(), "Button - Setting wake up time");
 
             final LayoutInflater inflater = LayoutInflater.from(mContext);
-            final AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+            final AlertDialog.Builder builder = new AlertDialog.Builder(mContext, R.style.DialogTheme);
             final View layout = inflater.inflate(R.layout.timesetting_dialog,null);
 
             final Spinner spinner_hour = (Spinner) layout.findViewById(R.id.spinner_hour);
@@ -507,17 +506,16 @@ public class Sleepingohio extends AppCompatActivity {
             final String[] ampm_options = {"am", "pm"};
 
             final ArrayAdapter<String> hourList = new ArrayAdapter<>(mContext,
-                    android.R.layout.simple_spinner_dropdown_item,
+                    R.layout.spinner_item,
                     hour_options);
 
             final ArrayAdapter<String> minList = new ArrayAdapter<>(mContext,
-                    android.R.layout.simple_spinner_dropdown_item,
+                    R.layout.spinner_item,
                     min_options);
 
             final ArrayAdapter<String> ampmList = new ArrayAdapter<>(mContext,
-                    android.R.layout.simple_spinner_dropdown_item,
+                    R.layout.spinner_item,
                     ampm_options);
-
             spinner_hour.setAdapter(hourList);
             spinner_min.setAdapter(minList);
             spinner_ampm.setAdapter(ampmList);

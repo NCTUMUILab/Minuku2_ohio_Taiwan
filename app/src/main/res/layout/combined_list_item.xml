@@ -13,6 +13,8 @@
         android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
         android:minHeight="?android:attr/listPreferredItemHeightSmall"
         android:text=""
+        android:textColor="@color/text_color_dark"
+        android:background="@color/button_color"
         android:textAppearance="?android:attr/textAppearanceListItemSmall"
         android:textSize="18sp" />
 

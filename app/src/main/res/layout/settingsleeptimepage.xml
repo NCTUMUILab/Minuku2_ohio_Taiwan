@@ -2,14 +2,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:weightSum="1">
-
+    android:weightSum="1"
+    android:background="@color/theme_background_color">
     <TextView
         android:id="@+id/description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="16dp"
         android:paddingTop="42dp"
+        android:textColor="@color/text_color_light"
         android:text="請設定你的睡眠時間，這個應用程式不會在你設定的睡眠時間發送任何通知。"
         android:textSize="22sp" />
 
@@ -22,49 +23,64 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/Start_time"
+        android:textColor="@color/text_color_light"
         android:paddingLeft="16dp"
         android:textSize="24sp"
         android:paddingTop="16dp" />
-
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="8dp" />
     <Button
         android:id="@+id/sleepStarttime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal|center"
         android:gravity="center"
+        android:background="@drawable/button_style"
+        android:textColor="@color/button_text_color"
         android:text="睡眠時間"
-        android:textSize="26sp" />
+        android:padding="8dp"
+        android:textSize="24sp" />
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="28dp" />
+        android:layout_height="16dp" />
 
     <TextView
         android:text="你通常幾點起床呢?"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="@color/text_color_light"
         android:id="@+id/End_time"
         android:paddingLeft="16dp"
         android:textSize="24sp" />
-
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="8dp" />
     <Button
         android:id="@+id/sleepEndtime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/button_style"
+        android:textColor="@color/button_text_color"
         android:layout_gravity="center_horizontal|center"
         android:text="起床時間"
+        android:padding="8dp"
         android:textSize="26sp" />
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="49dp" />
+        android:layout_height="48dp" />
 
     <Button
         android:id="@+id/confirm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/button_style"
+        android:textColor="@color/button_text_color"
         android:layout_gravity="center"
         android:text="確認"
+
         android:textSize="26sp" />
 
 </LinearLayout>

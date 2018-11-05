@@ -183,6 +183,8 @@ public class SurveyActivity extends Activity {
             if(currentState.equals(TEXT_Unavailable)){
 
                 Button currentButton = buttons.get(index);
+                currentButton.setBackground(getResources().getDrawable(R.drawable.survey_button_error));
+                currentButton.setTextColor(getResources().getColor(R.color.survey_text_color_error));
                 currentButton.setText(TEXT_ERROR);
                 currentButton.setClickable(false);
             }
@@ -209,8 +211,8 @@ public class SurveyActivity extends Activity {
 
         if(setUnavaliable){
 
-            survey_Button.setBackgroundColor(Color.LTGRAY);
-            survey_Button.setTextColor(Color.DKGRAY);
+            survey_Button.setBackground(getResources().getDrawable(R.drawable.survey_button_unavailable));
+            survey_Button.setTextColor(getResources().getColor(R.color.survey_text_color_unavailable));
 
             survey_Button.setText(TEXT_Unavailable);
             survey_Button.setClickable(false);
@@ -230,8 +232,8 @@ public class SurveyActivity extends Activity {
 
             if(openFlag.equals(Constants.SURVEY_COMPLETE_FLAG)){
 
-                survey_Button.setBackgroundColor(Color.LTGRAY);
-                survey_Button.setTextColor(Color.DKGRAY);
+                survey_Button.setBackground(getResources().getDrawable(R.drawable.survey_button_completed));
+                survey_Button.setTextColor(getResources().getColor(R.color.survey_text_color_completed));
 
                 survey_Button.setText(TEXT_COMPLETED);
                 survey_Button.setClickable(false);
@@ -239,8 +241,8 @@ public class SurveyActivity extends Activity {
                 buttonState.add(TEXT_COMPLETED);
             }else if(openFlag.equals(Constants.SURVEY_INCOMPLETE_FLAG)){
 
-                survey_Button.setBackgroundColor(Color.LTGRAY);
-                survey_Button.setTextColor(Color.DKGRAY);
+                survey_Button.setBackground(getResources().getDrawable(R.drawable.survey_button_missed));
+                survey_Button.setTextColor(getResources().getColor(R.color.survey_text_color_missed));
 
                 survey_Button.setText(TEXT_MISSED);
                 survey_Button.setClickable(false);
@@ -256,8 +258,8 @@ public class SurveyActivity extends Activity {
 
             }else if(openFlag.equals(Constants.SURVEY_ERROR_FLAG)){
 
-                survey_Button.setBackgroundColor(Color.LTGRAY);
-                survey_Button.setTextColor(Color.DKGRAY);
+                survey_Button.setBackground(getResources().getDrawable(R.drawable.survey_button_error));
+                survey_Button.setTextColor(getResources().getColor(R.color.survey_text_color_error));
 
                 survey_Button.setText(TEXT_ERROR);
                 survey_Button.setClickable(false);
@@ -265,8 +267,8 @@ public class SurveyActivity extends Activity {
                 buttonState.add(TEXT_ERROR);
             }else{
 
-                survey_Button.setBackgroundColor(Color.RED);
-                survey_Button.setTextColor(getResources().getColor(R.color.white));
+                survey_Button.setBackground(getResources().getDrawable(R.drawable.survey_button_available));
+                survey_Button.setTextColor(getResources().getColor(R.color.survey_text_color_available));
                 survey_Button.setText(TEXT_Available);
 
                 buttonState.add(TEXT_Available);
