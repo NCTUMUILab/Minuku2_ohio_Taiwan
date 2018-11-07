@@ -95,9 +95,9 @@ public class SurveyTriggerManager {
 
     private final String LINK_NCTU = "https://nctucommunication.qualtrics.com/jfe/form/SV_aWcHPkmdagnfgDb";
     private final String LINK_OHIO = "https://osu.az1.qualtrics.com/jfe/form/SV_6xjrFJF4YwQwuMZ";
-    private final String LINK = LINK_OHIO;
+    private final String LINK = LINK_NCTU;
 
-    private final String SURVEY_TEXT = "You have a new survey available now.";
+    private final String SURVEY_TEXT = "你有一個新的問卷";
 
     private final int dist_Lowerbound_Outdoorwalking = 50;
     private final int dist_Upperbound_Outdoorwalking = 150;
@@ -592,7 +592,7 @@ public class SurveyTriggerManager {
 
                     //-1 is for the survey day got from the server should be set to 0
                     if(Config.daysInSurvey == -1) {
-
+//TODO:TEST
                         Config.daysInSurvey = 0;
                     }else {
 

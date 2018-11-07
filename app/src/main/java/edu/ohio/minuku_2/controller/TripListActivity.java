@@ -48,7 +48,6 @@ public class TripListActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         if(Config.daysInSurvey == 0|| Config.daysInSurvey == -1){
-
             setContentView(R.layout.triplist_day0);
         }else{
 
