@@ -44,39 +44,54 @@
     <color name="accent_lightest">#dcdbdb</color>
     <color name="common_plus_signin_btn_text_dark_pressed">#000000</color>
 
+
+    <!-- sorry for mess these up -->
+    <color name="light_shades">#F0F5F4</color>
+    <color name="light_accent">#8D94A8</color>
+    <color name="main_brand_color">#5EABEF</color>
+    <color name="dark_accent">#7B6084</color>
+    <color name="dark_shades">#282638</color>
+    <color name="text_default">#AAAFB4</color>
+    <color name="button_default">#AAAFB4</color>
+    <color name="button_primary">@color/main_brand_color</color>
+    <color name="button_info">@color/dark_accent</color>
+    <color name="button_success">@color/main_brand_color</color>
+    <color name="button_text_color">#FFFFFF</color>
     <!-- THEME AREA -->
-    <color name="tool_bar_color">#747576</color>
-    <color name="theme_background_color">#434250</color>
-    <color name="text_color_light">#FFFFFF</color>
-    <color name="text_color_dark">#92929A</color>
-    <color name="button_outline">#9B5275</color>
-    <color name="button_text_color">#747576</color>
-    <color name="button_color">#33333D</color>
-    <color name="radio_button_tint">@color/button_outline</color>
+
+
+    <color name="tool_bar_color">@color/dark_shades</color>
+    <color name="theme_background_color">@color/light_shades</color>
+    <color name="text_color_light">@color/dark_shades</color>
+    <color name="text_color_dark">@color/text_default</color>
+    <color name="button_outline">@color/light_shades</color>
+
+    <color name="button_color">@color/main_brand_color</color>
+    <color name="radio_button_tint">@color/button_info</color>
     <color name="list_view_color">@color/theme_background_color</color>
-    <color name="status_bar_color">#37373F</color>
+    <color name="status_bar_color">@color/dark_shades</color>
     <color name="listed_trip_color"></color>
     <color name="listed_trip_ongoing_text_color"></color>
     <color name="listed_trip_not_ongoing_text_color"></color>
 
 
-    <color name="survey_button_background_color_available">#33333D</color>
-    <color name="survey_button_outline_color_available">#006054</color>
-    <color name="survey_text_color_available">#18BC80</color>
+    <color name="survey_button_background_color_available">@color/main_brand_color</color>
+    <color name="survey_button_outline_color_available">@color/light_shades</color>
+    <color name="survey_text_color_available">@color/light_shades</color>
 
-    <color name="survey_button_background_color_unavailable">#33333D</color>
-    <color name="survey_button_outline_color_unavailable">#434250</color>
-    <color name="survey_text_color_unavailable">#92929A</color>
+    <color name="survey_button_background_color_unavailable">@color/button_default</color>
+    <color name="survey_button_outline_color_unavailable">@color/light_shades</color>
+    <color name="survey_text_color_unavailable">@color/light_shades</color>
 
-    <color name="survey_button_background_color_completed">#33333D</color>
-    <color name="survey_button_outline_color_completed">#006054</color>
-    <color name="survey_text_color_completed">#92929A</color>
+    <color name="survey_button_background_color_completed">@color/button_default</color>
+    <color name="survey_button_outline_color_completed">@color/light_shades</color>
+    <color name="survey_text_color_completed">@color/light_shades</color>
 
-    <color name="survey_button_background_color_missed">#33333D</color>
-    <color name="survey_button_outline_color_missed">#9B5275</color>
-    <color name="survey_text_color_missed">#92929A</color>
+    <color name="survey_button_background_color_missed">@color/button_default</color>
+    <color name="survey_button_outline_color_missed">@color/light_shades</color>
+    <color name="survey_text_color_missed">@color/light_shades</color>
 
-    <color name="survey_button_background_color_error">#33333D</color>
-    <color name="survey_button_outline_color_error">#9B5275</color>
-    <color name="survey_text_color_error">#DB6A5E</color>
+    <color name="survey_button_background_color_error">@color/button_default</color>
+    <color name="survey_button_outline_color_error">@color/light_shades</color>
+    <color name="survey_text_color_error">@color/light_shades</color>
 </resources>

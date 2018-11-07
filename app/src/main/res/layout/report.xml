@@ -39,6 +39,7 @@
         android:text="結束日期"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="@color/text_color_light"
         android:id="@+id/sleepEndtime"
         android:layout_weight="0.15"
         android:textSize="36sp"

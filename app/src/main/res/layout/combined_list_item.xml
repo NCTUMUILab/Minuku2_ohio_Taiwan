@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/theme_background_color">
 
     <CheckedTextView
         android:id="@+id/check1"
@@ -13,8 +14,8 @@
         android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
         android:minHeight="?android:attr/listPreferredItemHeightSmall"
         android:text=""
-        android:textColor="@color/text_color_dark"
-        android:background="@color/button_color"
+        android:textColor="@color/text_color_light"
+        android:background="@color/theme_background_color"
         android:textAppearance="?android:attr/textAppearanceListItemSmall"
         android:textSize="18sp" />
 

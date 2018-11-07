@@ -127,7 +127,7 @@ public class Constants {
     public static final String NOTIFICATION_TEXT_LOCATION = "請確認 \"定位\" 權限";
     public static final String NOTIFICATION_TEXT_APPUSAGE = "請確認 \"使用紀錄存取\" 權限";
     public static final String NOTIFICATION_TEXT_NEW_TRIP = " 有新的行程";
-    public static final String NOTIFICATION_TEXT_NEW_TRIPS = " 有新的多個行程";
+    public static final String NOTIFICATION_TEXT_NEW_TRIPS = " 個新的行程";
     public static final String NOTIFICATION_TEXT_FINAL_DAY_PLUS_1_WITH_TRIPS = "最後一天的行程也請記得標記";
     public static final String NOTIFICATION_TEXT_FINAL_DAY_PLUS_1_WITHOUT_TRIPS = "感謝你完成這個階段，請跟研究員聯絡，確認到實驗室完成實驗最後階段的時間";
     public static final String NOTIFICATION_TEXT_AFTER_FINAL_DAY_PLUS_1 = "感謝你完成這個階段，請跟研究員聯絡，確認到實驗室完成實驗最後階段的時間";
