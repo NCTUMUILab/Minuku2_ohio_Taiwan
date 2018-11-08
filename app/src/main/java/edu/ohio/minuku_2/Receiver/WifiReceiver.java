@@ -1622,4 +1622,444 @@ public class WifiReceiver extends BroadcastReceiver {
         }
 
     }
+//
+//    /**
+//     * Testing Server Block
+//     */
+//    public void testSendingTripData(){
+//
+//        ArrayList<JSONObject> datas = testGetSessionData();
+//
+//        for(int index = 0; index < datas.size(); index++){
+//
+//            JSONObject data = datas.get(index);
+//
+//            Log.d(TAG, "[test Trip sending] trip data uploading : " + data.toString());
+//
+//            String curr = getDateCurrentTimeZone(new Date().getTime());
+//
+//            String lastTimeInServer;
+//
+//            try {
+//
+//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
+//                    lastTimeInServer = new HttpAsyncPostJsonTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,
+//                            postTripUrl,
+//                            data.toString(),
+//                            "Trip",
+//                            curr).get();
+//                else
+//                    lastTimeInServer = new HttpAsyncPostJsonTask().execute(
+//                            postTripUrl,
+//                            data.toString(),
+//                            "Trip",
+//                            curr).get();
+//
+//                //if it was updated successfully, return the end time
+//                Log.d(TAG, "[show data response] Trip lastTimeInServer : " + lastTimeInServer);
+//
+//                JSONObject lasttimeInServerJson = new JSONObject(lastTimeInServer);
+//
+//                Log.d(TAG, "[show data response] check sent EndTime : " + data.getString("EndTime"));
+//                Log.d(TAG, "[show data response] check latest data in server's lastinsert : " + lasttimeInServerJson.getString("lastinsert"));
+//                Log.d(TAG, "[show data response] check condition : " + data.getString("EndTime").equals(lasttimeInServerJson.getString("lastinsert")));
+//
+//                if(data.getString("EndTime").equals(lasttimeInServerJson.getString("lastinsert"))){
+//
+//                    //update the sent Session to already be sent
+//                    String sentSessionId = data.getString("sessionid");
+//                    DataHandler.updateSession(Integer.valueOf(sentSessionId), Constants.SESSION_IS_ALREADY_SENT_FLAG);
+//                }
+//
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            } catch (ExecutionException e) {
+//                e.printStackTrace();
+//            } catch (JSONException e){
+//                e.printStackTrace();
+//            }
+//        }
+//    }
+//
+//    private ArrayList<JSONObject> testGetSessionData(){
+//
+//        Log.d(TAG, "getSessionData");
+//
+//        ArrayList<JSONObject> sessionJsons = new ArrayList<>();
+//        try {
+//
+//
+//            Session sessionToSend = new Session(17);
+//
+//            //tell if the session has been labeled. It is in the annotaiton with ESM tag
+//            ArrayList<Annotation> annotations = sessionToSend.getAnnotationsSet().getAnnotationByTag("ESM");
+//
+//            JSONObject ESMJSON = null;
+//
+//            //{"Entire_session":true,"Tag":["ESM"],"Content":"{\"ans1\":\"Walking outdoors.\",\"ans2\":\"Food\",\"ans3\":\"No\",\"ans4\":\"Right before\"}"}
+//
+//            JSONObject annotatedtripdata = new JSONObject();
+//
+//            try {
+//
+//                //adding the id and group number
+//                annotatedtripdata.put("userid", Config.USER_ID);
+//                annotatedtripdata.put("group_number", Config.GROUP_NUM);
+//                annotatedtripdata.put("device_id", Config.DEVICE_ID);
+//                annotatedtripdata.put("version", versionNumber);
+//                annotatedtripdata.put("android_ver", Build.VERSION.SDK_INT);
+//                annotatedtripdata.put("build", getBuildInform());
+//
+//                annotatedtripdata.put("dataType", "Trip");
+//
+//                //adding the time info.
+//                long sessionStartTime = sessionToSend.getStartTime();
+//                long sessionEndTime = sessionToSend.getEndTime();
+//                long StartTime = sessionStartTime / Constants.MILLISECONDS_PER_SECOND;
+//                long EndTime = sessionEndTime / Constants.MILLISECONDS_PER_SECOND;
+//
+//                //Log.d(TAG, "Annotation StartTime : " + StartTime);
+//                //Log.d(TAG, "Annotation EndTime : " + EndTime);
+//
+//                annotatedtripdata.put("sessionid", sessionToSend.getId());
+//
+//                annotatedtripdata.put("StartTime", StartTime);
+//                annotatedtripdata.put("EndTime", EndTime);
+//                annotatedtripdata.put("StartTimeString", ScheduleAndSampleManager.getTimeString(sessionStartTime));
+//                annotatedtripdata.put("EndTimeString", ScheduleAndSampleManager.getTimeString(sessionEndTime));
+//
+//                annotatedtripdata.put("TripMin", sessionToSend.isLongEnough());
+//
+//                //getting the answers in the annotation.
+//                if(annotations.size() > 0) {
+//
+//                    annotatedtripdata.put("completeOrNot", "complete");
+//
+//                    String content = annotations.get(0).getContent();
+//                    ESMJSON = new JSONObject(content);
+//                    Log.d(TAG, "[checking data] the contentofJSON ESMJSONObject  is " + ESMJSON);
+//
+//                    //convert the time from millisecond to second
+//                    String annotationOpenTimesString = ESMJSON.getString("openTimes").replace("[", "").replace("]", "");
+//
+//                    Log.d(TAG, "[checking data] ESMJSON get openTimes " + ESMJSON.getString("openTimes"));
+//
+//                    String[] openTimes = annotationOpenTimesString.split(", ");
+//
+//                    String openTimesInLongToShow = "";
+//                    String openTimesInStringToShow = "";
+//                    for(int openTimesIndex = 0; openTimesIndex < openTimes.length; openTimesIndex++ ){
+//
+//                        long openTime = Long.valueOf(openTimes[openTimesIndex]);
+//                        long openTimeInSec = openTime / Constants.MILLISECONDS_PER_SECOND;
+//
+//                        openTimesInLongToShow += String.valueOf(openTimeInSec);
+//                        openTimesInStringToShow += ScheduleAndSampleManager.getTimeString(openTime);
+//
+//                        if(openTimesIndex != openTimes.length - 1){
+//
+//                            openTimesInLongToShow += ", ";
+//                            openTimesInStringToShow += ", ";
+//                        }
+//                    }
+//
+////                        long annotationOpenTimes = Long.valueOf(annotationOpenTimesString);
+////                        ESMJSON.put("openTimes", annotationOpenTimes / Constants.MILLISECONDS_PER_SECOND);
+////                        ESMJSON.put("openTimeString", ScheduleAndSampleManager.getTimeString(annotationOpenTimes));
+//
+//                    ESMJSON.put("openTimes", openTimesInLongToShow);
+//                    ESMJSON.put("openTimeString", openTimesInStringToShow);
+//
+//                    Log.d(TAG, "[checking data] the contentofJSON ESMJSONObject is " + ESMJSON);
+//
+//                }else{
+//
+//                    annotatedtripdata.put("completeOrNot", "incomplete");
+//
+//                    ESMJSON = new JSONObject();
+//                    try {
+//
+//                        ESMJSON.put("openTimes", Constants.NOT_A_NUMBER);
+//                        ESMJSON.put("openTimeString", Constants.NOT_A_NUMBER);
+//                        ESMJSON.put("submitTime", Constants.NOT_A_NUMBER);
+//                        ESMJSON.put("ans1", Constants.NOT_A_NUMBER);
+//                        ESMJSON.put("ans2", Constants.NOT_A_NUMBER);
+//                        ESMJSON.put("ans3", Constants.NOT_A_NUMBER);
+//                        ESMJSON.put("ans4", Constants.NOT_A_NUMBER);
+//                        ESMJSON.put("optionalNote", Constants.NOT_A_NUMBER);
+//                    }catch (JSONException e){
+//                        //e.printStackTrace();
+//                    }
+//
+//                    Log.d(TAG, "[checking data] the contentofJSON ESMJSONObject is " + ESMJSON);
+//                }
+//
+//                //adding the annotations data
+//                annotatedtripdata.put("Annotations", ESMJSON);
+//
+//                annotatedtripdata.put("PeriodNumber", sessionToSend.getPeriodNum());
+//                annotatedtripdata.put("d", sessionToSend.getSurveyDay());
+//
+//            } catch (JSONException e) {
+//
+//            } catch (Exception e) {
+//
+//                CSVHelper.storeToCSV(CSVHelper.CSV_PULLING_DATA_CHECK, "Trips");
+//                CSVHelper.storeToCSV(CSVHelper.CSV_PULLING_DATA_CHECK, Utils.getStackTrace(e));
+//            }
+//
+////                CSVHelper.storeToCSV(CSVHelper.CSV_CHECK_DATAFORMAT, "Trip ", annotatedtripdata.toString());
+//
+//            sessionJsons.add(annotatedtripdata);
+//        }catch (IndexOutOfBoundsException e){
+//
+//        }
+//
+//        return sessionJsons;
+//    }
+//
+//    public void testSendingSurveyLinkData(){
+//
+//        long timeOfData = -999;
+//
+//        //where openflag != -1, implies it hasn't been opened or missed, set as clickedtime
+//
+//        JSONObject surveyJson = new JSONObject();
+//
+//        int rows = 1;
+//
+//        Log.d(TAG, "[check query] latestSurveyLinkIdFromServer rows : "+ rows);
+//
+//        if(true){
+//
+//            try {
+//
+//                for (int i = 0; i < 1; i++) {
+//
+//                    Log.d("testSendingSurveyLink", "set data 0");
+//                    String d = "d";
+//                    String n = "n";
+//                    String m = "m";
+//
+//                    String timestamp = "0";
+//
+//                    //same as openedTime might be null when the user missed it.
+//                    String clickedtime = "0";
+//
+//                    //convert into second
+//                    String timestampInSec = "0";
+//                    Log.d("testSendingSurveyLink", "set data 1");
+//                    surveyJson.put("userid", Config.USER_ID);
+//                    surveyJson.put("group_number", Config.GROUP_NUM);
+//                    surveyJson.put("device_id", Config.DEVICE_ID);
+//                    surveyJson.put("version", versionNumber);
+//                    surveyJson.put("dataType", "SurveyLink");
+//                    surveyJson.put("android_ver", Build.VERSION.SDK_INT);
+//                    surveyJson.put("build", getBuildInform());
+//
+//                    surveyJson.put("triggerTime", timestampInSec);
+//                    surveyJson.put("triggerTimeString", ScheduleAndSampleManager.getTimeString(Long.valueOf(timestamp)));
+//
+//                    surveyJson.put("clickedtime", clickedtime);
+//                    Log.d("testSendingSurveyLink", "set data 2");
+//                    surveyJson.put("clickedtime", Constants.NOT_A_NUMBER);
+//
+//                    //clickornot
+//                    surveyJson.put("completeType", Constants.TEXT_TO_SERVER_SURVEY_COMPLETE);
+//
+//                    surveyJson.put("d", d);
+//                    surveyJson.put("n", n);
+//                    surveyJson.put("m", m);
+//
+//                    timeOfData = Long.valueOf(timestampInSec);
+//
+//                    String curr = getDateCurrentTimeZone(new Date().getTime());
+//
+//                    String timeInServer;
+//                    Log.d("testSendingSurveyLink", "set data 3");
+//
+//                    Log.d("testSendingSurveyLink", "EOF set data");
+//                    try {
+//
+//                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
+//                            timeInServer = new HttpAsyncPostJsonTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,
+//                                    postSurveyLinkUrl,
+//                                    surveyJson.toString(),
+//                                    "SurveyLink",
+//                                    curr).get();
+//                        else
+//                            timeInServer = new HttpAsyncPostJsonTask().execute(
+//                                    postSurveyLinkUrl,
+//                                    surveyJson.toString(),
+//                                    "SurveyLink",
+//                                    curr).get();
+//
+//                        Log.d(TAG, "[show data response] SurveyLink timeInServer : "+timeInServer);
+//
+//                        JSONObject lasttimeInServerJson = new JSONObject(timeInServer);
+//
+//                        Log.d(TAG, "[show data response] before to next iteration check : "+Long.valueOf(lasttimeInServerJson.getString("lastinsert")));
+//
+//                        long fromServer = Long.valueOf(lasttimeInServerJson.getString("lastinsert"));
+//
+////                        CSVHelper.dataUploadingCSV("Survey Link", "After sending, getting from the server, the latest EndTime : "+ScheduleAndSampleManager.getTimeString(fromServer * Constants.MILLISECONDS_PER_SECOND));
+//
+//                        Log.d(TAG, "[check query] going to change the latest id");
+//
+//                        Log.d(TAG, "[check query] timeOfData : " +timeOfData);
+//                        Log.d(TAG, "[check query] fromServer : " +fromServer);
+//                        Log.d(TAG, "[check query] timeOfData == fromServer ? "+ (timeOfData == fromServer));
+//
+//                    } catch (InterruptedException e) {
+//                    } catch (ExecutionException e) {
+//                    } catch (JSONException e){
+//                    }
+//
+//                }
+//            }catch (JSONException e){
+//
+//            }catch (Exception e) {
+//
+//                CSVHelper.storeToCSV(CSVHelper.CSV_PULLING_DATA_CHECK, "SurveyLink");
+//                CSVHelper.storeToCSV(CSVHelper.CSV_PULLING_DATA_CHECK, Utils.getStackTrace(e));
+//            }
+//
+//        }
+//    }
+//    public void testSendingDumpData(){
+//
+//        //Log.d(TAG, "sendingDumpData") ;
+//
+//        JSONObject data = new JSONObject();
+//
+//        long endTimeOfJson = -999;
+//
+//        try {
+//
+//            data.put("userid", Config.USER_ID);
+//            data.put("group_number", Config.GROUP_NUM);
+//            data.put("device_id", Config.DEVICE_ID);
+//            data.put("email", Config.Email);
+//            data.put("version", versionNumber);
+//            data.put("dataType", "Dump");
+//            data.put("android_ver", Build.VERSION.SDK_INT);
+//
+//            long startTimeInSec = 0/Constants.MILLISECONDS_PER_SECOND;
+//            long endTimeInSec = 0/Constants.MILLISECONDS_PER_SECOND;
+//
+//            data.put("StartTime", startTimeInSec);
+//            data.put("EndTime", endTimeInSec);
+//
+//            SimpleDateFormat sdf_now = new SimpleDateFormat(Constants.DATE_FORMAT_NOW_Dash);
+//
+//            data.put("StartTimeString", ScheduleAndSampleManager.getTimeString(startTime, sdf_now));
+//            data.put("EndTimeString", ScheduleAndSampleManager.getTimeString(endTime, sdf_now));
+//
+//            data.put("build", getBuildInform());
+//
+//            int d = getSurveyDayByTime(startTime);
+//
+//            data.put("d", 0);
+//
+//            Log.d(TAG, "[show data response] Dump survey day : " + d);
+//
+//            SimpleDateFormat sdf_date = new SimpleDateFormat(Constants.DATE_FORMAT_NOW_DAY);
+//            data.put("date", ScheduleAndSampleManager.getTimeString(0, sdf_date));
+//
+//            endTimeOfJson = endTimeInSec;
+//        }catch (JSONException e){
+//
+//        }
+//
+//        storeTransporatation(data);
+//        storeLocation(data);
+//        storeActivityRecognition(data);
+//        storeRinger(data);
+//        storeConnectivity(data);
+//        storeBattery(data);
+//        storeAppUsage(data);
+//        storeActionLog(data);
+//
+//        Log.d(TAG,"[show data response] checking data Dump : "+ data.toString());
+//
+////        CSVHelper.storeToCSV(CSVHelper.CSV_CHECK_DATAFORMAT,"Dump", data.toString());
+//
+//        try {
+//
+//            CSVHelper.dataUploadingCSV("Dump", "Going to send the data with EndTime : " + data.getString("EndTimeString"));
+//            CSVHelper.dataUploadingCSV("Dump", "Going to send the data with deviceId : " + data.getString("device_id"));
+//            CSVHelper.dataUploadingCSV("Dump", "Going to send the data with surveyDay : " + data.getString("d"));
+//        }catch (JSONException e){
+//
+//        }
+//
+//        String curr = getDateCurrentTimeZone(new Date().getTime());
+//
+//        String lastTimeInServer;
+//
+//        try {
+//
+//            if(data.getString("d").equals("-1")){
+//
+//                Log.d(TAG, "[show data response] not a correct survey day");
+//
+//                throw new JSONException("not a correct survey day");
+//            }
+//
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
+//                lastTimeInServer = new HttpAsyncPostJsonTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,
+//                        postDumpUrl,
+//                        data.toString(),
+//                        "Dump",
+//                        curr).get();
+//            else
+//                lastTimeInServer = new HttpAsyncPostJsonTask().execute(
+//                        postDumpUrl,
+//                        data.toString(),
+//                        "Dump",
+//                        curr).get();
+//
+//            Log.d(TAG, "[show data response] Dump lastTimeInServer : "+lastTimeInServer);
+//
+//            JSONObject lasttimeInServerJson = new JSONObject(lastTimeInServer);
+//
+//            Log.d(TAG, "[show data response] before to next iteration check : " + Long.valueOf(lasttimeInServerJson.getString("lastinsert")));
+//
+//            long fromServer = Long.valueOf(lasttimeInServerJson.getString("lastinsert"));
+//
+//            CSVHelper.dataUploadingCSV("Dump", "After sending, getting from the server, the latest EndTime : "+ScheduleAndSampleManager.getTimeString(fromServer * Constants.MILLISECONDS_PER_SECOND));
+//
+//            //check the data is sent completely
+//            if(endTimeOfJson == fromServer) {
+//
+//                //update latestUpdatedTime; due to the format from the server is divided by 1000
+//                //we get the time unit is second; thus, we have to convert into millis
+//                latestUpdatedTime = fromServer * Constants.MILLISECONDS_PER_SECOND;
+//
+//                Log.d(TAG, "[show data response] next iteration latestUpdatedTime : " + latestUpdatedTime);
+//                Log.d(TAG, "[show data response] next iteration latestUpdatedTimeString : " + ScheduleAndSampleManager.getTimeString(latestUpdatedTime));
+//
+//                //setting nextime interval
+//                //improve it to get the value from the server
+//                startTime = latestUpdatedTime;
+//
+//                endTime = startTime + Constants.MILLISECONDS_PER_HOUR;
+//
+//                //Log.d(TAG,"latestUpdatedTime : " + latestUpdatedTime);
+//                //Log.d(TAG,"latestUpdatedTime + 1 hour : " + latestUpdatedTime + nextinterval);
+//
+//                Log.d(TAG, "[show data response] next iteration startTime : " + startTime);
+//                Log.d(TAG, "[show data response] next iteration startTimeString : " + ScheduleAndSampleManager.getTimeString(startTime));
+//
+//                Log.d(TAG, "[show data response] next iteration endTime : " + endTime);
+//                Log.d(TAG, "[show data response] next iteration endTimeString : " + ScheduleAndSampleManager.getTimeString(endTime));
+//
+//                //update the last data's startTime.
+//                sharedPrefs.edit().putLong("lastSentStarttime", startTime).apply();
+//            }
+//        } catch (InterruptedException e) {
+//        } catch (ExecutionException e) {
+//        } catch (JSONException e){
+//        }
+//    }
 }

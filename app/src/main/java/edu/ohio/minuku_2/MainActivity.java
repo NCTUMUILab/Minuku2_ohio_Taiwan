@@ -125,7 +125,16 @@ public class MainActivity extends AppCompatActivity {
 //        setTheme(R.style.MyTheme);
         setContentView(R.layout.activity_main);
         MultiDex.install(this);
-
+//
+//        /**
+//         * Testing block
+//         */
+//        TestServer testServer = new TestServer();
+//        testServer.test();
+        Log.d("SERVERTEST", "testing end");
+        /**
+         * EOF testing block
+         */
         sharedPrefs = getSharedPreferences(Constants.sharedPrefString, MODE_PRIVATE);
 
         //TODO if the daysInSurvey is already set, send to userinform again
