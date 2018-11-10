@@ -93,7 +93,8 @@ import edu.ohio.minuku_2.controller.Sleepingohio;
 import edu.ohio.minuku_2.controller.SurveyActivity;
 import edu.ohio.minuku_2.controller.TripListActivity;
 import edu.ohio.minuku_2.service.BackgroundService;
-
+import com.crashlytics.android.Crashlytics;
+import io.fabric.sdk.android.Fabric;
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
@@ -125,6 +126,7 @@ public class MainActivity extends AppCompatActivity {
 //        setTheme(R.style.MyTheme);
         setContentView(R.layout.activity_main);
         MultiDex.install(this);
+        Fabric.with(this, new Crashlytics());
 //
 //        /**
 //         * Testing block
