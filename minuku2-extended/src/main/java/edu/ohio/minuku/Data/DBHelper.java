@@ -52,6 +52,8 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String openFlag_col = "openFlag";
     public static final String surveyType_col = "surveyType";
     public static final String sentOrNot_col = "sentOrNot";
+    public static final String d_col = "d";
+    public static final String n_col = "n";
     public static final int COL_INDEX_ID = 0;
     public static final int COL_INDEX_LINK = 1;
     public static final int COL_INDEX_GENERATE_TIME = 2;
@@ -142,14 +144,14 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String COL_SESSION_END_TIME = "session_end_time";
     public static final String COL_SESSION_LONG_ENOUGH_FLAG = "session_long_enough";
     public static final String COL_SESSION_ID = "session_id";
-    public static final String COL_TIMESTAMP_STRING = "timestamp_string";
+    public static final String COL_CREATED_TIME = "created_time";
     public static final String COL_SESSION_ANNOTATION_SET = "session_annotation_set";
     public static final String COL_SESSION_SENTORNOT_FLAG = "sentOrNot";
     public static final String COL_SESSION_COMBINEDORNOT_FLAG = "combinedOrNot";
     public static final String COL_SESSION_PERIODNUMBER_FLAG = "periodnumber";
     public static final String COL_SESSION_SURVEYDAY_FLAG = "surveyDay";
     public static final int COL_INDEX_SESSION_ID = 0;
-    public static final int COL_INDEX_SESSION_TIMESTAMP_STRING = 1;
+    public static final int COL_INDEX_SESSION_CREATED_TIME = 1;
     public static final int COL_INDEX_SESSION_START_TIME = 2;
     public static final int COL_INDEX_SESSION_END_TIME= 3;
     public static final int COL_INDEX_SESSION_ANNOTATION_SET= 4;
@@ -261,7 +263,9 @@ public class DBHelper extends SQLiteOpenHelper {
                 missedTime_col+" INTEGER," +
                 openFlag_col +" INTEGER," +
                 surveyType_col +" TEXT, " +
-                sentOrNot_col + " INTEGER " +
+                sentOrNot_col + " INTEGER, " +
+                d_col + " INTEGER, " +
+                n_col + " INTEGER " +
                 ");";
 
         db.execSQL(cmd);
@@ -457,7 +461,7 @@ public class DBHelper extends SQLiteOpenHelper {
         String cmd = "CREATE TABLE" + " " +
                 SESSION_TABLE_NAME + " ( "+
                 COL_ID + " " + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                COL_TIMESTAMP_STRING + " TEXT NOT NULL, " +
+                COL_CREATED_TIME + " INTEGER NOT NULL, " +
                 COL_SESSION_START_TIME + " INTEGER NOT NULL, " +
                 COL_SESSION_END_TIME + " INTEGER, " +
                 COL_SESSION_ANNOTATION_SET + " TEXT, " +
@@ -607,7 +611,7 @@ public class DBHelper extends SQLiteOpenHelper {
             ContentValues values = new ContentValues();
 
 //            values.put(COL_TASK_ID, session.getTaskId());
-            values.put(COL_TIMESTAMP_STRING, ScheduleAndSampleManager.getTimeString(session.getStartTime()));
+            values.put(COL_CREATED_TIME, session.getCreatedTime());
             values.put(COL_SESSION_START_TIME, session.getStartTime());
 
             if(session.getEndTime() != 0){
@@ -1514,6 +1518,26 @@ public class DBHelper extends SQLiteOpenHelper {
 
     }
 
+    public static void updateSessionTableByCreatedTime(long createdTime, int toBeSent){
+
+        String where = COL_CREATED_TIME + " = " + createdTime;
+
+        try{
+            SQLiteDatabase db = DBManager.getInstance().openDatabase();
+            ContentValues values = new ContentValues();
+
+            values.put(COL_SESSION_SENTORNOT_FLAG, toBeSent);
+
+            db.update(SESSION_TABLE_NAME, values, where, null);
+
+            DBManager.getInstance().closeDatabase();
+
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
+    }
+
     public static void updateSessionTableToCombined(int sessionId, int isCombined){
 
         String where = COL_ID + " = " +  sessionId;
@@ -1646,7 +1670,6 @@ public class DBHelper extends SQLiteOpenHelper {
         }
 
         return rows;
-
     }
 
     public static ArrayList<String> querySurveyLinks() {
@@ -1845,7 +1868,7 @@ public class DBHelper extends SQLiteOpenHelper {
             SQLiteDatabase db = DBManager.getInstance().openDatabase();
             ContentValues values = new ContentValues();
 
-            //missedTime_col
+            //surveylink error
             values.put(openFlag_col, 2);
             values.put(sentOrNot_col, Constants.SURVEYLINK_SHOULD_BE_SENT_FLAG);
 
@@ -1876,6 +1899,53 @@ public class DBHelper extends SQLiteOpenHelper {
 
         }catch(Exception e){
 
+        }
+
+        DBManager.getInstance().closeDatabase();
+
+    }
+
+    public static void updateSurveyBydn(int d, int n) {
+
+        String where = d_col + " = " +  d + " and " + n_col + " = " + n;
+
+        try{
+            SQLiteDatabase db = DBManager.getInstance().openDatabase();
+            ContentValues values = new ContentValues();
+
+            values.put(DBHelper.sentOrNot_col, Constants.SURVEYLINK_IS_ALREADY_SENT_FLAG);
+
+            db.update(surveyLink_table, values, where, null);
+
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
+        DBManager.getInstance().closeDatabase();
+    }
+
+    public static void updateSurveyBydn(String linktoShow, String noti_type, int d, int n) {
+
+        String where = d_col + " = " +  d + " and " + n_col + " = " + n;
+
+        try{
+            SQLiteDatabase db = DBManager.getInstance().openDatabase();
+            ContentValues values = new ContentValues();
+
+            values.put(DBHelper.generateTime_col, ScheduleAndSampleManager.getCurrentTimeInMillis());
+            values.put(DBHelper.link_col, linktoShow);
+            values.put(DBHelper.surveyType_col, noti_type);
+            values.put(DBHelper.openFlag_col, -1);
+            values.put(DBHelper.sentOrNot_col, Constants.SURVEYLINK_SHOULDNT_BEEN_SENT_FLAG);
+            values.put(DBHelper.d_col, d);
+            values.put(DBHelper.n_col, n);
+
+            int id = (int) db.insertWithOnConflict(surveyLink_table, null, values, SQLiteDatabase.CONFLICT_IGNORE);
+            if (id == -1) {
+                db.update(surveyLink_table, values, where, null);
+            }
+        }catch(Exception e){
+            e.printStackTrace();
         }
 
         DBManager.getInstance().closeDatabase();

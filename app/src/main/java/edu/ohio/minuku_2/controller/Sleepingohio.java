@@ -41,15 +41,12 @@ public class Sleepingohio extends AppCompatActivity {
 
     private Context mContext;
     private Button sleepStarttime, sleepEndtime, confirm;
-    private final static int TIME_PICKER_INTERVAL = 30;
 
     private String sleepStartTimeRaw, sleepEndTimeRaw, todayDate;
 
     private SharedPreferences sharedPrefs;
 
     private long sleepStartTimeLong= -999, sleepEndTimeLong= -999;
-    private String sleepStartTimeHour = "", sleepEndTimeHour = "";
-    private String sleepStartTimeMin = "", sleepEndTimeMin = "";
 
     public Sleepingohio(){}
 
@@ -160,6 +157,7 @@ public class Sleepingohio extends AppCompatActivity {
 
             sleepingRange += Constants.MILLISECONDS_PER_DAY;
 
+            //TODO check
             sharedPrefs.edit().putBoolean("WakeSleepDateIsSame", false).apply();
         }else {
 
@@ -186,35 +184,18 @@ public class Sleepingohio extends AppCompatActivity {
             Log.d(TAG, "sleepStartTimeAMPM : " + sleepStartTimeAMPM);
             Log.d(TAG, "sleepEndTimeAMPM : " + sleepEndTimeAMPM);
 
+            /*if(sleepStartTimeAMPM.equals(sleepEndTimeAMPM)){
+
+                sharedPrefs.edit().putBoolean("WakeSleepDateIsSame", true).apply();
+            }else {
+
+                sharedPrefs.edit().putBoolean("WakeSleepDateIsSame", false).apply();
+            }*/
+
             long sleepStartTimeCheck = sleepStartTimeLong, sleepEndTimeCheck = sleepEndTimeLong;
 
             //TODO replace the code below
             long sleepingRange = getSleepingRange(sleepStartTimeLong, sleepEndTimeLong);
-
-//            long sleepingRange;
-
-            //TODO deprecated
-            //TODO change it to can be set to start from am pm
-            /*if (!sleepStartTimeAMPM.equals(sleepEndTimeAMPM)) {
-
-                //we add the date to get the accurate range
-//                SimpleDateFormat sdf_ = new SimpleDateFormat(Constants.DATE_FORMAT_NOW_HOUR_MIN_AMPM, Locale.US);
-//                sleepStartTimeCheck = ScheduleAndSampleManager.getTimeInMillis(todayDate + " " + sleepStartTimeHour + ":" + sleepStartTimeMin + " " + sleepStartTimeAMPM, sdf_);
-//                sleepEndTimeCheck = ScheduleAndSampleManager.getTimeInMillis(tomorrDate + " " + sleepEndTimeHour + ":" + sleepEndTimeMin + " " + sleepEndTimeAMPM, sdf_);
-
-                sleepingRange = sleepEndTimeCheck - sleepStartTimeCheck + Constants.MILLISECONDS_PER_DAY;
-
-                sharedPrefs.edit().putBoolean("WakeSleepDateIsSame", false).apply();
-            } else {
-
-//                SimpleDateFormat sdf_ = new SimpleDateFormat(Constants.DATE_FORMAT_NOW_HOUR_MIN_AMPM, Locale.US);
-//                sleepStartTimeCheck = ScheduleAndSampleManager.getTimeInMillis(todayDate + " " + sleepStartTimeHour + ":" + sleepStartTimeMin + " " + sleepStartTimeAMPM, sdf_);
-//                sleepEndTimeCheck = ScheduleAndSampleManager.getTimeInMillis(todayDate + " " + sleepEndTimeHour + ":" + sleepEndTimeMin + " " + sleepEndTimeAMPM, sdf_);
-
-                sleepingRange = sleepEndTimeCheck - sleepStartTimeCheck;
-
-                sharedPrefs.edit().putBoolean("WakeSleepDateIsSame", true).apply();
-            }*/
 
             Log.d(TAG, "sleepStartTimeCheck : " + sleepStartTimeCheck);
             Log.d(TAG, "sleepEndTimeCheck : " + sleepEndTimeCheck);
@@ -223,18 +204,18 @@ public class Sleepingohio extends AppCompatActivity {
 
                 DBHelper.insertActionLogTable(ScheduleAndSampleManager.getCurrentTimeInMillis(), "Button - Confirm sleeping time - Fail - Bed Time haven't been set.");
 
-                Toast.makeText(Sleepingohio.this, "請選擇就寢時間", Toast.LENGTH_SHORT).show();
+                Toast.makeText(Sleepingohio.this, getResources().getString(R.string.reminder_bedtime_check), Toast.LENGTH_SHORT).show();
             } else if(sleepEndtime.getText().equals("WAKE TIME")) {
 
                 DBHelper.insertActionLogTable(ScheduleAndSampleManager.getCurrentTimeInMillis(), "Button - Confirm sleeping time - Fail - Wake up Time haven't been set.");
 
-                Toast.makeText(Sleepingohio.this, "請選擇起床時間", Toast.LENGTH_SHORT).show();
+                Toast.makeText(Sleepingohio.this, getResources().getString(R.string.reminder_wakeuptime_check), Toast.LENGTH_SHORT).show();
             } else if(sleepingRange > Constants.sleepTime_UpperBound * Constants.MILLISECONDS_PER_HOUR || sleepingRange < Constants.sleepTime_LowerBound * Constants.MILLISECONDS_PER_HOUR){
 
                 DBHelper.insertActionLogTable(ScheduleAndSampleManager.getCurrentTimeInMillis(), "Button - Confirm sleeping time - Fail - Sleeping Time is not between 3 and 12 hours.");
 
-                Toast.makeText(Sleepingohio.this,"請確認你的就寢與起床時間。 你的睡眠時間請介於 " +
-                        Constants.sleepTime_LowerBound +" 與 "+Constants.sleepTime_UpperBound+" 個小時之間", Toast.LENGTH_SHORT).show();
+                Toast.makeText(Sleepingohio.this,"Please check your bed and wake times. Your sleep schedule must be between " +
+                        Constants.sleepTime_LowerBound +" and "+Constants.sleepTime_UpperBound+" hours long.", Toast.LENGTH_SHORT).show();
             }
             else {
 
@@ -248,22 +229,42 @@ public class Sleepingohio extends AppCompatActivity {
                 Log.d(TAG, "SleepingStartTime Raw : "+sleepStartTimeRaw);
                 Log.d(TAG, "SleepingEndTime Raw : "+sleepEndTimeRaw);
 
-                boolean firstTimeEnterSleepTimePage = sharedPrefs.getBoolean("FirstTimeEnterSleepTimePage", false);
+                //TODO if the hour and min didn't changed, don't reset the overview interval sample times
 
-                if(firstTimeEnterSleepTimePage)
-                    cancelAlarmsByResetSleepTime();
-
-                sharedPrefs.edit().putBoolean("FirstTimeEnterSleepTimePage", true).apply();
+                String previousSleepingStartTime = sharedPrefs.getString("SleepingStartTime", Constants.NOT_A_NUMBER);
+                String previousSleepingEndTime = sharedPrefs.getString("SleepingEndTime", Constants.NOT_A_NUMBER);
+                Log.d(TAG, "previousSleepingStartTime : "+ previousSleepingStartTime);
+                Log.d(TAG, "previousSleepingEndTime : "+ previousSleepingEndTime);
 
                 sharedPrefs.edit().putString("SleepingStartTime", sleepStartTimeRaw).apply();
                 sharedPrefs.edit().putString("SleepingEndTime", sleepEndTimeRaw).apply();
 
-                //for easy to maintain
                 sharedPrefs.edit().putLong("sleepStartTimeLong", sleepStartTimeLong).apply();
                 sharedPrefs.edit().putLong("sleepEndTimeLong", sleepEndTimeLong).apply();
-                sharedPrefs.edit().putLong("nextSleepTime", sleepStartTimeLong + Constants.MILLISECONDS_PER_DAY).apply();
 
-                Utils.settingAllDaysIntervalSampling(getApplicationContext());
+                //check if the current time is over the sleep time
+                if(ScheduleAndSampleManager.getCurrentTimeInMillis() >= sleepStartTimeLong){
+
+                    sharedPrefs.edit().putLong("nextSleepTime", sleepStartTimeLong + Constants.MILLISECONDS_PER_DAY).apply();
+                }else {
+
+                    sharedPrefs.edit().putLong("nextSleepTime", sleepStartTimeLong).apply();
+                }
+
+
+                if(sleepStartTimeRaw.equals(previousSleepingStartTime) && sleepEndTimeRaw.equals(previousSleepingEndTime)){
+
+                    Log.d(TAG, "previousSleepingTime is same as the current one, don't reset the survey times");
+                }else {
+
+                    boolean firstTimeEnterSleepTimePage = sharedPrefs.getBoolean("FirstTimeEnterSleepTimePage", false);
+
+                    if(firstTimeEnterSleepTimePage)
+                        cancelAlarmsByResetSleepTime();
+
+                    sharedPrefs.edit().putBoolean("FirstTimeEnterSleepTimePage", true).apply();
+                    Utils.settingAllDaysIntervalSampling(getApplicationContext());
+                }
 
                 Intent intent = new Intent(Sleepingohio.this, MainActivity.class);
                 Bundle bundle = new Bundle();
@@ -274,6 +275,8 @@ public class Sleepingohio extends AppCompatActivity {
                 setResult(1, intent);
 
                 DBHelper.insertActionLogTable(ScheduleAndSampleManager.getCurrentTimeInMillis(), "Button - Confirm sleeping time - success");
+
+                Toast.makeText(Sleepingohio.this, getResources().getString(R.string.reminder_sleeptime_changed), Toast.LENGTH_SHORT).show();
 
                 Sleepingohio.this.finish();
 
@@ -292,8 +295,6 @@ public class Sleepingohio extends AppCompatActivity {
         SimpleDateFormat sdf_Now = new SimpleDateFormat(Constants.DATE_FORMAT_NOW_DAY);
         String todayDate = ScheduleAndSampleManager.getTimeString(currentTimeInMillis, sdf_Now);
 
-//        SimpleDateFormat sdf_noZone = new SimpleDateFormat(Constants.DATE_FORMAT_NOW_NO_ZONE);
-//        String startTimeString = todayDate + " 00:00:00";
         long startTime = ScheduleAndSampleManager.getTimeInMillis(todayDate, sdf_Now);
         long tomorrowStartTime = startTime + Constants.MILLISECONDS_PER_DAY;
 
@@ -356,7 +357,6 @@ public class Sleepingohio extends AppCompatActivity {
             }
         }
 
-        //return 定點 by default
         return 0;
     }
 
@@ -366,7 +366,7 @@ public class Sleepingohio extends AppCompatActivity {
             DBHelper.insertActionLogTable(ScheduleAndSampleManager.getCurrentTimeInMillis(), "Button - Setting bed time");
 
             final LayoutInflater inflater = LayoutInflater.from(mContext);
-            final AlertDialog.Builder builder = new AlertDialog.Builder(mContext, R.style.DialogTheme);
+            final AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
             final View layout = inflater.inflate(R.layout.timesetting_dialog,null);
 
             final Spinner spinner_hour = (Spinner) layout.findViewById(R.id.spinner_hour);
@@ -378,14 +378,15 @@ public class Sleepingohio extends AppCompatActivity {
             final String[] ampm_options = {"am", "pm"};
 
             final ArrayAdapter<String> hourList = new ArrayAdapter<>(mContext,
-                    R.layout.spinner_item,
+                    android.R.layout.simple_spinner_dropdown_item,
                     hour_options);
+
             final ArrayAdapter<String> minList = new ArrayAdapter<>(mContext,
-                    R.layout.spinner_item,
+                    android.R.layout.simple_spinner_dropdown_item,
                     min_options);
 
             final ArrayAdapter<String> ampmList = new ArrayAdapter<>(mContext,
-                    R.layout.spinner_item,
+                    android.R.layout.simple_spinner_dropdown_item,
                     ampm_options);
 
             spinner_hour.setAdapter(hourList);
@@ -431,7 +432,7 @@ public class Sleepingohio extends AppCompatActivity {
 
             builder.setView(layout)
                     .setPositiveButton(R.string.ok, null)
-                    .setNegativeButton("取消", null);
+                    .setNegativeButton("cancel", null);
 
             final AlertDialog mAlertDialog = builder.create();
             mAlertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
@@ -459,14 +460,11 @@ public class Sleepingohio extends AppCompatActivity {
                             Log.d(TAG, "starttime raw hour : "+hour);
                             Log.d(TAG, "starttime raw min : "+min);
 
-                            sleepStartTimeHour = hour;
-                            sleepStartTimeMin = min;
-
                             SimpleDateFormat sdf = new SimpleDateFormat(Constants.DATE_FORMAT_NOW_HOUR_MIN_AMPM, Locale.US);
-                            sleepStartTimeLong = ScheduleAndSampleManager.getTimeInMillis(todayDate+" "+hour+":"+min+" "+am_pm, sdf);
+                            long sleepStartTimeToCheck = ScheduleAndSampleManager.getTimeInMillis(todayDate+" "+hour+":"+min+" "+am_pm, sdf);
 
-                            Log.d(TAG, "SleepStartTime Long : "+sleepStartTimeLong);
-                            Log.d(TAG, "SleepStartTime Long : "+ScheduleAndSampleManager.getTimeString(sleepStartTimeLong));
+                            Log.d(TAG, "sleepStartTimeToCheck Long : "+sleepStartTimeToCheck);
+                            Log.d(TAG, "sleepStartTimeToCheck String : "+ScheduleAndSampleManager.getTimeString(sleepStartTimeToCheck));
 
                             if(am_pm.equals("am")){
 
@@ -476,9 +474,20 @@ public class Sleepingohio extends AppCompatActivity {
                                 }
                             }
 
-                            sleepStarttime.setText( hour + ":" + min + " " + am_pm);
+                            long bedLowerBoundTime = getBedLowerBoundTime(todayDate);
+                            long bedUpperBoundTime = getBedUpperBoundTime(todayDate);
 
-                            dialogInterface.dismiss();
+                            if(sleepStartTimeToCheck > bedUpperBoundTime && sleepStartTimeToCheck < bedLowerBoundTime){
+
+                                Toast.makeText(Sleepingohio.this, getResources().getString(R.string.reminder_bedtime_range_error), Toast.LENGTH_SHORT).show();
+                            }else {
+
+                                sleepStartTimeLong = sleepStartTimeToCheck;
+
+                                sleepStarttime.setText(hour + ":" + min + " " + am_pm);
+
+                                dialogInterface.dismiss();
+                            }
                         }
                     });
                 }
@@ -494,7 +503,7 @@ public class Sleepingohio extends AppCompatActivity {
             DBHelper.insertActionLogTable(ScheduleAndSampleManager.getCurrentTimeInMillis(), "Button - Setting wake up time");
 
             final LayoutInflater inflater = LayoutInflater.from(mContext);
-            final AlertDialog.Builder builder = new AlertDialog.Builder(mContext, R.style.DialogTheme);
+            final AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
             final View layout = inflater.inflate(R.layout.timesetting_dialog,null);
 
             final Spinner spinner_hour = (Spinner) layout.findViewById(R.id.spinner_hour);
@@ -506,16 +515,17 @@ public class Sleepingohio extends AppCompatActivity {
             final String[] ampm_options = {"am", "pm"};
 
             final ArrayAdapter<String> hourList = new ArrayAdapter<>(mContext,
-                    R.layout.spinner_item,
+                    android.R.layout.simple_spinner_dropdown_item,
                     hour_options);
 
             final ArrayAdapter<String> minList = new ArrayAdapter<>(mContext,
-                    R.layout.spinner_item,
+                    android.R.layout.simple_spinner_dropdown_item,
                     min_options);
 
             final ArrayAdapter<String> ampmList = new ArrayAdapter<>(mContext,
-                    R.layout.spinner_item,
+                    android.R.layout.simple_spinner_dropdown_item,
                     ampm_options);
+
             spinner_hour.setAdapter(hourList);
             spinner_min.setAdapter(minList);
             spinner_ampm.setAdapter(ampmList);
@@ -559,7 +569,7 @@ public class Sleepingohio extends AppCompatActivity {
 
             builder.setView(layout)
                     .setPositiveButton(R.string.ok, null)
-                    .setNegativeButton("取消", null);
+                    .setNegativeButton("cancel", null);
 
             final AlertDialog mAlertDialog = builder.create();
             mAlertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
@@ -580,21 +590,17 @@ public class Sleepingohio extends AppCompatActivity {
                             String selectedMin = spinner_min.getSelectedItem().toString();
                             String selectedAmpm = spinner_ampm.getSelectedItem().toString();
 
-                            String hour=String.valueOf(selectedHour);
-                            String min =String.valueOf(selectedMin);
+                            String hour = String.valueOf(selectedHour);
+                            String min  = String.valueOf(selectedMin);
                             String am_pm = selectedAmpm;
 
                             Log.d(TAG, "endtime raw hour : "+hour);
                             Log.d(TAG, "endtime raw min : "+min);
 
-                            sleepEndTimeHour = hour;
-                            sleepEndTimeMin = min;
-
                             SimpleDateFormat sdf = new SimpleDateFormat(Constants.DATE_FORMAT_NOW_HOUR_MIN_AMPM, Locale.US);
-                            sleepEndTimeLong = ScheduleAndSampleManager.getTimeInMillis(todayDate+" "+hour+":"+min+" "+am_pm, sdf);
+                            long sleepEndTimeToCheck = ScheduleAndSampleManager.getTimeInMillis(todayDate+" "+hour+":"+min+" "+am_pm, sdf);
 
-                            Log.d(TAG, "SleepEndTime Long : "+sleepEndTimeLong);
-                            Log.d(TAG, "SleepEndTime Long : "+ScheduleAndSampleManager.getTimeString(sleepEndTimeLong));
+                            Log.d(TAG, "SleepEndTime Long : "+ScheduleAndSampleManager.getTimeString(sleepEndTimeToCheck));
 
                             if(am_pm.equals("am")){
 
@@ -604,9 +610,22 @@ public class Sleepingohio extends AppCompatActivity {
                                 }
                             }
 
-                            sleepEndtime.setText( hour + ":" + min + " " + am_pm);
+                            long wakeUpUpperBoundTime = getWakeUpUpperBoundTime(todayDate);
+                            long wakeUpLowerBoundTime = getWakeUpLowerBoundTime(todayDate);
+                            Log.d(TAG, "WakeUpUpperBoundTime Long : "+ScheduleAndSampleManager.getTimeString(wakeUpUpperBoundTime));
+                            Log.d(TAG, "WakeUpLowerBoundTime Long : "+ScheduleAndSampleManager.getTimeString(wakeUpLowerBoundTime));
 
-                            dialogInterface.dismiss();
+                            if(sleepEndTimeToCheck > wakeUpUpperBoundTime || sleepEndTimeToCheck < wakeUpLowerBoundTime){
+
+                                Toast.makeText(Sleepingohio.this, getResources().getString(R.string.reminder_wakeuptime_range_error), Toast.LENGTH_SHORT).show();
+                            }else {
+
+                                sleepEndTimeLong = sleepEndTimeToCheck;
+
+                                sleepEndtime.setText(hour + ":" + min + " " + am_pm);
+
+                                dialogInterface.dismiss();
+                            }
                         }
                     });
                 };
@@ -615,5 +634,39 @@ public class Sleepingohio extends AppCompatActivity {
             mAlertDialog.show();
         }
     };
+
+    private long getWakeUpUpperBoundTime(String todayDate){
+
+        SimpleDateFormat sdf = new SimpleDateFormat(Constants.DATE_FORMAT_NOW_HOUR_MIN_AMPM, Locale.US);
+        long wakeUpUpperBoundTime = ScheduleAndSampleManager.getTimeInMillis(todayDate+" 12:00 pm", sdf);
+
+        return wakeUpUpperBoundTime;
+    }
+
+    private long getWakeUpLowerBoundTime(String todayDate){
+
+        SimpleDateFormat sdf = new SimpleDateFormat(Constants.DATE_FORMAT_NOW_HOUR_MIN_AMPM, Locale.US);
+        long wakeUpLowerBoundTime = ScheduleAndSampleManager.getTimeInMillis(todayDate+" 04:00 am", sdf);
+
+        return wakeUpLowerBoundTime;
+    }
+
+    private long getBedUpperBoundTime(String todayDate){
+
+        SimpleDateFormat sdf = new SimpleDateFormat(Constants.DATE_FORMAT_NOW_HOUR_MIN_AMPM, Locale.US);
+        long wakeUpUpperBoundTime = ScheduleAndSampleManager.getTimeInMillis(todayDate+" 04:00 am", sdf);
+
+        return wakeUpUpperBoundTime;
+    }
+
+    private long getBedLowerBoundTime(String todayDate){
+
+        SimpleDateFormat sdf = new SimpleDateFormat(Constants.DATE_FORMAT_NOW_HOUR_MIN_AMPM, Locale.US);
+        long wakeUpLowerBoundTime = ScheduleAndSampleManager.getTimeInMillis(todayDate+" 08:00 pm", sdf);
+
+        return wakeUpLowerBoundTime;
+    }
+
+
 
 }

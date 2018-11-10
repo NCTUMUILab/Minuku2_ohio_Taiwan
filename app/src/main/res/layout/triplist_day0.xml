@@ -2,8 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
-    android:background="@color/theme_background_color">
+    android:gravity="center">
 
     <TextView
         android:id="@+id/textView"
@@ -13,8 +12,7 @@
         android:gravity="center"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
-        android:textColor="@color/text_color_dark"
-        android:text="行程記錄將從明天開始，且會連續記錄 14 天"
+        android:text="Your trip logs will begin tomorrow and continue for a total of 14 days."
         android:textSize="24sp" />
 
 </LinearLayout>

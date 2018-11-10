@@ -93,8 +93,7 @@ import edu.ohio.minuku_2.controller.Sleepingohio;
 import edu.ohio.minuku_2.controller.SurveyActivity;
 import edu.ohio.minuku_2.controller.TripListActivity;
 import edu.ohio.minuku_2.service.BackgroundService;
-import com.crashlytics.android.Crashlytics;
-import io.fabric.sdk.android.Fabric;
+
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
@@ -123,20 +122,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 //        Log.d(TAG, "Creating Main activity");
-//        setTheme(R.style.MyTheme);
-        setContentView(R.layout.activity_main);
+
         MultiDex.install(this);
-        Fabric.with(this, new Crashlytics());
-//
-//        /**
-//         * Testing block
-//         */
-//        TestServer testServer = new TestServer();
-//        testServer.test();
-        Log.d("SERVERTEST", "testing end");
-        /**
-         * EOF testing block
-         */
+
         sharedPrefs = getSharedPreferences(Constants.sharedPrefString, MODE_PRIVATE);
 
         //TODO if the daysInSurvey is already set, send to userinform again
@@ -147,20 +135,19 @@ public class MainActivity extends AppCompatActivity {
             Button finalSurvey = (Button) findViewById(R.id.finalSurvey);
 
             boolean isFinalButtonClicked = sharedPrefs.getBoolean("finalButtonClicked", false);
+
             String finalButtonText = "PART C\n20 minutes";
             Spannable spannable = new SpannableString(finalButtonText);
             spannable.setSpan(new StyleSpan(Typeface.NORMAL), 0, 6,Spannable.SPAN_INCLUSIVE_INCLUSIVE);
             spannable.setSpan(new RelativeSizeSpan(0.5f), 7, finalButtonText.length(),Spannable.SPAN_INCLUSIVE_INCLUSIVE);
             finalSurvey.setTextSize(30);
-
-            // TODO:CHT
             finalSurvey.setText(spannable);
             finalSurvey.setTransformationMethod(null);
 
             if(isFinalButtonClicked){
 
-                finalSurvey.setBackground(getResources().getDrawable(R.drawable.survey_button_completed));
-                finalSurvey.setTextColor(getResources().getColor(R.color.survey_text_color_completed));
+                finalSurvey.setBackgroundColor(Color.LTGRAY);
+                finalSurvey.setTextColor(Color.DKGRAY);
 
                 finalSurvey.setClickable(false);
             }else {
@@ -183,7 +170,7 @@ public class MainActivity extends AppCompatActivity {
 
             user_id = (TextView) findViewById(R.id.userid);
             Config.USER_ID = sharedPrefs.getString("userid","NA");
-            user_id.setText("認證編號:" );
+            user_id.setText("Confirmation #:" );
 
             num_6_digit = (TextView) findViewById(R.id.group_num);
             Config.GROUP_NUM = sharedPrefs.getString("groupNum","NA");
@@ -235,14 +222,13 @@ public class MainActivity extends AppCompatActivity {
             spannable.setSpan(new StyleSpan(Typeface.NORMAL), 0, 6,Spannable.SPAN_INCLUSIVE_INCLUSIVE);
             spannable.setSpan(new RelativeSizeSpan(0.5f), 7, finalButtonText.length(),Spannable.SPAN_INCLUSIVE_INCLUSIVE);
             finalSurvey.setTextSize(30);
-            // TODO:CHT
             finalSurvey.setText(spannable);
             finalSurvey.setTransformationMethod(null);
 
             if(isFinalButtonClicked){
 
-                finalSurvey.setBackground(getResources().getDrawable(R.drawable.survey_button_completed));
-                finalSurvey.setTextColor(getResources().getColor(R.color.survey_text_color_completed));
+                finalSurvey.setBackgroundColor(Color.LTGRAY);
+                finalSurvey.setTextColor(Color.DKGRAY);
 
                 finalSurvey.setClickable(false);
             }else {
@@ -265,7 +251,7 @@ public class MainActivity extends AppCompatActivity {
 
             user_id = (TextView) findViewById(R.id.userid);
             Config.USER_ID = sharedPrefs.getString("userid","NA");
-            user_id.setText("認證編號:" );
+            user_id.setText("Confirmation #:" );
 
             num_6_digit = (TextView) findViewById(R.id.group_num);
             Config.GROUP_NUM = sharedPrefs.getString("groupNum","NA");
@@ -321,8 +307,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void settingHomepageView() {
-        super.getTheme().applyStyle(R.style.ThemePurple, true);
+
         setContentView(R.layout.homepage);
+
         /* alertdialog for checking userid */
         long downloadtime = Utils.getDownloadedTime(this);
 
@@ -349,7 +336,7 @@ public class MainActivity extends AppCompatActivity {
 
         user_id = (TextView) findViewById(R.id.userid);
         Config.USER_ID = sharedPrefs.getString("userid", "NA");
-        user_id.setText("認證編號:");
+        user_id.setText("Confirmation #:");
 
         num_6_digit = (TextView) findViewById(R.id.group_num);
         Config.GROUP_NUM = sharedPrefs.getString("groupNum", "NA");
@@ -401,6 +388,8 @@ public class MainActivity extends AppCompatActivity {
         String sleepStartTime = sharedPrefs.getString("SleepingStartTime", Constants.NOT_A_NUMBER);//"Please select your sleeping time"
         String sleepEndTime = sharedPrefs.getString("SleepingEndTime", Constants.NOT_A_NUMBER);//"Please select your wake up time"
 
+        Log.d(TAG, "SleepingStartTime : "+sleepStartTime+" SleepingEndTime : "+sleepEndTime);
+
         if (!sleepStartTime.equals(Constants.NOT_A_NUMBER) && !sleepEndTime.equals(Constants.NOT_A_NUMBER)) {
 
             String[] sleepStartDetail = sleepStartTime.split(":");
@@ -429,11 +418,11 @@ public class MainActivity extends AppCompatActivity {
             else
                 sleepEndHourStr = String.valueOf(sleepEndHour - 12) + ":" + sleepEndDetail[1] + " pm";
 
-            sleepingtime.setText("睡眠時間: " + sleepStartHourStr + " 到 " + sleepEndHourStr);
+            sleepingtime.setText("Sleep: " + sleepStartHourStr + " to " + sleepEndHourStr);
 
         } else {
 
-            sleepingtime.setText("設定睡眠時間");
+            sleepingtime.setText("Set Sleep Time");
         }
 
     }
@@ -467,9 +456,7 @@ public class MainActivity extends AppCompatActivity {
         TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT,1.0f);
 
         final EditText editText_confirmNum = new EditText(MainActivity.this);
-        editText_confirmNum.setTextColor(getResources().getColor(R.color.text_color_light));
         editText_confirmNum.setHint(getResources().getString(R.string.log_in_confirmation_number_hint));
-        editText_confirmNum.setHintTextColor(getResources().getColor(R.color.text_color_dark));
         editText_confirmNum.setGravity(Gravity.CENTER_HORIZONTAL);
         editText_confirmNum.setLayoutParams(params);
         editText_confirmNum.setFilters(new InputFilter[] {
@@ -478,9 +465,7 @@ public class MainActivity extends AppCompatActivity {
         layout.addView(editText_confirmNum);
 
         final EditText editText_Email = new EditText(MainActivity.this);
-        editText_Email.setTextColor(getResources().getColor(R.color.text_color_light));
         editText_Email.setHint(getResources().getString(R.string.log_in_contact_email_hint));
-        editText_Email.setHintTextColor(getResources().getColor(R.color.text_color_dark));
         editText_Email.setGravity(Gravity.CENTER_HORIZONTAL);
         editText_Email.setLayoutParams(params);
         layout.addView(editText_Email);
@@ -489,11 +474,12 @@ public class MainActivity extends AppCompatActivity {
         num_6_digit = (TextView) findViewById(R.id.group_num);
 
 
-        AlertDialog.Builder dialog = new AlertDialog.Builder(MainActivity.this, R.style.DialogTheme)
+        AlertDialog.Builder dialog = new AlertDialog.Builder(MainActivity.this)
                 .setTitle(getResources().getString(R.string.log_in_title))
                 .setView(layout)
                 .setPositiveButton(R.string.ok, null)
                 .setCancelable(false);
+
         final AlertDialog mAlertDialog = dialog.create();
         mAlertDialog.setOnShowListener(new DialogInterface.OnShowListener(){
 
@@ -505,28 +491,19 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
 
-                        String inputID;
+                        String inputID = editText_confirmNum.getText().toString();
 //                        Log.d(TAG,"inputID : "+inputID);
 
-                        String inputEmail;
+                        String inputEmail = editText_Email.getText().toString();
 //                        Log.d(TAG,"inputEmail : "+inputEmail);
 
-                        // TEST MODE BLOCK
-                        if (Config.testMode == true) {
-                            inputID = "123456";
-                            inputEmail = "test@mail";
-                        } else {
-                            inputID = editText_confirmNum.getText().toString();
-                            inputEmail = editText_Email.getText().toString();
-                        }
-                        // EOF TEST MODE BLOCK
                         if(Utils.isConfirmNumInvalid(inputID)){
-                            Toast.makeText(MainActivity.this,"輸入的認證編號有誤，請重新確認",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MainActivity.this,"Error, please try re-entering the number provided",Toast.LENGTH_SHORT).show();
                         }else if(!Utils.isEmailEasyValid(inputEmail)){
-                            Toast.makeText(MainActivity.this,"輸入的電子信箱有誤，請重新確認",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MainActivity.this,"Error, please try re-entering your email",Toast.LENGTH_SHORT).show();
                         }
                         else if(!haveNetworkConnection()){
-                            Toast.makeText(MainActivity.this,"請連上網路後再嘗試",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MainActivity.this,"Error, please connect to the network",Toast.LENGTH_SHORT).show();
                         }
                         else {
 
@@ -542,7 +519,7 @@ public class MainActivity extends AppCompatActivity {
 
                             sharedPrefs.edit().putString("userid", inputID).apply();
                             Config.USER_ID = sharedPrefs.getString("userid", "NA");
-                            user_id.setText("認證編號:");
+                            user_id.setText("Confirmation #");
 
                             sharedPrefs.edit().putString("groupNum", inputID.substring(0, 1)).apply();
                             Config.GROUP_NUM = sharedPrefs.getString("groupNum", "NA");
@@ -553,8 +530,7 @@ public class MainActivity extends AppCompatActivity {
                             Config.Email = sharedPrefs.getString("Email", "NA");
 
 
-//                            boolean isEmailValid = checkUserInform();
-                            boolean isEmailValid = true;
+                            boolean isEmailValid = checkUserInform();
 
                             //TODO for testing
 //                            isEmailValid = true;
@@ -568,10 +544,13 @@ public class MainActivity extends AppCompatActivity {
                             //TODO...
 
                             if(isEmailValid){
-                                Log.d(TAG, "Valid Email");
+
                                 sendingUserInform(installedOrNot);
+
                                 startSettingSleepingTime(); //the appearing order is reversed from the code.
+
                                 startpermission();
+
                                 getStartDate();
 
                                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -840,6 +819,8 @@ public class MainActivity extends AppCompatActivity {
                     String sleepStartTime = data.getExtras().getString("SleepingStartTime");
                     String sleepEndTime = data.getExtras().getString("SleepingEndTime");
 
+                    Log.d(TAG, "SleepingStartTime : "+sleepStartTime+" SleepingEndTime : "+sleepEndTime);
+
                     if(!sleepStartTime.equals("Please select your start time")&&!sleepEndTime.equals("Please select your end time")) {
 
                         String[] sleepStartDetail = sleepStartTime.split(":");
@@ -869,7 +850,7 @@ public class MainActivity extends AppCompatActivity {
                         else
                             sleepEndHourStr = String.valueOf(sleepEndHour-12)+":"+sleepEndDetail[1]+" pm";
 
-                        sleepingtime.setText("睡眠時間: " + sleepStartHourStr + " 到 " + sleepEndHourStr);
+                        sleepingtime.setText("Sleep: " + sleepStartHourStr + " to " + sleepEndHourStr);
 
                         sharedPrefs.edit().putBoolean("resetIntervalSurveyFlag", true).apply();
 
@@ -879,7 +860,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                     else {
 
-                        sleepingtime.setText("設定睡眠時間");
+                        sleepingtime.setText("Set Sleep Time");
                     }
                     break;
             }

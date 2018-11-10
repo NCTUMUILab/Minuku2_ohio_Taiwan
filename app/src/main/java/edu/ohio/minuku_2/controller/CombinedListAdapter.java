@@ -92,9 +92,9 @@ public class CombinedListAdapter extends ArrayAdapter<Session> {
 
         String today_yesterday;
         if(StartTimeDate.equals(CurrentTimeDate)){
-            today_yesterday = "今天";
+            today_yesterday = "Today";
         }else{
-            today_yesterday = "昨天";
+            today_yesterday = "Yesterday";
         }
 
         sessionTitle = today_yesterday + " " + timeLabel + "    " + labelStr;
@@ -109,23 +109,23 @@ public class CombinedListAdapter extends ArrayAdapter<Session> {
 
         switch (labelStr){
             case "Walking outdoors": //ans1
-                return "走路";
+                return "Walk";
             case "Walking indoors": //ans1
-                return "走路";
+                return "Walk";
             case "Riding a bicycle":
-                return "自行車";
+                return "Bike";
             case "Driving (I'm the driver)":
-                return "汽車";
+                return "Drive";
             case "Driving (I'm the passenger)":
-                return "汽車";
+                return "Drive";
             case "Trip is part of previous trip (COMBINE)":
-                return "合併";
+                return "Combine";
             case "Taking a bus":
-                return "巴士";
+                return "Bus";
             case "Trip is incorrect (DELETE)":
-                return "刪除";
+                return "Delete";
             case "Other transportation":
-                return "其他";
+                return "Other";
             default:
                 return "";
         }

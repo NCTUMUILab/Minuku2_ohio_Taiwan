@@ -3,8 +3,6 @@ package edu.ohio.minuku_2.controller;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -14,18 +12,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 
 import edu.ohio.minuku.Data.DBHelper;
 import edu.ohio.minuku.Data.DataHandler;
 import edu.ohio.minuku.Utilities.ScheduleAndSampleManager;
 import edu.ohio.minuku.config.Config;
 import edu.ohio.minuku.config.Constants;
-import edu.ohio.minuku.manager.DBManager;
 import edu.ohio.minuku_2.R;
 
 /**
@@ -49,11 +43,11 @@ public class SurveyActivity extends Activity {
 
     private SharedPreferences sharedPrefs;
 
-    private final String TEXT_Unavailable = "尚未提供";
-    private final String TEXT_Available = " 可使用";/*the space is to padding the border*/
-    private final String TEXT_COMPLETED = "已被啟用";
-    private final String TEXT_MISSED = "已錯過";
-    private final String TEXT_ERROR = "錯誤";
+    private final String TEXT_Unavailable = "Unavailable";
+    private final String TEXT_Available = " Available ";/*the space is to padding the border*/
+    private final String TEXT_COMPLETED = "Activated";
+    private final String TEXT_MISSED = "Missed";
+    private final String TEXT_ERROR = "Error";
 
 
     public void onCreate(Bundle savedInstanceState) {
@@ -87,10 +81,10 @@ public class SurveyActivity extends Activity {
         }
 
         if(Config.daysInSurvey <= Constants.FINALDAY && Config.daysInSurvey >= 1)
-            initlinkListohio();
+            initlinkListOhio();
     }
 
-    private void initlinkListohio(){
+    private void initlinkListOhio(){
 
         sharedPrefs = getSharedPreferences(Constants.sharedPrefString, MODE_PRIVATE);
 
@@ -106,7 +100,7 @@ public class SurveyActivity extends Activity {
         long startTime = ScheduleAndSampleManager.getTimeInMillis(startTimeString, sdf2);
         long endTime = startTime + Constants.MILLISECONDS_PER_DAY;
 
-//        Log.d(TAG, "[test mobile triggering] startTime : "+startTimeString);
+        Log.d(TAG, "[test mobile triggering] startTime : "+startTimeString);
 
         surveyDatas = new ArrayList<>();
         linkNums = new ArrayList<>();
@@ -117,21 +111,20 @@ public class SurveyActivity extends Activity {
         surveyDayText = (TextView) findViewById(R.id.surveyDayView);
         surveyDayText.setText("Day "+ Config.daysInSurvey+"/"+Constants.FINALDAY);
 
-//        Log.d(TAG, "[test mobile triggering] surveyDatas size : "+surveyDatas.size());
+        Log.d(TAG, "[test mobile triggering] surveyDatas size : "+surveyDatas.size());
 
         for(String data : surveyDatas){
 
             String link = data.split(Constants.DELIMITER)[1];
 
             String getSurveyNumber1 = link.split("n=")[1];
-            String getSurveyNumber2 = getSurveyNumber1.split("&m=")[0];
+            String n = getSurveyNumber1.split("&m=")[0];
 
-            int linkNum = Integer.valueOf(getSurveyNumber2);
+            int linkNum = Integer.valueOf(n);
 
             linkNums.add(linkNum);
 
-//            Log.d(TAG, "[test mobile triggering] link : "+link);
-
+            Log.d(TAG, "[test mobile triggering] link : "+link);
         }
 
         buttonState = new ArrayList<>();
@@ -183,8 +176,6 @@ public class SurveyActivity extends Activity {
             if(currentState.equals(TEXT_Unavailable)){
 
                 Button currentButton = buttons.get(index);
-                currentButton.setBackground(getResources().getDrawable(R.drawable.survey_button_error));
-                currentButton.setTextColor(getResources().getColor(R.color.survey_text_color_error));
                 currentButton.setText(TEXT_ERROR);
                 currentButton.setClickable(false);
             }
@@ -197,9 +188,7 @@ public class SurveyActivity extends Activity {
         boolean setUnavaliable = true;
         int correspondingIndex = -1;
 
-//        Log.d(TAG, "[test mobile triggering] setSurveyButtonsAvailable");
-
-//        Log.d(TAG, "[test mobile triggering] links size : "+linkNums.size());
+        Log.d(TAG, "[test mobile triggering] links size : "+linkNums.size());
 
         if(linkNums.contains(correspondingSize)){
 
@@ -207,12 +196,12 @@ public class SurveyActivity extends Activity {
             setUnavaliable = false;
         }
 
-//        Log.d(TAG, "[test mobile triggering] setUnavaliable : "+setUnavaliable);
+        Log.d(TAG, "[test mobile triggering] setUnavaliable : "+setUnavaliable);
 
         if(setUnavaliable){
 
-            survey_Button.setBackground(getResources().getDrawable(R.drawable.survey_button_unavailable));
-            survey_Button.setTextColor(getResources().getColor(R.color.survey_text_color_unavailable));
+            survey_Button.setBackgroundColor(Color.LTGRAY);
+            survey_Button.setTextColor(Color.DKGRAY);
 
             survey_Button.setText(TEXT_Unavailable);
             survey_Button.setClickable(false);
@@ -220,20 +209,20 @@ public class SurveyActivity extends Activity {
             buttonState.add(TEXT_Unavailable);
         }else{
 
-//            Log.d(TAG, "[test mobile triggering] correspondingIndex : "+correspondingIndex);
-//            Log.d(TAG, "[test mobile triggering] surveyDatas size : "+surveyDatas.size());
+            Log.d(TAG, "[test mobile triggering] correspondingIndex : "+correspondingIndex);
+            Log.d(TAG, "[test mobile triggering] surveyDatas size : "+surveyDatas.size());
 
             String surveyData = surveyDatas.get(correspondingIndex);
 
             String openFlag = surveyData.split(Constants.DELIMITER)[5];
 
-//            Log.d(TAG, "[test mobile triggering] surveyData : "+surveyData);
-//            Log.d(TAG, "[test mobile triggering] openFlag : "+openFlag);
+            Log.d(TAG, "[test mobile triggering] surveyData : "+surveyData);
+            Log.d(TAG, "[test mobile triggering] openFlag : "+openFlag);
 
             if(openFlag.equals(Constants.SURVEY_COMPLETE_FLAG)){
 
-                survey_Button.setBackground(getResources().getDrawable(R.drawable.survey_button_completed));
-                survey_Button.setTextColor(getResources().getColor(R.color.survey_text_color_completed));
+                survey_Button.setBackgroundColor(Color.LTGRAY);
+                survey_Button.setTextColor(Color.DKGRAY);
 
                 survey_Button.setText(TEXT_COMPLETED);
                 survey_Button.setClickable(false);
@@ -241,8 +230,8 @@ public class SurveyActivity extends Activity {
                 buttonState.add(TEXT_COMPLETED);
             }else if(openFlag.equals(Constants.SURVEY_INCOMPLETE_FLAG)){
 
-                survey_Button.setBackground(getResources().getDrawable(R.drawable.survey_button_missed));
-                survey_Button.setTextColor(getResources().getColor(R.color.survey_text_color_missed));
+                survey_Button.setBackgroundColor(Color.LTGRAY);
+                survey_Button.setTextColor(Color.DKGRAY);
 
                 survey_Button.setText(TEXT_MISSED);
                 survey_Button.setClickable(false);
@@ -258,8 +247,8 @@ public class SurveyActivity extends Activity {
 
             }else if(openFlag.equals(Constants.SURVEY_ERROR_FLAG)){
 
-                survey_Button.setBackground(getResources().getDrawable(R.drawable.survey_button_error));
-                survey_Button.setTextColor(getResources().getColor(R.color.survey_text_color_error));
+                survey_Button.setBackgroundColor(Color.LTGRAY);
+                survey_Button.setTextColor(Color.DKGRAY);
 
                 survey_Button.setText(TEXT_ERROR);
                 survey_Button.setClickable(false);
@@ -267,8 +256,8 @@ public class SurveyActivity extends Activity {
                 buttonState.add(TEXT_ERROR);
             }else{
 
-                survey_Button.setBackground(getResources().getDrawable(R.drawable.survey_button_available));
-                survey_Button.setTextColor(getResources().getColor(R.color.survey_text_color_available));
+                survey_Button.setBackgroundColor(Color.RED);
+                survey_Button.setTextColor(getResources().getColor(R.color.white));
                 survey_Button.setText(TEXT_Available);
 
                 buttonState.add(TEXT_Available);
@@ -398,91 +387,6 @@ public class SurveyActivity extends Activity {
         }
 
         return super.onKeyDown(keyCode, event);
-    }
-
-    public ArrayList<String> getData(){
-
-        //Log.d(TAG, " getData");
-
-        ArrayList<String> data = new ArrayList<String>();
-
-        long startTime = -9999;
-        long endTime = -9999;
-        String startTimeString = "";
-        String endTimeString = "";
-
-        Calendar cal = Calendar.getInstance();
-        Date date = new Date();
-        cal.setTime(date);
-        int Year = cal.get(Calendar.YEAR);
-        int Month = cal.get(Calendar.MONTH)+1;
-        int Day = cal.get(Calendar.DAY_OF_MONTH);
-
-        startTimeString = makingDataFormat(Year, Month, Day);
-        endTimeString = makingDataFormat(Year, Month, Day+1);
-        startTime = getSpecialTimeInMillis(startTimeString);
-        endTime = getSpecialTimeInMillis(endTimeString);
-
-        String taskTable = DBHelper.surveyLink_table;
-
-        try {
-            SQLiteDatabase db = DBManager.getInstance().openDatabase();
-
-            Cursor tripCursor = db.rawQuery("SELECT "+ DBHelper.openFlag_col +", "+ DBHelper.link_col +" FROM " + taskTable + " WHERE " //+ DBHelper.Trip_id + " ='" + position + "'" +" AND "
-                    +DBHelper.TIME+" BETWEEN"+" '"+startTime+"' "+"AND"+" '"+endTime+"' ORDER BY "+DBHelper.TIME+" DESC", null);
-
-            //Log.d(TAG, "SELECT "+ DBHelper.openFlag_col +", "+ DBHelper.link_col +" FROM " + taskTable + " WHERE " //+ DBHelper.Trip_id + " ='" + position + "'" +" AND "
-//                    +DBHelper.TIME+" BETWEEN"+" '"+startTime+"' "+"AND"+" '"+endTime+"' ORDER BY "+DBHelper.TIME+" DESC");
-
-            //get all data from cursor
-            int i = 0;
-            if(tripCursor.moveToFirst()){
-                do{
-                    int eachdataInCursor = tripCursor.getInt(0);
-                    String link = tripCursor.getString(1);
-
-                    //Log.d(TAG, " 0 : "+ eachdataInCursor+ ", 1 : "+ link);
-
-                    data.add(link);
-                    //Log.d(TAG, " link : "+ link);
-
-                    //Log.d(TAG, " tripCursor.moveToFirst()");
-                }while(tripCursor.moveToNext());
-            }else
-                //Log.d(TAG, " tripCursor.moveToFirst() else");
-            tripCursor.close();
-        }catch (Exception e){
-            //e.printStackTrace();
-        }
-        return data;
-    }
-
-    private long getSpecialTimeInMillis(String givenDateFormat){
-        SimpleDateFormat sdf = new SimpleDateFormat(Constants.DATE_FORMAT_NOW_NO_ZONE_Slash);
-        long timeInMilliseconds = 0;
-        try {
-            Date mDate = sdf.parse(givenDateFormat);
-            timeInMilliseconds = mDate.getTime();
-            //Log.d(TAG,"Date in milli :: " + timeInMilliseconds);
-        } catch (ParseException e) {
-            //e.printStackTrace();
-        }
-        return timeInMilliseconds;
-    }
-
-    public String makingDataFormat(int year,int month,int date){
-        String dataformat= "";
-
-        dataformat = addZero(year)+"/"+addZero(month)+"/"+addZero(date)+" "+"00:00:00";
-
-        return dataformat;
-    }
-
-    private String addZero(int date){
-        if(date<10)
-            return String.valueOf("0"+date);
-        else
-            return String.valueOf(date);
     }
 
 }

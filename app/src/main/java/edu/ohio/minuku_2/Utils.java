@@ -141,7 +141,9 @@ public class Utils {
     public static boolean isConfirmNumInvalid(String inputID) {
         boolean isInvalid = inputID.matches("") ||
                 !tryParseInt(inputID) ||
-                inputID.length()!=6;
+                inputID.length()!=6 ||
+                Integer.valueOf(inputID.substring(0, 1))>4 ||
+                Integer.valueOf(inputID.substring(0, 1))==0;
 
         return isInvalid;
     }
@@ -167,7 +169,7 @@ public class Utils {
 
         //14 is the total of the research days
         int countOfDaysInSurvey = Constants.FINALDAY - Config.daysInSurvey;
-        for(int DaysInSurvey = 1; DaysInSurvey <= countOfDaysInSurvey; DaysInSurvey++ ){
+        for(int daysInSurvey = 1; daysInSurvey <= countOfDaysInSurvey; daysInSurvey++ ){
 
 //            Log.d(TAG, "[test alarm] DaysInSurvey : "+DaysInSurvey);
 
@@ -177,7 +179,7 @@ public class Utils {
             comment.add("Trigger times");
             CSVHelper.storeToCSV(CSVHelper.CSV_Interval_Samples_Times, comment);
 
-            SurveyTriggerManager.settingIntervalSampling(DaysInSurvey, context);
+            SurveyTriggerManager.settingIntervalSampling(daysInSurvey, context);
 
             storeToCSV_IntervalSamplesTimes();
 
@@ -195,7 +197,7 @@ public class Utils {
         storeToCSV_Interval_Samples_Times_split();
 
         SharedPreferences sharedPrefs = context.getSharedPreferences(Constants.sharedPrefString, context.MODE_PRIVATE);
-        String sleepingstartTime = sharedPrefs.getString("SleepingStartTime", Constants.NOT_A_NUMBER); //"22:00"
+        String sleepingstartTime = sharedPrefs.getString("SleepingStartTime", Constants.NOT_A_NUMBER);
         String sleepingendTime = sharedPrefs.getString("SleepingEndTime", Constants.NOT_A_NUMBER);
 
         SimpleDateFormat sdf = new SimpleDateFormat(Constants.DATE_FORMAT_HOUR_MIN);
@@ -221,7 +223,7 @@ public class Utils {
 //        Log.d(TAG, "period : "+period);
 
         sharedPrefs.edit().putLong("PeriodLong", period).apply();
-
+        sharedPrefs.edit().putBoolean("IsSleepTimeSet", true).apply();
     }
 
     public static void setDefaultSleepTime(Context context){
@@ -372,7 +374,7 @@ public class Utils {
     }
 
 
-    public static void storeToCSV_IntervalSurveyCreated(long triggeredTimestamp, int surveyNum, String surveyLink, String noti_type,Context context){
+    public static void storeToCSV_IntervalSurveyCreated(long triggeredTimestamp, int daysInSurvey, int surveyNum, String surveyLink, String noti_type, Context context){
 
         String sFileName = "IntervalSurveyState.csv";
 
@@ -418,14 +420,14 @@ public class Utils {
             Boolean startSurveying = sharedPrefs.getBoolean("startSurveying", true);
 
             if(startSurveying) {
+
                 List<String[]> title = new ArrayList<String[]>();
 
-                title.add(new String[]{"triggeredTime", "Survey #", "clicked", "clickedTime","Survey link", "Noti Type","Period Number", "Overall rate"});
+                title.add(new String[]{"triggeredTime", "Day #(d)", "Survey #(n)", "clicked", "clickedTime","Survey link", "Noti Type", "Overall rate"});
 
                 csv_writer.writeAll(title);
 
                 sharedPrefs.edit().putBoolean("startSurveying", false).apply();
-
             }
 
             String triggeredTimeString = ScheduleAndSampleManager.getTimeString(triggeredTimestamp);
@@ -434,7 +436,7 @@ public class Utils {
 
             List<String[]> data = new ArrayList<String[]>();
 
-            data.add(new String[]{triggeredTimeString, "Survey "+surveyNum, "",  "", surveyLink, noti_type, periodNum, rateString+"%"});
+            data.add(new String[]{triggeredTimeString, "Day "+daysInSurvey,"Survey "+surveyNum, "",  "", surveyLink, noti_type, rateString+"%"});
 
             csv_writer.writeAll(data);
 

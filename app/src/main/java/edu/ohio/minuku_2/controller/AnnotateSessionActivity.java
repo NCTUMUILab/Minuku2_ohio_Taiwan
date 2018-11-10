@@ -3,11 +3,9 @@ package edu.ohio.minuku_2.controller;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.location.Location;
 import android.os.AsyncTask;
@@ -24,7 +22,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -54,7 +51,6 @@ import edu.ohio.minuku.Data.DBHelper;
 import edu.ohio.minuku.Data.DataHandler;
 import edu.ohio.minuku.Utilities.ScheduleAndSampleManager;
 import edu.ohio.minuku.config.Constants;
-import edu.ohio.minuku.manager.DBManager;
 import edu.ohio.minuku.manager.SessionManager;
 import edu.ohio.minuku.model.Annotation;
 import edu.ohio.minuku.model.Session;
@@ -165,7 +161,6 @@ public class AnnotateSessionActivity extends Activity implements OnMapReadyCallb
         //Log.d(TAG, "[test show trip] loading session " + mSession.getId() + " the annotations are " + mSession.getAnnotationsSet().toJSONObject().toString());
 
         initAnnotationView();
-
     }
 
     private void triggerAlertDialog(){
@@ -194,7 +189,7 @@ public class AnnotateSessionActivity extends Activity implements OnMapReadyCallb
                     @Override
                     public void onClick(View view) {
 
-                        DBHelper.insertActionLogTable(ScheduleAndSampleManager.getCurrentTimeInMillis(), "Button - Confirm split");
+                        DBHelper.insertActionLogTable(ScheduleAndSampleManager.getCurrentTimeInMillis(), "Button - Confirm split - sessionid : "+ mSessionId);
 
                         if(IsSplitLocationChosen) {
 
@@ -288,7 +283,7 @@ public class AnnotateSessionActivity extends Activity implements OnMapReadyCallb
                         @Override
                         public void onMapClick(LatLng latLng) {
 
-                            DBHelper.insertActionLogTable(ScheduleAndSampleManager.getCurrentTimeInMillis(), "Annotation Map");
+                            DBHelper.insertActionLogTable(ScheduleAndSampleManager.getCurrentTimeInMillis(), "Annotation Map - sessionid : "+ mSessionId);
 
                             //remove the current marker
                             if(currentMarkerKey != -1){
@@ -482,9 +477,9 @@ public class AnnotateSessionActivity extends Activity implements OnMapReadyCallb
         Polyline path = map.addPolyline(pathPolyLineOption);
 
         //after getting the start and ened point of location trace, we put a marker
-        map.addMarker(new MarkerOptions().position(startLatLng).title("開始"))
+        map.addMarker(new MarkerOptions().position(startLatLng).title("Start"))
                 .setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
-        map.addMarker(new MarkerOptions().position(endLatLng).title("結束"));
+        map.addMarker(new MarkerOptions().position(endLatLng).title("End"));
 
     }
 
@@ -572,7 +567,7 @@ public class AnnotateSessionActivity extends Activity implements OnMapReadyCallb
             @Override
             public void onClick(View v) {
 
-                DBHelper.insertActionLogTable(ScheduleAndSampleManager.getCurrentTimeInMillis(), "EditText - click - Optional Note");
+                DBHelper.insertActionLogTable(ScheduleAndSampleManager.getCurrentTimeInMillis(), "EditText - click - Optional Note - sessionid : "+ mSessionId);
             }
         });
 
@@ -590,7 +585,7 @@ public class AnnotateSessionActivity extends Activity implements OnMapReadyCallb
             public void onTextChanged(CharSequence s, int start,
                                       int before, int count) {
 
-                DBHelper.insertActionLogTable(ScheduleAndSampleManager.getCurrentTimeInMillis(), "EditText - onTextChanged - Optional Note");
+                DBHelper.insertActionLogTable(ScheduleAndSampleManager.getCurrentTimeInMillis(), "EditText - onTextChanged - Optional Note - sessionid : "+ mSessionId);
             }
         });
 
@@ -598,7 +593,7 @@ public class AnnotateSessionActivity extends Activity implements OnMapReadyCallb
         ques1.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
 
-                DBHelper.insertActionLogTable(ScheduleAndSampleManager.getCurrentTimeInMillis(), "Ques1 - Ans"+(checkedId+1));
+                DBHelper.insertActionLogTable(ScheduleAndSampleManager.getCurrentTimeInMillis(), "Ques1 - Ans"+(checkedId+1)+" - sessionid : "+ mSessionId);
 
                 if(checkedId==-1){
 
@@ -606,7 +601,7 @@ public class AnnotateSessionActivity extends Activity implements OnMapReadyCallb
                 }else{
 
                     RadioButton radioButton = (RadioButton) findViewById(checkedId);
-                    ans1 = answerChtToEng(radioButton.getText().toString());
+                    ans1 = radioButton.getText().toString();
                 }
             }
         });
@@ -614,14 +609,14 @@ public class AnnotateSessionActivity extends Activity implements OnMapReadyCallb
         ques2.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
 
-                DBHelper.insertActionLogTable(ScheduleAndSampleManager.getCurrentTimeInMillis(), "Ques2 - Ans"+(checkedId+1));
+                DBHelper.insertActionLogTable(ScheduleAndSampleManager.getCurrentTimeInMillis(), "Ques2 - Ans"+(checkedId+1)+" - sessionid : "+ mSessionId);
 
                 if(checkedId==-1){
 
                 }else{
 
                     RadioButton radioButton = (RadioButton) findViewById(checkedId);
-                    ans2 = answerChtToEng(radioButton.getText().toString());
+                    ans2 = radioButton.getText().toString();
                 }
             }
         });
@@ -629,14 +624,14 @@ public class AnnotateSessionActivity extends Activity implements OnMapReadyCallb
         ques3.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
 
-                DBHelper.insertActionLogTable(ScheduleAndSampleManager.getCurrentTimeInMillis(), "Ques3 - Ans"+(checkedId+1));
+                DBHelper.insertActionLogTable(ScheduleAndSampleManager.getCurrentTimeInMillis(), "Ques3 - Ans"+(checkedId+1)+" - sessionid : "+ mSessionId);
 
                 if(checkedId==-1){
 
                 }else{
 
                     RadioButton radioButton = (RadioButton) findViewById(checkedId);
-                    ans3 = answerChtToEng(radioButton.getText().toString());
+                    ans3 = radioButton.getText().toString();
                 }
 
             }
@@ -645,14 +640,14 @@ public class AnnotateSessionActivity extends Activity implements OnMapReadyCallb
         ques4.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
 
-                DBHelper.insertActionLogTable(ScheduleAndSampleManager.getCurrentTimeInMillis(), "Ques4 - Ans"+(checkedId+1));
+                DBHelper.insertActionLogTable(ScheduleAndSampleManager.getCurrentTimeInMillis(), "Ques4 - Ans"+(checkedId+1)+" - sessionid : "+ mSessionId);
 
                 if(checkedId==-1){
 
                 }else{
 
                     RadioButton radioButton = (RadioButton) findViewById(checkedId);
-                    ans4 = answerChtToEng(radioButton.getText().toString());
+                    ans4 = radioButton.getText().toString();
                 }
             }
         });
@@ -724,7 +719,7 @@ public class AnnotateSessionActivity extends Activity implements OnMapReadyCallb
 
             RadioButton button = (RadioButton) ques.getChildAt(i);
 
-            if (button.getText().toString().equals(answerEngToCht(ans))){
+            if (button.getText().toString().equals(ans)){
 
                 button.setChecked(true);
             }
@@ -807,7 +802,7 @@ public class AnnotateSessionActivity extends Activity implements OnMapReadyCallb
 
             //Log.d(TAG, "ans1 : "+ans1+" ans2 : "+ans2+" ans3 : "+ans3+" ans4 : "+ ans4 +" ans4_2 : "+ans4_2);
 
-            DBHelper.insertActionLogTable(ScheduleAndSampleManager.getCurrentTimeInMillis(), "Button - Submit");
+            DBHelper.insertActionLogTable(ScheduleAndSampleManager.getCurrentTimeInMillis(), "Button - Submit - sessionid : "+ mSessionId);
 
             if(isAllSelected() || combineOrDelete){
 
@@ -823,7 +818,7 @@ public class AnnotateSessionActivity extends Activity implements OnMapReadyCallb
     private Button.OnClickListener combining = new Button.OnClickListener() {
         public void onClick(View v) {
 
-            DBHelper.insertActionLogTable(ScheduleAndSampleManager.getCurrentTimeInMillis(), "Button - Combine");
+            DBHelper.insertActionLogTable(ScheduleAndSampleManager.getCurrentTimeInMillis(), "Button - Combine - sessionid : "+ mSessionId);
 
             Intent intent = new Intent(AnnotateSessionActivity.this, CombinationActivity.class);
 
@@ -840,7 +835,7 @@ public class AnnotateSessionActivity extends Activity implements OnMapReadyCallb
     private Button.OnClickListener deleting = new Button.OnClickListener() {
         public void onClick(View v) {
 
-            DBHelper.insertActionLogTable(ScheduleAndSampleManager.getCurrentTimeInMillis(), "Button - Delete");
+            DBHelper.insertActionLogTable(ScheduleAndSampleManager.getCurrentTimeInMillis(), "Button - Delete - sessionid : "+ mSessionId);
 
             new AlertDialog.Builder(AnnotateSessionActivity.this)
                     .setTitle(getResources().getString(R.string.dialog_delete_title))
@@ -849,7 +844,7 @@ public class AnnotateSessionActivity extends Activity implements OnMapReadyCallb
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
 
-                            DBHelper.insertActionLogTable(ScheduleAndSampleManager.getCurrentTimeInMillis(), "Button - Delete - Confirm");
+                            DBHelper.insertActionLogTable(ScheduleAndSampleManager.getCurrentTimeInMillis(), "Button - Delete - Confirm - sessionid : "+ mSessionId);
 
                             DBHelper.deleteSessionTable(mSessionId);
 
@@ -865,7 +860,7 @@ public class AnnotateSessionActivity extends Activity implements OnMapReadyCallb
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
 
-                            DBHelper.insertActionLogTable(ScheduleAndSampleManager.getCurrentTimeInMillis(), "Button - Delete - Cancel");
+                            DBHelper.insertActionLogTable(ScheduleAndSampleManager.getCurrentTimeInMillis(), "Button - Delete - Cancel - sessionid : "+ mSessionId);
 
                         }
                     }).show();
@@ -876,7 +871,7 @@ public class AnnotateSessionActivity extends Activity implements OnMapReadyCallb
     private Button.OnClickListener splitting = new Button.OnClickListener(){
         public void onClick(View v) {
 
-            DBHelper.insertActionLogTable(ScheduleAndSampleManager.getCurrentTimeInMillis(), "Button - Split");
+            DBHelper.insertActionLogTable(ScheduleAndSampleManager.getCurrentTimeInMillis(), "Button - Split - sessionid : "+ mSessionId);
 
             triggerAlertDialog();
         }
@@ -894,9 +889,6 @@ public class AnnotateSessionActivity extends Activity implements OnMapReadyCallb
     private void updateSessionWithAnnotation(String ans1, String ans2, String ans3
             , String ans4, String optionalNote){
         //Log.d(TAG, "updateSessionWithAnnotation");
-
-        ContentValues values = new ContentValues();
-        SQLiteDatabase db = DBManager.getInstance().openDatabase();
 
         //create annoation from the ESM
         Annotation annotation = new Annotation();
@@ -928,8 +920,6 @@ public class AnnotateSessionActivity extends Activity implements OnMapReadyCallb
 
         //update session with its annotation to the session table
         DBHelper.updateSessionTable(mSession.getId(), mSession.getEndTime(), mSession.getAnnotationsSet());
-
-
     }
 
     public ArrayList<LatLng> getLocationPointsToDrawOnMap(int sessionId) {
@@ -979,50 +969,6 @@ public class AnnotateSessionActivity extends Activity implements OnMapReadyCallb
             Log.d(TAG, "[test show trip] in onPostExecute, the poitns obtained are : " + points.size());
         }
 
-    }
-    public String answerChtToEng(String answer) {
-
-        if (answer.equals(((RadioButton)findViewById(R.id.ans1_1)).getText().toString())) return "Walking outdoors";
-        else if (answer.equals(((RadioButton)findViewById(R.id.ans1_2)).getText().toString())) return "Walking indoors";
-        else if (answer.equals(((RadioButton)findViewById(R.id.ans1_3)).getText().toString())) return "Riding a bicycle";
-        else if (answer.equals(((RadioButton)findViewById(R.id.ans1_4)).getText().toString())) return "Riding a scooter";
-        else if (answer.equals(((RadioButton)findViewById(R.id.ans1_5)).getText().toString())) return "Driving (I'm the driver)";
-        else if (answer.equals(((RadioButton)findViewById(R.id.ans1_6)).getText().toString())) return "Driving (I'm the passenger)";
-        else if (answer.equals(((RadioButton)findViewById(R.id.ans1_7)).getText().toString())) return "Taking a bus";
-        else if (answer.equals(((RadioButton)findViewById(R.id.ans1_8)).getText().toString())) return "Other transportation";
-        else if (answer.equals(((RadioButton)findViewById(R.id.ans2_1)).getText().toString())) return "Yes";
-        else if (answer.equals(((RadioButton)findViewById(R.id.ans2_2)).getText().toString())) return "No";
-        else if (answer.equals(((RadioButton)findViewById(R.id.ans3_1)).getText().toString())) return "Very new";
-        else if (answer.equals(((RadioButton)findViewById(R.id.ans3_2)).getText().toString())) return "Somewhat new";
-        else if (answer.equals(((RadioButton)findViewById(R.id.ans3_3)).getText().toString())) return "Somewhat familiar";
-        else if (answer.equals(((RadioButton)findViewById(R.id.ans3_4)).getText().toString())) return "Very familiar";
-        else if (answer.equals(((RadioButton)findViewById(R.id.ans4_1)).getText().toString())) return "Part of my normal routine";
-        else if (answer.equals(((RadioButton)findViewById(R.id.ans4_2)).getText().toString())) return "Decided on right before";
-        else if (answer.equals(((RadioButton)findViewById(R.id.ans4_3)).getText().toString())) return "Planned earlier on same day";
-        else if (answer.equals(((RadioButton)findViewById(R.id.ans4_4)).getText().toString())) return "Preplanned on prior day";
-        else return answer;
-    }
-
-    public String answerEngToCht(String answer) {
-        if (answer.equals("Walking outdoors")) return ((RadioButton)findViewById(R.id.ans1_1)).getText().toString();
-        else if (answer.equals("Walking indoors")) return ((RadioButton)findViewById(R.id.ans1_2)).getText().toString();
-        else if (answer.equals("Riding a bicycle")) return ((RadioButton)findViewById(R.id.ans1_3)).getText().toString();
-        else if (answer.equals("Riding a scooter")) return ((RadioButton)findViewById(R.id.ans1_4)).getText().toString();
-        else if (answer.equals("Driving (I'm the driver)")) return ((RadioButton)findViewById(R.id.ans1_5)).getText().toString();
-        else if (answer.equals("Driving (I'm the passenger)")) return ((RadioButton)findViewById(R.id.ans1_6)).getText().toString();
-        else if (answer.equals("Taking a bus")) return ((RadioButton)findViewById(R.id.ans1_7)).getText().toString();
-        else if (answer.equals("Other transportation")) return ((RadioButton)findViewById(R.id.ans1_8)).getText().toString();
-        else if (answer.equals("Yes")) return ((RadioButton)findViewById(R.id.ans2_1)).getText().toString();
-        else if (answer.equals("No")) return ((RadioButton)findViewById(R.id.ans2_2)).getText().toString();
-        else if (answer.equals("Very new")) return ((RadioButton)findViewById(R.id.ans3_1)).getText().toString();
-        else if (answer.equals("Somewhat new")) return ((RadioButton)findViewById(R.id.ans3_2)).getText().toString();
-        else if (answer.equals("Somewhat familiar")) return ((RadioButton)findViewById(R.id.ans3_3)).getText().toString();
-        else if (answer.equals("Very familiar")) return ((RadioButton)findViewById(R.id.ans3_4)).getText().toString();
-        else if (answer.equals("Part of my normal routine")) return ((RadioButton)findViewById(R.id.ans4_1)).getText().toString();
-        else if (answer.equals("Decided on right before")) return ((RadioButton)findViewById(R.id.ans4_2)).getText().toString();
-        else if (answer.equals("Planned earlier on same day")) return ((RadioButton)findViewById(R.id.ans4_3)).getText().toString();
-        else if (answer.equals("Preplanned on prior day")) return ((RadioButton)findViewById(R.id.ans4_4)).getText().toString();
-        else return answer;
     }
 
 }
