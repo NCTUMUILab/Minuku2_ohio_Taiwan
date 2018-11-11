@@ -4,6 +4,35 @@
     android:layout_height="match_parent"
     android:weightSum="1"
     android:background="@color/theme_background_color">
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/status_bar_color"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme">
+
+        <TextView
+            android:id="@+id/toolbar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:text="DMS"
+            android:paddingLeft="0dp"
+            android:textSize="24sp"
+            android:textColor="@color/light_shades" />
+
+        <TextView
+            android:id="@+id/app_version"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:paddingRight="24dp"
+            android:text="v1.0.0"
+            android:textColor="@color/light_shades"
+            android:textSize="14sp" />
+
+    </android.support.v7.widget.Toolbar>
     <TextView
         android:id="@+id/description"
         android:layout_width="match_parent"

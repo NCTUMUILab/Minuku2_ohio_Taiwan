@@ -97,10 +97,6 @@ public class Sleepingohio extends AppCompatActivity {
         confirm = (Button)findViewById(R.id.confirm);
         confirm.setOnClickListener(confirming);
 
-
-        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getSupportActionBar().setCustomView(R.layout.actionbar_new);
-
         SimpleDateFormat sdf_date = new SimpleDateFormat(Constants.DATE_FORMAT_NOW_DAY);
         todayDate = ScheduleAndSampleManager.getTimeString(ScheduleAndSampleManager.getCurrentTimeInMillis(), sdf_date);
 

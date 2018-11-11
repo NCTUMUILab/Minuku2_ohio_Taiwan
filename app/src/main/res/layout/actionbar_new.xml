@@ -11,6 +11,7 @@
         android:text="DMS"
         android:textColor="#ffffff"
         android:id="@+id/mytext"
-        android:textSize="24sp" />
+        android:textSize="24sp"
+        android:background="@color/status_bar_color"/>
 
 </LinearLayout>
