@@ -28,7 +28,7 @@
         android:layout_marginTop="24dp"
         android:layout_weight="1"
         android:gravity="right"
-        android:text="Day "
+        android:text="Day 1"
         android:textColor="@color/text_color_light"
         android:textSize="20sp"
         android:textStyle="bold" />
@@ -94,7 +94,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/survey_button_completed"
                 android:textColor="@color/survey_text_color_completed"
-                android:text="已被啟用"
+                android:text="完成"
                 android:textSize="22sp" />
         </LinearLayout>
 
@@ -181,7 +181,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/survey_button_unavailable"
                 android:textColor="@color/survey_text_color_unavailable"
-                android:text="尚未提供"
+                android:text="尚未開始"
                 android:textSize="22sp" />
         </LinearLayout>
 
@@ -207,9 +207,10 @@
                 android:id="@+id/survey6_button"
                 android:layout_width="200dp"
                 android:layout_height="match_parent"
-                android:background="@drawable/button_style"
                 android:layout_weight="1"
-                android:textColor="@color/button_text_color"
+                android:background="@drawable/survey_button_unavailable"
+                android:textColor="@color/survey_text_color_unavailable"
+                android:text="尚未開始"
                 android:textSize="22sp" />
         </LinearLayout>
 

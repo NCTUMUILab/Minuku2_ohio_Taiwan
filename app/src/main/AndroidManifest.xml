@@ -57,7 +57,7 @@
         android:icon="@drawable/dms_icon"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
+        android:theme="@style/NoActionBar"
         android:largeHeap="true">
 
         <!-- API KEY FOR PLACES -->
@@ -72,20 +72,13 @@
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyB18KD96La4JEUy-RZQteYPULSfuXfxwGo" />
 
-        <activity android:name=".controller.Sleepingohio"
-            android:label="@string/app_name"
-            android:theme="@style/NoActionBar">
-        </activity>
+        <activity android:name=".controller.Sleepingohio"></activity>
         <activity android:name=".controller.TripListActivity"></activity>
         <activity android:name=".controller.CombinationActivity"></activity>
         <activity android:name=".controller.AnnotateSessionActivity"></activity>
         <activity android:name=".controller.SurveyActivity"></activity>
 
-        <activity android:name=".MainActivity"
-            android:label="@string/app_name"
-            android:theme="@style/NoActionBar">
-
-        </activity>
+        <activity android:name=".MainActivity"></activity>
 
         <activity android:name=".SplashScreen"
             android:label="@string/app_name"

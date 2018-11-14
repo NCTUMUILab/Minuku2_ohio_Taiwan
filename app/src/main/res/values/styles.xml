@@ -40,7 +40,7 @@
         <item name="android:windowNoTitle">true</item>
         <item name="colorPrimary">@color/theme_background_color</item>
         <item name="colorPrimaryDark">@color/status_bar_color</item>
-        <item name="android:navigationBarColor">@color/theme_background_color</item>
+        <item name="android:navigationBarColor">@color/status_bar_color</item>
     </style>
 
     <style name="ThemePurple" parent="Theme.AppCompat.Light.DarkActionBar">

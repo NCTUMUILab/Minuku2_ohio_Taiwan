@@ -71,8 +71,8 @@
     <color name="list_view_color">@color/theme_background_color</color>
     <color name="status_bar_color">@color/dark_shades</color>
     <color name="listed_trip_color"></color>
-    <color name="listed_trip_ongoing_text_color"></color>
-    <color name="listed_trip_not_ongoing_text_color"></color>
+    <color name="listed_trip_ongoing_text_color">@color/main_brand_color</color>
+    <color name="listed_trip_not_ongoing_text_color">@color/dark_shades</color>
 
 
     <color name="survey_button_background_color_available">@color/main_brand_color</color>

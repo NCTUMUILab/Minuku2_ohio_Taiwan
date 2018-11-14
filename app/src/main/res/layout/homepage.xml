@@ -51,10 +51,11 @@
 
         <TextView
             android:id="@+id/userid"
-            android:layout_width="234dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="center_horizontal"
             android:layout_weight="1"
+            android:layout_marginLeft="24dp"
             android:gravity="center_vertical|center"
             android:text="認證編號:"
             android:textColor="@color/text_color_light"
@@ -62,12 +63,14 @@
 
         <TextView
             android:id="@+id/group_num"
-            android:layout_width="123dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="center_horizontal"
             android:layout_weight="1"
+            android:text="123456"
             android:gravity="center_vertical|center"
             android:textColor="@color/text_color_light"
+            android:layout_marginRight="24dp"
             android:textSize="30sp" />
     </LinearLayout>
 
@@ -103,12 +106,16 @@
     <TextView
         android:id="@+id/sleepingTime"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center_vertical|center_horizontal"
         android:textColor="@color/text_color_light"
-        android:textSize="25sp"
+        android:textSize="20sp"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
         android:layout_below="@id/linkList"
+        android:text=""
         android:layout_centerHorizontal="true"/>
 
     <Button
@@ -121,6 +128,7 @@
         android:textAlignment="center"
         android:textColor="@color/button_text_color"
         android:textSize="18sp"
+        android:layout_marginTop="8dp"
         android:layout_below="@id/sleepingTime"
         android:layout_centerHorizontal="true"/>
 
@@ -129,7 +137,7 @@
         android:layout_width="130dp"
         android:layout_height="50dp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:background="@drawable/button_style"
         android:text="說明"
         android:textAlignment="center"

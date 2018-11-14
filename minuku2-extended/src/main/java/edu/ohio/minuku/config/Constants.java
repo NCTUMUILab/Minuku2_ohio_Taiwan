@@ -156,15 +156,15 @@ public class Constants {
 
 
     //TODO: NEED TO CHANGE TO MUI VERSION
-    public static final String CHECK_IN_URL = "http://cmogflaskbackend.minuku.org:80/servicerec?";
-    public static final String CHECK_IN_URL_USER_INFORM = "http://cmogflaskbackend.minuku.org:80/useridcheck?";
+    public static final String CHECK_IN_URL = "http://cmogflaskbackend.minuku.org:8080/servicerec?";
+    public static final String CHECK_IN_URL_USER_INFORM = "http://cmogflaskbackend.minuku.org:8080/useridcheck?";
 
-    public static final String FINAL_SURVEY_URL_NCTU = "https://nctucommunication.qualtrics.com/jfe/form/SV_aWcHPkmdagnfgDb";
+    public static final String FINAL_SURVEY_URL_NCTU = "https://nctucommunication.qualtrics.com/jfe/form/SV_aVS9WRCNnfgRNGd";
     public static final String FINAL_SURVEY_URL_OHIO = "https://osu.az1.qualtrics.com/jfe/form/SV_2bPukwuNSojU4Sx";
     public static final String FINAL_SURVEY_URL = FINAL_SURVEY_URL_NCTU;
 
     //TODO: NEED TO CHANGE TO MUI VERSION
-    public static final String HELP_URL = "http://u.osu.edu/dailymobilitystudy/";
+    public static final String HELP_URL = "https://sites.google.com/view/nctudmshelp";
 
 
     public static final String INTERVAL_SAMPLE = "INTERVAL_SAMPLE";

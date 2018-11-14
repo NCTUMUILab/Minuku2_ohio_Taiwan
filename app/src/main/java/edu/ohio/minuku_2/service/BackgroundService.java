@@ -174,7 +174,7 @@ public class BackgroundService extends Service {
 
         mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 
-        ongoingNotificationText = sharedPrefs.getString("ongoingNotificationText", "0 New Trips");
+        ongoingNotificationText = sharedPrefs.getString("ongoingNotificationText", "還沒有新行程");
 
         Config.daysInSurvey = sharedPrefs.getInt("daysInSurvey", Config.daysInSurvey);
 
@@ -603,7 +603,7 @@ public class BackgroundService extends Service {
         }
 
         ongoingNotificationText = unfilledTrips + Constants.NOTIFICATION_TEXT_NEW_TRIPS;
-
+        if(unfilledTrips == 0) ongoingNotificationText = "還沒有新行程";
         if(unfilledTrips==1){
 
             ongoingNotificationText = unfilledTrips + Constants.NOTIFICATION_TEXT_NEW_TRIP;

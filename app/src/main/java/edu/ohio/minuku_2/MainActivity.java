@@ -399,26 +399,26 @@ public class MainActivity extends AppCompatActivity {
             int sleepStartHour = Integer.valueOf(sleepStartDetail[0]);
             String sleepStartHourStr = "";
             if (sleepStartHour < 12 && sleepStartHour > 0)
-                sleepStartHourStr = String.valueOf(sleepStartHour) + ":" + sleepStartDetail[1] + " am";
+                sleepStartHourStr = String.valueOf(sleepStartHour) + ":" + sleepStartDetail[1] + " AM";
             else if (sleepStartHour == 12)
-                sleepStartHourStr = String.valueOf(sleepStartHour) + ":" + sleepStartDetail[1] + " pm";
+                sleepStartHourStr = String.valueOf(sleepStartHour) + ":" + sleepStartDetail[1] + " PM";
             else if (sleepStartHour == 0)
-                sleepStartHourStr = "12" + ":" + sleepStartDetail[1] + " am";
+                sleepStartHourStr = "12" + ":" + sleepStartDetail[1] + " AM";
             else
-                sleepStartHourStr = String.valueOf(sleepStartHour - 12) + ":" + sleepStartDetail[1] + " pm";
+                sleepStartHourStr = String.valueOf(sleepStartHour - 12) + ":" + sleepStartDetail[1] + " PM";
 
             String[] sleepEndDetail = sleepEndTime.split(":");
 
             int sleepEndHour = Integer.valueOf(sleepEndDetail[0]);
             String sleepEndHourStr = "";
             if (sleepEndHour < 12 && sleepEndHour > 0)
-                sleepEndHourStr = String.valueOf(sleepEndHour) + ":" + sleepEndDetail[1] + " am";
+                sleepEndHourStr = String.valueOf(sleepEndHour) + ":" + sleepEndDetail[1] + " AM";
             else if (sleepEndHour == 12)
-                sleepEndHourStr = String.valueOf(sleepEndHour) + ":" + sleepEndDetail[1] + " pm";
+                sleepEndHourStr = String.valueOf(sleepEndHour) + ":" + sleepEndDetail[1] + " PM";
             else if (sleepEndHour == 0)
-                sleepEndHourStr = "12" + ":" + sleepEndDetail[1] + " am";
+                sleepEndHourStr = "12" + ":" + sleepEndDetail[1] + " AM";
             else
-                sleepEndHourStr = String.valueOf(sleepEndHour - 12) + ":" + sleepEndDetail[1] + " pm";
+                sleepEndHourStr = String.valueOf(sleepEndHour - 12) + ":" + sleepEndDetail[1] + " PM";
 
             sleepingtime.setText("睡眠時間: " + sleepStartHourStr + " 到 " + sleepEndHourStr);
 
@@ -498,12 +498,10 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(View view) {
 
                         String inputID = editText_confirmNum.getText().toString();
-//                        Log.d(TAG,"inputID : "+inputID);
 
                         String inputEmail = editText_Email.getText().toString();
-//                        Log.d(TAG,"inputEmail : "+inputEmail);
-
                         if(Utils.isConfirmNumInvalid(inputID)){
+//                            Log.d(TAG, "inputID result: ." + inputID + "." + Boolean.toString(inputID != tester) + ", " + Boolean.toString(Utils.isConfirmNumInvalid(inputID) && (inputID != tester)));
                             Toast.makeText(MainActivity.this,"輸入的認證編號有誤，請重新確認",Toast.LENGTH_SHORT).show();
                         }else if(!Utils.isEmailEasyValid(inputEmail)){
                             Toast.makeText(MainActivity.this,"輸入的電子信箱有誤，請重新確認",Toast.LENGTH_SHORT).show();
@@ -835,26 +833,26 @@ public class MainActivity extends AppCompatActivity {
 
                         String sleepStartHourStr = "";
                         if(sleepStartHour<=12 && sleepStartHour > 0)
-                            sleepStartHourStr = String.valueOf(sleepStartHour)+":"+sleepStartDetail[1]+" am";
+                            sleepStartHourStr = String.valueOf(sleepStartHour)+":"+sleepStartDetail[1]+" AM";
                         else if(sleepStartHour==12)
-                            sleepStartHourStr = String.valueOf(sleepStartHour)+":"+sleepStartDetail[1]+" pm";
+                            sleepStartHourStr = String.valueOf(sleepStartHour)+":"+sleepStartDetail[1]+" PM";
                         else if(sleepStartHour==0)
-                            sleepStartHourStr = "12"+":"+sleepStartDetail[1]+" am";
+                            sleepStartHourStr = "12"+":"+sleepStartDetail[1]+" AM";
                         else
-                            sleepStartHourStr = String.valueOf(sleepStartHour-12)+":"+sleepStartDetail[1]+" pm";
+                            sleepStartHourStr = String.valueOf(sleepStartHour-12)+":"+sleepStartDetail[1]+" PM";
 
                         String[] sleepEndDetail = sleepEndTime.split(":");
 
                         int sleepEndHour = Integer.valueOf(sleepEndDetail[0]);
                         String sleepEndHourStr = "";
                         if(sleepEndHour<=12 && sleepEndHour > 0)
-                            sleepEndHourStr = String.valueOf(sleepEndHour)+":"+sleepEndDetail[1]+" am";
+                            sleepEndHourStr = String.valueOf(sleepEndHour)+":"+sleepEndDetail[1]+" AM";
                         else if(sleepEndHour==12)
-                            sleepEndHourStr = String.valueOf(sleepEndHour)+":"+sleepEndDetail[1]+" pm";
+                            sleepEndHourStr = String.valueOf(sleepEndHour)+":"+sleepEndDetail[1]+" PM";
                         else if(sleepEndHour==0)
-                            sleepEndHourStr = "12"+":"+sleepEndDetail[1]+" am";
+                            sleepEndHourStr = "12"+":"+sleepEndDetail[1]+" AM";
                         else
-                            sleepEndHourStr = String.valueOf(sleepEndHour-12)+":"+sleepEndDetail[1]+" pm";
+                            sleepEndHourStr = String.valueOf(sleepEndHour-12)+":"+sleepEndDetail[1]+" PM";
 
                         sleepingtime.setText("睡眠時間: " + sleepStartHourStr + " 到 " + sleepEndHourStr);
 

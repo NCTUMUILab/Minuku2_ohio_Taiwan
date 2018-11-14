@@ -120,7 +120,7 @@ public class OhioListAdapter extends ArrayAdapter<Session> {
             //if there's annotation in the session and the session is not ongoing
             if (!labelStr.equals(SessionManager.SESSION_DISPLAY_ONGOING) && !labelStr.equals(SessionManager.SESSION_DISPLAY_NO_ANNOTATION)) {
                 //if they've edited, put the text in green
-                textView.setTextColor(mContext.getResources().getColor(R.color.listed_trip_not_ongoing_text_color));
+                textView.setTextColor(mContext.getResources().getColor(R.color.text_default));
 
                 if(labelStr.equals("Combine")||labelStr.equals("Delete")){
 
@@ -129,10 +129,13 @@ public class OhioListAdapter extends ArrayAdapter<Session> {
             }
             //if there's no annotation or the session is ongoing
             else {
-                textView.setTextColor(mContext.getResources().getColor(R.color.listed_trip_ongoing_text_color));
+                textView.setTextColor(mContext.getResources().getColor(R.color.listed_trip_not_ongoing_text_color));
 
-                if (labelStr.equals(SessionManager.SESSION_DISPLAY_ONGOING))
+                if (labelStr.equals(SessionManager.SESSION_DISPLAY_ONGOING)) {
+
+                    textView.setTextColor(mContext.getResources().getColor(R.color.listed_trip_ongoing_text_color));
                     sessionTitle = labelStr;
+                }
             }
 
             //set the title of the view
