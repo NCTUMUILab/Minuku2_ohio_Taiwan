@@ -74,35 +74,6 @@
             android:textSize="30sp" />
     </LinearLayout>
 
-    <Button
-        android:id="@+id/Annotate"
-        android:layout_width="250dp"
-        android:layout_height="85dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/button_style"
-        android:text="行程紀錄"
-        android:textAlignment="center"
-        android:textColor="@color/button_text_color"
-        android:textSize="30sp"
-        android:layout_below="@id/layout_userinform"
-        android:layout_centerHorizontal="true"/>
-
-    <Button
-        android:id="@+id/linkList"
-        android:layout_width="250dp"
-        android:layout_height="85dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/button_style"
-        android:text="問卷"
-        android:textAlignment="center"
-        android:textColor="@color/button_text_color"
-        android:textSize="30sp"
-        android:visibility="visible"
-        android:layout_below="@id/Annotate"
-        android:layout_centerHorizontal="true"/>
-
     <TextView
         android:id="@+id/sleepingTime"
         android:layout_width="match_parent"
@@ -111,38 +82,69 @@
         android:gravity="center_vertical|center_horizontal"
         android:textColor="@color/text_color_light"
         android:textSize="20sp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="0dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:layout_below="@id/linkList"
-        android:text=""
+        android:layout_below="@id/layout_userinform"
+        android:text="睡眠時間: 00:00 AM 到 00:00 PM"
         android:layout_centerHorizontal="true"/>
 
     <Button
+        android:id="@+id/Annotate"
+        android:layout_width="196dp"
+        android:layout_height="64dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/button_style"
+        android:text="行程紀錄"
+        android:textAlignment="center"
+        android:textColor="@color/button_text_color"
+        android:textSize="28sp"
+        android:layout_below="@id/sleepingTime"
+        android:layout_centerHorizontal="true"/>
+
+    <Button
+        android:id="@+id/linkList"
+        android:layout_width="196dp"
+        android:layout_height="64dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/button_style"
+        android:text="問卷"
+        android:textAlignment="center"
+        android:textColor="@color/button_text_color"
+        android:textSize="28sp"
+        android:visibility="visible"
+        android:layout_below="@id/Annotate"
+        android:layout_centerHorizontal="true"/>
+
+
+
+    <Button
         android:id="@+id/settingSleepTime"
-        android:layout_width="130dp"
-        android:layout_height="50dp"
+        android:layout_width="196dp"
+        android:layout_height="64dp"
         android:layout_gravity="center_horizontal"
         android:background="@drawable/button_style"
         android:text="睡眠時間設定"
         android:textAlignment="center"
         android:textColor="@color/button_text_color"
-        android:textSize="18sp"
+        android:textSize="28sp"
         android:layout_marginTop="8dp"
-        android:layout_below="@id/sleepingTime"
+        android:layout_below="@id/linkList"
         android:layout_centerHorizontal="true"/>
 
     <Button
         android:id="@+id/help"
-        android:layout_width="130dp"
-        android:layout_height="50dp"
+        android:layout_width="196dp"
+        android:layout_height="64dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="8dp"
         android:background="@drawable/button_style"
         android:text="說明"
         android:textAlignment="center"
         android:textColor="@color/button_text_color"
-        android:textSize="18sp"
+        android:textSize="28sp"
         android:layout_below="@id/settingSleepTime"
         android:layout_centerHorizontal="true"/>
 
