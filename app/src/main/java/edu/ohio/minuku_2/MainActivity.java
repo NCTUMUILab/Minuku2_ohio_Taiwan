@@ -375,6 +375,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         test = (Button) findViewById(R.id.testServer);
+        if (Config.testServerMode == false) test.setVisibility(View.INVISIBLE);
         test.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
