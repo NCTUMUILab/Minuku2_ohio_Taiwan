@@ -3,14 +3,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/theme_background_color"
-    >
+    android:background="#bb0000">
 
     <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/status_bar_color"
+        android:background="#666666"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme">
 
@@ -18,21 +16,10 @@
             android:id="@+id/toolbar_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="left"
+            android:layout_gravity="center"
             android:text="DMS"
-            android:paddingLeft="0dp"
-            android:textSize="24sp"
-            android:textColor="@color/light_shades" />
-
-        <TextView
-            android:id="@+id/app_version"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:paddingRight="24dp"
-            android:text="v1.0.0"
-            android:textColor="@color/light_shades"
-            android:textSize="14sp" />
+            android:textColor="#ffffff"
+            android:textSize="24sp" />
 
     </android.support.v7.widget.Toolbar>
 
@@ -49,8 +36,8 @@
             android:layout_gravity="center_horizontal"
             android:layout_weight="1"
             android:gravity="center_vertical|center"
-            android:text="認證編號:"
-            android:textColor="@color/text_color_light"
+            android:text="Confirmation #:"
+            android:textColor="#ffffff"
             android:textSize="30sp" />
 
         <TextView
@@ -61,7 +48,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_weight="1"
             android:gravity="center_vertical|center"
-            android:textColor="@color/text_color_light"
+            android:textColor="#ffffff"
             android:textSize="30sp" />
     </LinearLayout>
 
@@ -78,8 +65,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:gravity="center"
-            android:text="恭喜你! 你完成了本實驗階段"
-            android:textColor="@color/text_color_light"
+            android:text="Congratulations! You have finished Part B."
+            android:textColor="#ffffff"
             android:textSize="26sp" />
 
         <LinearLayout
@@ -98,11 +85,11 @@
                 android:layout_marginLeft="26dp"
                 android:layout_marginRight="26dp"
                 android:layout_weight="1"
-                android:background="@color/main_brand_color"
+                android:background="@drawable/button_style"
                 android:paddingBottom="8dp"
                 android:paddingTop="8dp"
                 android:text=""
-                android:textColor="@color/light_shades"
+                android:textColor="#666666"
                 />
         </LinearLayout>
 
@@ -112,8 +99,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:gravity="center"
-            android:text="在收到確認完成的電子郵件前，請勿解除安裝應用程式"
-            android:textColor="@color/text_color_light"
+            android:text="Please do not uninstall the app until you receive an email confirmation."
+            android:textColor="#ffffff"
             android:textSize="26sp" />
 
     </LinearLayout>

@@ -8,7 +8,4 @@
     android:gravity="center"
     android:paddingStart="?android:attr/listPreferredItemPaddingStart"
     android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
-    android:minHeight="?android:attr/listPreferredItemHeightSmall"
-    android:background="@color/light_shades"
-    android:textColor="@color/text_default"
-    android:text="Time bla bla bla annotation"/>
+    android:minHeight="?android:attr/listPreferredItemHeightSmall" />

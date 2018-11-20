@@ -127,6 +127,7 @@ public class CombinationActivity extends Activity {
             Session lastSession = SessionManager.getLastSession();
             int sessionCount = lastSession.getId();
             int newSessionId = sessionCount + 1;
+
             String referenceId = "";
 
             //combine the time and update to the current session
@@ -150,8 +151,8 @@ public class CombinationActivity extends Activity {
 
                 //update the background data with the corresponding sessionids
 //                DBHelper.updateRecordsInSessionConcat(DBHelper.STREAM_TYPE_LOCATION, sessionid, sessionToCombineId);
-                DBHelper.updateRecordsInSessionConcat(DBHelper.STREAM_TYPE_LOCATION, sessionid, sessionToCombineId);
                 DBHelper.updateRecordsInSession(DBHelper.STREAM_TYPE_LOCATION, sessionid, newSessionId);
+
                 if(index == 0){
                     referenceId += sessionid;
                 }else{
@@ -161,11 +162,9 @@ public class CombinationActivity extends Activity {
 
             referenceId += ","+sessionToCombineId;
 
-//            DBHelper.updateSessionTable(sessionToCombineId, currentStartTime, currentEndTime);
-//            DBHelper.updateSessionTableToCombined(sessionToCombineId, Constants.SESSION_SUBJECTIVELY_COMBINE_FLAG);
-
             DBHelper.hideSessionTable(sessionToCombineId, Constants.SESSION_TYPE_CHANGED);
             DBHelper.updateRecordsInSession(DBHelper.STREAM_TYPE_LOCATION, sessionToCombineId, newSessionId);
+
             Session session = new Session(sessionToCombineId);
             session.setId(newSessionId);
             session.setCreatedTime(ScheduleAndSampleManager.getCurrentTimeInMillis() / Constants.MILLISECONDS_PER_SECOND);
@@ -177,9 +176,11 @@ public class CombinationActivity extends Activity {
             session.setType(Constants.SESSION_TYPE_COMBINED);
             session.setReferenceId("("+referenceId+")");
             session.setToShow(true);
+
             DBHelper.insertSessionTable(session);
 //            DBHelper.updateSessionTable(sessionToCombineId, currentStartTime, currentEndTime);
 //            DBHelper.updateSessionTableToCombined(sessionToCombineId, Constants.SESSION_SUBJECTIVELY_COMBINE_FLAG);
+
             Toast.makeText(CombinationActivity.this, getResources().getString(R.string.reminder_trips_combined_successfully), Toast.LENGTH_SHORT).show();
 
             finish();

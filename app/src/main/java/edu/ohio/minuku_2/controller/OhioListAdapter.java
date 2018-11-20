@@ -109,9 +109,9 @@ public class OhioListAdapter extends ArrayAdapter<Session> {
 
             String today_yesterday;
             if(StartTimeDate.equals(CurrentTimeDate)){
-                today_yesterday = "今天";
+                today_yesterday = "Today";
             }else{
-                today_yesterday = "昨天";
+                today_yesterday = "Yesterday";
             }
 
             sessionTitle = today_yesterday + " " + timeLabel + "    " + labelStr;
@@ -120,7 +120,7 @@ public class OhioListAdapter extends ArrayAdapter<Session> {
             //if there's annotation in the session and the session is not ongoing
             if (!labelStr.equals(SessionManager.SESSION_DISPLAY_ONGOING) && !labelStr.equals(SessionManager.SESSION_DISPLAY_NO_ANNOTATION)) {
                 //if they've edited, put the text in green
-                textView.setTextColor(mContext.getResources().getColor(R.color.text_default));
+                textView.setTextColor(Color.GRAY);
 
                 if(labelStr.equals("Combine")||labelStr.equals("Delete")){
 
@@ -129,13 +129,10 @@ public class OhioListAdapter extends ArrayAdapter<Session> {
             }
             //if there's no annotation or the session is ongoing
             else {
-                textView.setTextColor(mContext.getResources().getColor(R.color.listed_trip_not_ongoing_text_color));
+                textView.setTextColor(Color.BLACK);
 
-                if (labelStr.equals(SessionManager.SESSION_DISPLAY_ONGOING)) {
-
-                    textView.setTextColor(mContext.getResources().getColor(R.color.listed_trip_ongoing_text_color));
+                if (labelStr.equals(SessionManager.SESSION_DISPLAY_ONGOING))
                     sessionTitle = labelStr;
-                }
             }
 
             //set the title of the view
@@ -153,26 +150,26 @@ public class OhioListAdapter extends ArrayAdapter<Session> {
     private String getLabelFromAns1(String labelStr){
 
         switch (labelStr){
-            case "Walking outdoors": //ans1
-                return "走路";
-            case "Walking indoors": //ans1
-                return "走路";
+            case "Walking outdoors":
+                return "Walk";
+            case "Walking indoors":
+                return "Walk";
             case "Riding a bicycle":
-                return "自行車";
+                return "Bike";
             case "Riding a scooter":
-                return "摩托車";
+                return "Scooter";
             case "Driving (I'm the driver)":
-                return "汽車";
+                return "Drive";
             case "Driving (I'm the passenger)":
-                return "汽車";
+                return "Drive";
             case "Trip is part of previous trip (COMBINE)":
-                return "合併";
+                return "Combine";
             case "Taking a bus":
-                return "巴士";
+                return "Bus";
             case "Trip is incorrect (DELETE)":
-                return "刪除";
+                return "Delete";
             case "Other transportation":
-                return "其他";
+                return "Other";
             default:
                 return "";
         }

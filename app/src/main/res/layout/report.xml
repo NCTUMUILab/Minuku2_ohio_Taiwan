@@ -3,8 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:weightSum="1"
-    android:background="@color/theme_background_color">
+    android:weightSum="1">
 
     <Space
         android:layout_width="match_parent"
@@ -15,7 +14,6 @@
         android:text="開始日期"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/text_color_light"
         android:id="@+id/startTime"
         android:textSize="36sp"
         android:paddingLeft="16dp"
@@ -23,8 +21,6 @@
 
     <Button
         android:text="請選擇日期"
-        android:background="@drawable/button_style"
-        android:textColor="@color/button_text_color"
         android:layout_width="232dp"
         android:layout_height="37dp"
         android:id="@+id/startdate"
@@ -39,7 +35,6 @@
         android:text="結束日期"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/text_color_light"
         android:id="@+id/sleepEndtime"
         android:layout_weight="0.15"
         android:textSize="36sp"
@@ -49,8 +44,6 @@
         android:text="請選擇日期"
         android:layout_width="232dp"
         android:layout_height="37dp"
-        android:background="@drawable/button_style"
-        android:textColor="@color/button_text_color"
         android:id="@+id/enddate"
         android:layout_marginLeft="16dp" />
 
@@ -63,8 +56,6 @@
         android:text="創建"
         android:layout_width="118dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/button_style"
-        android:textColor="@color/button_text_color"
         android:id="@+id/buildreport"
         android:layout_marginLeft="226dp" />
 </LinearLayout>

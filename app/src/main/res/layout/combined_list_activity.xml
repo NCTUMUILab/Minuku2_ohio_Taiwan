@@ -2,14 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/theme_background_color">
+    android:orientation="vertical">
 
     <ListView
         android:id="@+id/otherTripsList"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/theme_background_color">
+        android:layout_height="wrap_content">
 
     </ListView>
 
@@ -20,8 +18,7 @@
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginTop="16dp"
-        android:text="確認"
-        android:textColor="@color/button_text_color"
+        android:text="confirm"
         android:visibility="visible" />
 
     <!-- empty view -->
@@ -30,8 +27,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center_horizontal"
-        android:gravity="center"
-        android:background="@color/theme_background_color">
+        android:gravity="center">
 
         <TextView
             android:id="@+id/emptyViewText"
@@ -39,8 +35,7 @@
             android:layout_height="wrap_content"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
-            android:text="還沒有任何行程紀錄"
-            android:textColor="@color/text_color_dark"
+            android:text="No trips available yet."
             android:textSize="24sp" />
 
     </LinearLayout>

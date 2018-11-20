@@ -23,30 +23,21 @@
 <resources>
 
     <!-- Base application theme. -->
-
-    <style name="AppTheme" parent="Base.Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/theme_background_color</item>
-        <item name="colorPrimaryDark">@color/status_bar_color</item>
+        <!--<item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>-->
+        <item name="colorPrimary">#666666</item>
+        <item name="colorPrimaryDark">#000000</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:navigationBarColor">@color/theme_background_color</item>
     </style>
-    <style name="DialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
-        <item name="android:background">@color/theme_background_color</item>
-        <item name="android:textColor">@color/text_color_light</item>
-    </style>
-    <style name="NoActionBar" parent="@style/Theme.AppCompat.NoActionBar">
+
+    <style name="NoActionBar" parent="@style/Theme.AppCompat">
         <item name="android:windowActionBar">false</item>
         <item name="android:windowNoTitle">true</item>
-        <item name="colorPrimary">@color/theme_background_color</item>
-        <item name="colorPrimaryDark">@color/status_bar_color</item>
-        <item name="android:navigationBarColor">@color/status_bar_color</item>
     </style>
 
-    <style name="ThemePurple" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorPrimary">#6200EE</item>
-        <item name="colorPrimaryDark">#3700B3</item>
-    </style>
     <!--<style name="NoActionBar_sleep" parent="@style/Theme.AppCompat">
         <item name="android:windowActionBar">false</item>
         <item name="android:windowNoTitle">true</item>

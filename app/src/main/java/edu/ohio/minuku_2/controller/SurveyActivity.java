@@ -43,11 +43,12 @@ public class SurveyActivity extends Activity {
 
     private SharedPreferences sharedPrefs;
 
-    private final String TEXT_Unavailable = "尚未開始";
-    private final String TEXT_Available = " 可使用";/*the space is to padding the border*/
-    private final String TEXT_COMPLETED = "完成";
-    private final String TEXT_MISSED = "已錯過";
-    private final String TEXT_ERROR = "錯誤";
+    private final String TEXT_Unavailable = "Unavailable";
+    private final String TEXT_Available = " Available ";/*the space is to padding the border*/
+    private final String TEXT_COMPLETED = "Activated";
+    private final String TEXT_MISSED = "Missed";
+    private final String TEXT_ERROR = "Error";
+
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -175,8 +176,6 @@ public class SurveyActivity extends Activity {
             if(currentState.equals(TEXT_Unavailable)){
 
                 Button currentButton = buttons.get(index);
-                currentButton.setBackground(getResources().getDrawable(R.drawable.survey_button_error));
-                currentButton.setTextColor(getResources().getColor(R.color.survey_text_color_error));
                 currentButton.setText(TEXT_ERROR);
                 currentButton.setClickable(false);
             }
@@ -200,8 +199,9 @@ public class SurveyActivity extends Activity {
         Log.d(TAG, "[test mobile triggering] setUnavaliable : "+setUnavaliable);
 
         if(setUnavaliable){
-            survey_Button.setBackground(getResources().getDrawable(R.drawable.survey_button_unavailable));
-            survey_Button.setTextColor(getResources().getColor(R.color.survey_text_color_unavailable));
+
+            survey_Button.setBackgroundColor(Color.LTGRAY);
+            survey_Button.setTextColor(Color.DKGRAY);
 
             survey_Button.setText(TEXT_Unavailable);
             survey_Button.setClickable(false);
@@ -220,8 +220,9 @@ public class SurveyActivity extends Activity {
             Log.d(TAG, "[test mobile triggering] openFlag : "+openFlag);
 
             if(openFlag.equals(Constants.SURVEY_COMPLETE_FLAG)){
-                survey_Button.setBackground(getResources().getDrawable(R.drawable.survey_button_completed));
-                survey_Button.setTextColor(getResources().getColor(R.color.survey_text_color_completed));
+
+                survey_Button.setBackgroundColor(Color.LTGRAY);
+                survey_Button.setTextColor(Color.DKGRAY);
 
                 survey_Button.setText(TEXT_COMPLETED);
                 survey_Button.setClickable(false);
@@ -229,8 +230,8 @@ public class SurveyActivity extends Activity {
                 buttonState.add(TEXT_COMPLETED);
             }else if(openFlag.equals(Constants.SURVEY_INCOMPLETE_FLAG)){
 
-                survey_Button.setBackground(getResources().getDrawable(R.drawable.survey_button_missed));
-                survey_Button.setTextColor(getResources().getColor(R.color.survey_text_color_missed));
+                survey_Button.setBackgroundColor(Color.LTGRAY);
+                survey_Button.setTextColor(Color.DKGRAY);
 
                 survey_Button.setText(TEXT_MISSED);
                 survey_Button.setClickable(false);
@@ -245,8 +246,9 @@ public class SurveyActivity extends Activity {
 //                setSurveyButtonsAvailable(survey_Button, correspondingSize+1);
 
             }else if(openFlag.equals(Constants.SURVEY_ERROR_FLAG)){
-                survey_Button.setBackground(getResources().getDrawable(R.drawable.survey_button_error));
-                survey_Button.setTextColor(getResources().getColor(R.color.survey_text_color_error));
+
+                survey_Button.setBackgroundColor(Color.LTGRAY);
+                survey_Button.setTextColor(Color.DKGRAY);
 
                 survey_Button.setText(TEXT_ERROR);
                 survey_Button.setClickable(false);
@@ -254,8 +256,8 @@ public class SurveyActivity extends Activity {
                 buttonState.add(TEXT_ERROR);
             }else{
 
-                survey_Button.setBackground(getResources().getDrawable(R.drawable.survey_button_available));
-                survey_Button.setTextColor(getResources().getColor(R.color.survey_text_color_available));
+                survey_Button.setBackgroundColor(Color.RED);
+                survey_Button.setTextColor(getResources().getColor(R.color.white));
                 survey_Button.setText(TEXT_Available);
 
                 buttonState.add(TEXT_Available);
