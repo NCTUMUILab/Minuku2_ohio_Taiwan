@@ -97,10 +97,6 @@ public class Sleepingohio extends AppCompatActivity {
         confirm = (Button)findViewById(R.id.confirm);
         confirm.setOnClickListener(confirming);
 
-
-        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getSupportActionBar().setCustomView(R.layout.actionbar_new);
-
         SimpleDateFormat sdf_date = new SimpleDateFormat(Constants.DATE_FORMAT_NOW_DAY);
         todayDate = ScheduleAndSampleManager.getTimeString(ScheduleAndSampleManager.getCurrentTimeInMillis(), sdf_date);
 
@@ -204,18 +200,18 @@ public class Sleepingohio extends AppCompatActivity {
 
                 DBHelper.insertActionLogTable(ScheduleAndSampleManager.getCurrentTimeInMillis(), "Button - Confirm sleeping time - Fail - Bed Time haven't been set.");
 
-                Toast.makeText(Sleepingohio.this, getResources().getString(R.string.reminder_bedtime_check), Toast.LENGTH_SHORT).show();
+                Toast.makeText(Sleepingohio.this, "請選擇就寢時間", Toast.LENGTH_SHORT).show();
             } else if(sleepEndtime.getText().equals("WAKE TIME")) {
 
                 DBHelper.insertActionLogTable(ScheduleAndSampleManager.getCurrentTimeInMillis(), "Button - Confirm sleeping time - Fail - Wake up Time haven't been set.");
 
-                Toast.makeText(Sleepingohio.this, getResources().getString(R.string.reminder_wakeuptime_check), Toast.LENGTH_SHORT).show();
+                Toast.makeText(Sleepingohio.this, "請選擇起床時間", Toast.LENGTH_SHORT).show();
             } else if(sleepingRange > Constants.sleepTime_UpperBound * Constants.MILLISECONDS_PER_HOUR || sleepingRange < Constants.sleepTime_LowerBound * Constants.MILLISECONDS_PER_HOUR){
 
                 DBHelper.insertActionLogTable(ScheduleAndSampleManager.getCurrentTimeInMillis(), "Button - Confirm sleeping time - Fail - Sleeping Time is not between 3 and 12 hours.");
 
-                Toast.makeText(Sleepingohio.this,"Please check your bed and wake times. Your sleep schedule must be between " +
-                        Constants.sleepTime_LowerBound +" and "+Constants.sleepTime_UpperBound+" hours long.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(Sleepingohio.this,"請確認你的就寢與起床時間。 你的睡眠時間請介於 " +
+                        Constants.sleepTime_LowerBound +" 與 "+Constants.sleepTime_UpperBound+" 個小時之間", Toast.LENGTH_SHORT).show();
             }
             else {
 
@@ -276,7 +272,7 @@ public class Sleepingohio extends AppCompatActivity {
 
                 DBHelper.insertActionLogTable(ScheduleAndSampleManager.getCurrentTimeInMillis(), "Button - Confirm sleeping time - success");
 
-                Toast.makeText(Sleepingohio.this, getResources().getString(R.string.reminder_sleeptime_changed), Toast.LENGTH_SHORT).show();
+                Toast.makeText(Sleepingohio.this, "已更改睡眠時間!更改將於明天開始生效", Toast.LENGTH_SHORT).show();
 
                 Sleepingohio.this.finish();
 
@@ -366,7 +362,7 @@ public class Sleepingohio extends AppCompatActivity {
             DBHelper.insertActionLogTable(ScheduleAndSampleManager.getCurrentTimeInMillis(), "Button - Setting bed time");
 
             final LayoutInflater inflater = LayoutInflater.from(mContext);
-            final AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+            final AlertDialog.Builder builder = new AlertDialog.Builder(mContext, R.style.DialogTheme);
             final View layout = inflater.inflate(R.layout.timesetting_dialog,null);
 
             final Spinner spinner_hour = (Spinner) layout.findViewById(R.id.spinner_hour);
@@ -378,15 +374,15 @@ public class Sleepingohio extends AppCompatActivity {
             final String[] ampm_options = {"am", "pm"};
 
             final ArrayAdapter<String> hourList = new ArrayAdapter<>(mContext,
-                    android.R.layout.simple_spinner_dropdown_item,
+                    R.layout.spinner_item,
                     hour_options);
 
             final ArrayAdapter<String> minList = new ArrayAdapter<>(mContext,
-                    android.R.layout.simple_spinner_dropdown_item,
+                    R.layout.spinner_item,
                     min_options);
 
             final ArrayAdapter<String> ampmList = new ArrayAdapter<>(mContext,
-                    android.R.layout.simple_spinner_dropdown_item,
+                    R.layout.spinner_item,
                     ampm_options);
 
             spinner_hour.setAdapter(hourList);
@@ -432,7 +428,7 @@ public class Sleepingohio extends AppCompatActivity {
 
             builder.setView(layout)
                     .setPositiveButton(R.string.ok, null)
-                    .setNegativeButton("cancel", null);
+                    .setNegativeButton("取消", null);
 
             final AlertDialog mAlertDialog = builder.create();
             mAlertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
@@ -479,7 +475,7 @@ public class Sleepingohio extends AppCompatActivity {
 
                             if(sleepStartTimeToCheck > bedUpperBoundTime && sleepStartTimeToCheck < bedLowerBoundTime){
 
-                                Toast.makeText(Sleepingohio.this, getResources().getString(R.string.reminder_bedtime_range_error), Toast.LENGTH_LONG).show();
+                                Toast.makeText(Sleepingohio.this, "請注意你的就寢時間! 就寢時間必須介於晚上八點到上午四點之間", Toast.LENGTH_LONG).show();
                             }else {
 
                                 sleepStartTimeLong = sleepStartTimeToCheck;
@@ -503,7 +499,7 @@ public class Sleepingohio extends AppCompatActivity {
             DBHelper.insertActionLogTable(ScheduleAndSampleManager.getCurrentTimeInMillis(), "Button - Setting wake up time");
 
             final LayoutInflater inflater = LayoutInflater.from(mContext);
-            final AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+            final AlertDialog.Builder builder = new AlertDialog.Builder(mContext, R.style.DialogTheme);
             final View layout = inflater.inflate(R.layout.timesetting_dialog,null);
 
             final Spinner spinner_hour = (Spinner) layout.findViewById(R.id.spinner_hour);
@@ -515,15 +511,15 @@ public class Sleepingohio extends AppCompatActivity {
             final String[] ampm_options = {"am", "pm"};
 
             final ArrayAdapter<String> hourList = new ArrayAdapter<>(mContext,
-                    android.R.layout.simple_spinner_dropdown_item,
+                    R.layout.spinner_item,
                     hour_options);
 
             final ArrayAdapter<String> minList = new ArrayAdapter<>(mContext,
-                    android.R.layout.simple_spinner_dropdown_item,
+                    R.layout.spinner_item,
                     min_options);
 
             final ArrayAdapter<String> ampmList = new ArrayAdapter<>(mContext,
-                    android.R.layout.simple_spinner_dropdown_item,
+                    R.layout.spinner_item,
                     ampm_options);
 
             spinner_hour.setAdapter(hourList);
@@ -569,7 +565,7 @@ public class Sleepingohio extends AppCompatActivity {
 
             builder.setView(layout)
                     .setPositiveButton(R.string.ok, null)
-                    .setNegativeButton("cancel", null);
+                    .setNegativeButton("取消", null);
 
             final AlertDialog mAlertDialog = builder.create();
             mAlertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
@@ -617,7 +613,7 @@ public class Sleepingohio extends AppCompatActivity {
 
                             if(sleepEndTimeToCheck > wakeUpUpperBoundTime || sleepEndTimeToCheck < wakeUpLowerBoundTime){
 
-                                Toast.makeText(Sleepingohio.this, getResources().getString(R.string.reminder_wakeuptime_range_error), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Sleepingohio.this, "請注意起床時間! 起床時間必須介於上午四點到中午十二點之間", Toast.LENGTH_SHORT).show();
                             }else {
 
                                 sleepEndTimeLong = sleepEndTimeToCheck;

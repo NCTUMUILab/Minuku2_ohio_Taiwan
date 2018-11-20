@@ -168,9 +168,7 @@ public class TripListActivity extends Activity {
 
 //                sessions = SessionManager.getRecentSessions();
                 sessions = SessionManager.getRecentToShowSessions();
-
                 for(Session session: sessions){
-
                     Log.d(TAG, "session "+session.getId());
                 }
             }catch (Exception e) {

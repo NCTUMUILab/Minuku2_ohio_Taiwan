@@ -141,8 +141,7 @@ public class Utils {
     public static boolean isConfirmNumInvalid(String inputID) {
         boolean isInvalid = inputID.matches("") ||
                 !tryParseInt(inputID) ||
-                inputID.length()!=6 ||
-                Integer.valueOf(inputID.substring(0, 1))>3;
+                inputID.length()!=6;
 
         return isInvalid;
     }

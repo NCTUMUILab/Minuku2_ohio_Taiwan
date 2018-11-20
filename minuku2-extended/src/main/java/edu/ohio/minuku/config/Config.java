@@ -14,5 +14,6 @@ public class Config {
     public static int downloadedDayInSurvey = 0;
     public static int daysInSurvey = -1;
     public static long midnightstart = -999;
+    public static boolean testServerMode = false;
 
 }
