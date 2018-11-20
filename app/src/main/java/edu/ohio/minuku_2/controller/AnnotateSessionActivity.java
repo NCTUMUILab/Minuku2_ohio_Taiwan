@@ -6,7 +6,6 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.location.Location;
 import android.os.AsyncTask;
@@ -110,7 +109,6 @@ public class AnnotateSessionActivity extends Activity implements OnMapReadyCallb
 
         sharedPrefs = getSharedPreferences(Constants.sharedPrefString, MODE_PRIVATE);
 
-        //TODO sessionid
         mSessionId = Integer.parseInt(bundle.getString("sessionkey_id"));
 
         Log.d(TAG,"[test show trip] on create session id: : " + mSessionId);
@@ -196,8 +194,8 @@ public class AnnotateSessionActivity extends Activity implements OnMapReadyCallb
 
                             try {
 
-                                //update the session into two different sessions
-                                //1st session
+                                //TODO add the information to show they are from the same trip.
+                                //keep the original one hided
                                 DBHelper.hideSessionTable(mSessionId, Constants.SESSION_TYPE_CHANGED);
 
                                 //update the session into two different sessions
@@ -206,9 +204,11 @@ public class AnnotateSessionActivity extends Activity implements OnMapReadyCallb
 
                                 long originStartTime = mSession.getStartTime();
                                 long originEndTime = mSession.getEndTime();
+
                                 Log.d(TAG, "originStartTime : "+ScheduleAndSampleManager.getTimeString(originStartTime));
                                 Log.d(TAG, "originEndTime : "+ScheduleAndSampleManager.getTimeString(originEndTime));
                                 Log.d(TAG, "splittingTime : "+ScheduleAndSampleManager.getTimeString(splittingTime));
+
                                 //1st session
                                 Session firstSession = mSession;
                                 firstSession.setCreatedTime(ScheduleAndSampleManager.getCurrentTimeInMillis() / Constants.MILLISECONDS_PER_SECOND);
@@ -219,9 +219,11 @@ public class AnnotateSessionActivity extends Activity implements OnMapReadyCallb
                                 firstSession.setToShow(true);
                                 firstSession.setReferenceId(String.valueOf(mSessionId));
                                 firstSession.setType(Constants.SESSION_TYPE_SPLIT);
-                                //                                DBHelper.updateSessionTable(mSessionId, mSession.getStartTime(), splittingTime);
+
+//                                DBHelper.updateSessionTable(mSessionId, mSession.getStartTime(), splittingTime);
                                 DBHelper.insertSessionTable(firstSession);
                                 DBHelper.updateRecordsInSessionBeforeSplit(DBHelper.STREAM_TYPE_LOCATION, splittingTime, mSessionId, firstSession.getId());
+
                                 //2nd session
                                 Session secondSession = mSession;
                                 secondSession.setCreatedTime(ScheduleAndSampleManager.getCurrentTimeInMillis() / Constants.MILLISECONDS_PER_SECOND);
@@ -232,7 +234,9 @@ public class AnnotateSessionActivity extends Activity implements OnMapReadyCallb
                                 secondSession.setToShow(true);
                                 secondSession.setReferenceId(String.valueOf(mSessionId));
                                 secondSession.setType(Constants.SESSION_TYPE_SPLIT);
+
                                 DBHelper.insertSessionTable(secondSession);
+
                                 //update session locations' session id,
                                 //set the time after splittingTime to the old ids concatenating with the new id
                                 DBHelper.updateRecordsInSession(DBHelper.STREAM_TYPE_LOCATION, splittingTime, mSessionId, secondSession.getId());
@@ -499,9 +503,9 @@ public class AnnotateSessionActivity extends Activity implements OnMapReadyCallb
         Polyline path = map.addPolyline(pathPolyLineOption);
 
         //after getting the start and ened point of location trace, we put a marker
-        map.addMarker(new MarkerOptions().position(startLatLng).title("開始"))
+        map.addMarker(new MarkerOptions().position(startLatLng).title("Start"))
                 .setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
-        map.addMarker(new MarkerOptions().position(endLatLng).title("結束"));
+        map.addMarker(new MarkerOptions().position(endLatLng).title("End"));
 
     }
 
@@ -567,14 +571,12 @@ public class AnnotateSessionActivity extends Activity implements OnMapReadyCallb
         split = (Button)findViewById(R.id.split);
         split.setOnClickListener(splitting);
 
+        combine.setEnabled(true);
+        split.setEnabled(true);
+        delete.setEnabled(true);
+
         submit = (Button)findViewById(R.id.submit);
         submit.setOnClickListener(submitting);
-
-        setButtonEnable(combine);
-        setButtonEnable(split);
-        setButtonEnable(delete);
-        setButtonEnable(submit);
-
 
         ques1 = (RadioGroup)findViewById(R.id.ques1);
         ques2 = (RadioGroup)findViewById(R.id.ques2);
@@ -625,7 +627,7 @@ public class AnnotateSessionActivity extends Activity implements OnMapReadyCallb
                 }else{
 
                     RadioButton radioButton = (RadioButton) findViewById(checkedId);
-                    ans1 = answerChtToEng(radioButton.getText().toString());
+                    ans1 = radioButton.getText().toString();
                 }
             }
         });
@@ -640,7 +642,7 @@ public class AnnotateSessionActivity extends Activity implements OnMapReadyCallb
                 }else{
 
                     RadioButton radioButton = (RadioButton) findViewById(checkedId);
-                    ans2 = answerChtToEng(radioButton.getText().toString());
+                    ans2 = radioButton.getText().toString();
                 }
             }
         });
@@ -655,7 +657,7 @@ public class AnnotateSessionActivity extends Activity implements OnMapReadyCallb
                 }else{
 
                     RadioButton radioButton = (RadioButton) findViewById(checkedId);
-                    ans3 = answerChtToEng(radioButton.getText().toString());
+                    ans3 = radioButton.getText().toString();
                 }
 
             }
@@ -671,7 +673,7 @@ public class AnnotateSessionActivity extends Activity implements OnMapReadyCallb
                 }else{
 
                     RadioButton radioButton = (RadioButton) findViewById(checkedId);
-                    ans4 = answerChtToEng(radioButton.getText().toString());
+                    ans4 = radioButton.getText().toString();
                 }
             }
         });
@@ -707,10 +709,9 @@ public class AnnotateSessionActivity extends Activity implements OnMapReadyCallb
             //disable button
             setRadioGroupNotclickable();
 
-            setButtonDisable(combine);
-            setButtonDisable(delete);
-            setButtonDisable(split);
-
+            combine.setEnabled(false);
+            delete.setEnabled(false);
+            split.setEnabled(false);
             optionalNote.setEnabled(false);
         }
     }
@@ -744,11 +745,10 @@ public class AnnotateSessionActivity extends Activity implements OnMapReadyCallb
 
             RadioButton button = (RadioButton) ques.getChildAt(i);
 
-            if (button.getText().toString().equals(answerEngToCht(ans))){
+            if (button.getText().toString().equals(ans)){
 
                 button.setChecked(true);
             }
-
         }
     }
 
@@ -758,18 +758,19 @@ public class AnnotateSessionActivity extends Activity implements OnMapReadyCallb
         //make them disabled
         for (int i = 0; i < ques.getChildCount(); i++) {
 
-            setButtonDisable((RadioButton)ques.getChildAt(i));
+            ques.getChildAt(i).setEnabled(false);
         }
-        setButtonDisable(submit);
+        submit.setEnabled(false);
     }
 
     private void setRadioGroupClickable(RadioGroup ques){
 
         //make them disabled
         for (int i = 0; i < ques.getChildCount(); i++) {
-            setButtonEnable((RadioButton)ques.getChildAt(i));
+
+            ques.getChildAt(i).setEnabled(true);
         }
-        setButtonEnable(submit);
+        submit.setEnabled(true);
     }
 
     @Override
@@ -875,7 +876,7 @@ public class AnnotateSessionActivity extends Activity implements OnMapReadyCallb
 //                            DBHelper.deleteSessionTable(mSessionId);
 
                             //update the background data corresponding, -1 indicated that it was gone
-                            DBHelper.updateRecordsInSession(DBHelper.STREAM_TYPE_LOCATION, mSessionId, -1);
+//                            DBHelper.updateRecordsInSession(DBHelper.STREAM_TYPE_LOCATION, mSessionId, -1);
 
                             Toast.makeText(AnnotateSessionActivity.this, getResources().getString(R.string.reminder_trip_deleted), Toast.LENGTH_SHORT).show();
 
@@ -996,94 +997,5 @@ public class AnnotateSessionActivity extends Activity implements OnMapReadyCallb
         }
 
     }
-    public String answerChtToEng(String answer) {
-
-        if (answer.equals(((RadioButton)findViewById(R.id.ans1_1)).getText().toString())) return "Walking outdoors";
-        else if (answer.equals(((RadioButton)findViewById(R.id.ans1_2)).getText().toString())) return "Walking indoors";
-        else if (answer.equals(((RadioButton)findViewById(R.id.ans1_3)).getText().toString())) return "Riding a bicycle";
-        else if (answer.equals(((RadioButton)findViewById(R.id.ans1_4)).getText().toString())) return "Riding a scooter";
-        else if (answer.equals(((RadioButton)findViewById(R.id.ans1_5)).getText().toString())) return "Driving (I'm the driver)";
-        else if (answer.equals(((RadioButton)findViewById(R.id.ans1_6)).getText().toString())) return "Driving (I'm the passenger)";
-        else if (answer.equals(((RadioButton)findViewById(R.id.ans1_7)).getText().toString())) return "Taking a bus";
-        else if (answer.equals(((RadioButton)findViewById(R.id.ans1_8)).getText().toString())) return "Other transportation";
-        else if (answer.equals(((RadioButton)findViewById(R.id.ans2_1)).getText().toString())) return "Yes";
-        else if (answer.equals(((RadioButton)findViewById(R.id.ans2_2)).getText().toString())) return "No";
-        else if (answer.equals(((RadioButton)findViewById(R.id.ans3_1)).getText().toString())) return "Very new";
-        else if (answer.equals(((RadioButton)findViewById(R.id.ans3_2)).getText().toString())) return "Somewhat new";
-        else if (answer.equals(((RadioButton)findViewById(R.id.ans3_3)).getText().toString())) return "Somewhat familiar";
-        else if (answer.equals(((RadioButton)findViewById(R.id.ans3_4)).getText().toString())) return "Very familiar";
-        else if (answer.equals(((RadioButton)findViewById(R.id.ans4_1)).getText().toString())) return "Part of my normal routine";
-        else if (answer.equals(((RadioButton)findViewById(R.id.ans4_2)).getText().toString())) return "Decided on right before";
-        else if (answer.equals(((RadioButton)findViewById(R.id.ans4_3)).getText().toString())) return "Planned earlier on same day";
-        else if (answer.equals(((RadioButton)findViewById(R.id.ans4_4)).getText().toString())) return "Preplanned on prior day";
-        else return answer;
-    }
-
-    public String answerEngToCht(String answer) {
-        if (answer.equals("Walking outdoors")) return ((RadioButton)findViewById(R.id.ans1_1)).getText().toString();
-        else if (answer.equals("Walking indoors")) return ((RadioButton)findViewById(R.id.ans1_2)).getText().toString();
-        else if (answer.equals("Riding a bicycle")) return ((RadioButton)findViewById(R.id.ans1_3)).getText().toString();
-        else if (answer.equals("Riding a scooter")) return ((RadioButton)findViewById(R.id.ans1_4)).getText().toString();
-        else if (answer.equals("Driving (I'm the driver)")) return ((RadioButton)findViewById(R.id.ans1_5)).getText().toString();
-        else if (answer.equals("Driving (I'm the passenger)")) return ((RadioButton)findViewById(R.id.ans1_6)).getText().toString();
-        else if (answer.equals("Taking a bus")) return ((RadioButton)findViewById(R.id.ans1_7)).getText().toString();
-        else if (answer.equals("Other transportation")) return ((RadioButton)findViewById(R.id.ans1_8)).getText().toString();
-        else if (answer.equals("Yes")) return ((RadioButton)findViewById(R.id.ans2_1)).getText().toString();
-        else if (answer.equals("No")) return ((RadioButton)findViewById(R.id.ans2_2)).getText().toString();
-        else if (answer.equals("Very new")) return ((RadioButton)findViewById(R.id.ans3_1)).getText().toString();
-        else if (answer.equals("Somewhat new")) return ((RadioButton)findViewById(R.id.ans3_2)).getText().toString();
-        else if (answer.equals("Somewhat familiar")) return ((RadioButton)findViewById(R.id.ans3_3)).getText().toString();
-        else if (answer.equals("Very familiar")) return ((RadioButton)findViewById(R.id.ans3_4)).getText().toString();
-        else if (answer.equals("Part of my normal routine")) return ((RadioButton)findViewById(R.id.ans4_1)).getText().toString();
-        else if (answer.equals("Decided on right before")) return ((RadioButton)findViewById(R.id.ans4_2)).getText().toString();
-        else if (answer.equals("Planned earlier on same day")) return ((RadioButton)findViewById(R.id.ans4_3)).getText().toString();
-        else if (answer.equals("Preplanned on prior day")) return ((RadioButton)findViewById(R.id.ans4_4)).getText().toString();
-        else return answer;
-    }
-    void setButtonEnable(Button btn) {
-        btn.setEnabled(true);
-        btn.setBackgroundColor(getResources().getColor(R.color.main_brand_color));
-        btn.setTextColor(getResources().getColor(R.color.light_shades));
-    }
-    void setButtonEnable(RadioButton rBtn) {
-        rBtn.setEnabled(true);
-        ColorStateList colorStateList = new ColorStateList(
-                new int[][]{
-
-                        new int[]{-android.R.attr.state_enabled}, //disabled
-                        new int[]{android.R.attr.state_enabled} //enabled
-                },
-                new int[] {
-
-                        getResources().getColor(R.color.radio_button_tint) //disabled
-                        ,getResources().getColor(R.color.radio_button_tint) //enabled
-                }
-        );
-        rBtn.setButtonTintList(colorStateList);
-    }
-
-    void setButtonDisable(Button btn) {
-        btn.setEnabled(false);
-        btn.setBackgroundColor(getResources().getColor(R.color.button_default));
-        btn.setTextColor(getResources().getColor(R.color.light_shades));
-    }
-    void setButtonDisable(RadioButton rBtn) {
-        rBtn.setEnabled(false);
-        ColorStateList colorStateList = new ColorStateList(
-                new int[][]{
-
-                        new int[]{-android.R.attr.state_enabled}, //disabled
-                        new int[]{android.R.attr.state_enabled} //enabled
-                },
-                new int[] {
-
-                        getResources().getColor(R.color.button_default) //disabled
-                        ,getResources().getColor(R.color.button_default) //enabled
-
-                }
-        );
-        rBtn.setButtonTintList(colorStateList);
-    }
-
 
 }
