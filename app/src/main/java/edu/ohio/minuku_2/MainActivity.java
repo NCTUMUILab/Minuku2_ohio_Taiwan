@@ -107,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView user_id;
     private TextView sleepingtime;
 
-    private Button ohio_settingSleepTime, ohio_annotate, closeService, tolinkList, help;
+    private Button ohio_settingSleepTime, ohio_annotate, closeService, tolinkList, help, test;
     private String projName = "Ohio";
 
     private int requestCode_setting = 1;
@@ -219,7 +219,7 @@ public class MainActivity extends AppCompatActivity {
 
             boolean isFinalButtonClicked = sharedPrefs.getBoolean("finalButtonClicked", false);
             //TODO check the word looks like
-            String finalButtonText = "PART C\n20 minutes";
+            String finalButtonText = "PART C\n20 分鐘";
             Spannable spannable = new SpannableString(finalButtonText);
             spannable.setSpan(new StyleSpan(Typeface.NORMAL), 0, 6,Spannable.SPAN_INCLUSIVE_INCLUSIVE);
             spannable.setSpan(new RelativeSizeSpan(0.5f), 7, finalButtonText.length(),Spannable.SPAN_INCLUSIVE_INCLUSIVE);
@@ -374,6 +374,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        test = (Button) findViewById(R.id.testServer);
+        test.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(MainActivity.this, "Test Server",Toast.LENGTH_SHORT);
+                TestServer ts = new TestServer();
+                ts.testServer();
+            }
+        });
         ohio_annotate = (Button) findViewById(R.id.Annotate);
         ohio_annotate.setOnClickListener(ohio_annotateing);
 

@@ -114,6 +114,8 @@ public class CombinedListAdapter extends ArrayAdapter<Session> {
                 return "走路";
             case "Riding a bicycle":
                 return "自行車";
+            case "Riding a scooter":
+                return "摩托車";
             case "Driving (I'm the driver)":
                 return "汽車";
             case "Driving (I'm the passenger)":

@@ -6,6 +6,7 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.location.Location;
 import android.os.AsyncTask;
@@ -545,12 +546,14 @@ public class AnnotateSessionActivity extends Activity implements OnMapReadyCallb
         split = (Button)findViewById(R.id.split);
         split.setOnClickListener(splitting);
 
-        combine.setEnabled(true);
-        split.setEnabled(true);
-        delete.setEnabled(true);
-
         submit = (Button)findViewById(R.id.submit);
         submit.setOnClickListener(submitting);
+
+        setButtonEnable(combine);
+        setButtonEnable(split);
+        setButtonEnable(delete);
+        setButtonEnable(submit);
+
 
         ques1 = (RadioGroup)findViewById(R.id.ques1);
         ques2 = (RadioGroup)findViewById(R.id.ques2);
@@ -683,9 +686,10 @@ public class AnnotateSessionActivity extends Activity implements OnMapReadyCallb
             //disable button
             setRadioGroupNotclickable();
 
-            combine.setEnabled(false);
-            delete.setEnabled(false);
-            split.setEnabled(false);
+            setButtonDisable(combine);
+            setButtonDisable(delete);
+            setButtonDisable(split);
+
             optionalNote.setEnabled(false);
         }
     }
@@ -733,19 +737,18 @@ public class AnnotateSessionActivity extends Activity implements OnMapReadyCallb
         //make them disabled
         for (int i = 0; i < ques.getChildCount(); i++) {
 
-            ques.getChildAt(i).setEnabled(false);
+            setButtonDisable((RadioButton)ques.getChildAt(i));
         }
-        submit.setEnabled(false);
+        setButtonDisable(submit);
     }
 
     private void setRadioGroupClickable(RadioGroup ques){
 
         //make them disabled
         for (int i = 0; i < ques.getChildCount(); i++) {
-
-            ques.getChildAt(i).setEnabled(true);
+            setButtonEnable((RadioButton)ques.getChildAt(i));
         }
-        submit.setEnabled(true);
+        setButtonEnable(submit);
     }
 
     @Override
@@ -1014,5 +1017,50 @@ public class AnnotateSessionActivity extends Activity implements OnMapReadyCallb
         else if (answer.equals("Preplanned on prior day")) return ((RadioButton)findViewById(R.id.ans4_4)).getText().toString();
         else return answer;
     }
+    void setButtonEnable(Button btn) {
+        btn.setEnabled(true);
+        btn.setBackgroundColor(getResources().getColor(R.color.main_brand_color));
+        btn.setTextColor(getResources().getColor(R.color.light_shades));
+    }
+    void setButtonEnable(RadioButton rBtn) {
+        rBtn.setEnabled(true);
+        ColorStateList colorStateList = new ColorStateList(
+                new int[][]{
+
+                        new int[]{-android.R.attr.state_enabled}, //disabled
+                        new int[]{android.R.attr.state_enabled} //enabled
+                },
+                new int[] {
+
+                        getResources().getColor(R.color.radio_button_tint) //disabled
+                        ,getResources().getColor(R.color.radio_button_tint) //enabled
+                }
+        );
+        rBtn.setButtonTintList(colorStateList);
+    }
+
+    void setButtonDisable(Button btn) {
+        btn.setEnabled(false);
+        btn.setBackgroundColor(getResources().getColor(R.color.button_default));
+        btn.setTextColor(getResources().getColor(R.color.light_shades));
+    }
+    void setButtonDisable(RadioButton rBtn) {
+        rBtn.setEnabled(false);
+        ColorStateList colorStateList = new ColorStateList(
+                new int[][]{
+
+                        new int[]{-android.R.attr.state_enabled}, //disabled
+                        new int[]{android.R.attr.state_enabled} //enabled
+                },
+                new int[] {
+
+                        getResources().getColor(R.color.button_default) //disabled
+                        ,getResources().getColor(R.color.button_default) //enabled
+
+                }
+        );
+        rBtn.setButtonTintList(colorStateList);
+    }
+
 
 }

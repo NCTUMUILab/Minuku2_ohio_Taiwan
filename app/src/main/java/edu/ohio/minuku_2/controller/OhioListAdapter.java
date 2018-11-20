@@ -153,26 +153,26 @@ public class OhioListAdapter extends ArrayAdapter<Session> {
     private String getLabelFromAns1(String labelStr){
 
         switch (labelStr){
-            case "Walking outdoors":
-                return "Walk";
-            case "Walking indoors":
-                return "Walk";
+            case "Walking outdoors": //ans1
+                return "走路";
+            case "Walking indoors": //ans1
+                return "走路";
             case "Riding a bicycle":
-                return "Bike";
+                return "自行車";
             case "Riding a scooter":
-                return "Scooter";
+                return "摩托車";
             case "Driving (I'm the driver)":
-                return "Drive";
+                return "汽車";
             case "Driving (I'm the passenger)":
-                return "Drive";
+                return "汽車";
             case "Trip is part of previous trip (COMBINE)":
-                return "Combine";
+                return "合併";
             case "Taking a bus":
-                return "Bus";
+                return "巴士";
             case "Trip is incorrect (DELETE)":
-                return "Delete";
+                return "刪除";
             case "Other transportation":
-                return "Other";
+                return "其他";
             default:
                 return "";
         }
