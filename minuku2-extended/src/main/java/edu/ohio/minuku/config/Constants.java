@@ -73,6 +73,13 @@ public class Constants {
     public static final int SESSION_IS_COMBINED_FLAG = 1;
     public static final int SESSION_SUBJECTIVELY_COMBINE_FLAG = 2;
 
+    public static final int SESSION_TYPE_ORIGINAL = 0;
+    public static final int SESSION_TYPE_COMBINED = 1;
+    public static final int SESSION_TYPE_DELETED = 2;
+    public static final int SESSION_TYPE_SPLIT = 3;
+    public static final int SESSION_TYPE_SHORT = 4;
+    public static final int SESSION_TYPE_CHANGED = 5;
+
     public static final String YES = "YES";
     public static final String NO = "NO";
 
@@ -123,16 +130,16 @@ public class Constants {
     public static final String APP_NAME = "DMS";
     public static final String APP_FULL_NAME = "Daily Mobility Study";
 
-    public static final String NOTIFICATION_TEXT_DAY_0 = "本實驗階段將於上午 12:00 開始且為期 14 天";
-    public static final String NOTIFICATION_TEXT_LOCATION = "請確認 \"定位\" 權限";
-    public static final String NOTIFICATION_TEXT_APPUSAGE = "請確認 \"使用紀錄存取\" 權限";
-    public static final String NOTIFICATION_TEXT_NEW_TRIP = " 有新的行程";
-    public static final String NOTIFICATION_TEXT_NEW_TRIPS = " 個新的行程";
-    public static final String NOTIFICATION_TEXT_FINAL_DAY_PLUS_1_WITH_TRIPS = "最後一天的行程也請記得標記";
-    public static final String NOTIFICATION_TEXT_FINAL_DAY_PLUS_1_WITHOUT_TRIPS = "感謝你完成這個階段，請跟研究員聯絡，確認到實驗室完成實驗最後階段的時間";
-    public static final String NOTIFICATION_TEXT_AFTER_FINAL_DAY_PLUS_1 = "感謝你完成這個階段，請跟研究員聯絡，確認到實驗室完成實驗最後階段的時間";
+    public static final String NOTIFICATION_TEXT_DAY_0 = "Part B begins at 12am and continues for 2 weeks.";
+    public static final String NOTIFICATION_TEXT_LOCATION = "Please check your location permission.";
+    public static final String NOTIFICATION_TEXT_APPUSAGE = "Please check your usage access permission.";
+    public static final String NOTIFICATION_TEXT_NEW_TRIP = " New Trip";
+    public static final String NOTIFICATION_TEXT_NEW_TRIPS = " New Trips";
+    public static final String NOTIFICATION_TEXT_FINAL_DAY_PLUS_1_WITH_TRIPS = "Your final trips are available now.";
+    public static final String NOTIFICATION_TEXT_FINAL_DAY_PLUS_1_WITHOUT_TRIPS = "Part C will become available tomorrow.";
+    public static final String NOTIFICATION_TEXT_AFTER_FINAL_DAY_PLUS_1 = "Part C is available today and lasts 20 mins.";
     public static final String NOTIFICATION_TEXT_AFTER_FINAL_DAY_PLUS_1_WAIT_DATA_TRANSFER
-            = "請將手機連上 Wifi 以完成實驗";
+            = "Connect your phone to WiFi to finish the study.";
 
     public static final long DATA_TRANSFER_TIMEOUT = 10 * MILLISECONDS_PER_SECOND; // 1 * 10 * 1000
 
@@ -155,16 +162,14 @@ public class Constants {
     public static final int FINALDAY = 14; //real: 14, test: 3
 
 
-    //TODO: NEED TO CHANGE TO MUI VERSION
-    public static final String CHECK_IN_URL = "http://cmogflaskbackend.minuku.org:8080/servicerec?";
-    public static final String CHECK_IN_URL_USER_INFORM = "http://cmogflaskbackend.minuku.org:8080/useridcheck?";
+    public static final String CHECK_IN_URL = "http://mcog.asc.ohio-state.edu/apps/servicerec?";
+    public static final String CHECK_IN_URL_USER_INFORM = "http://mcog.asc.ohio-state.edu/apps/useridcheck?";
 
     public static final String FINAL_SURVEY_URL_NCTU = "https://nctucommunication.qualtrics.com/jfe/form/SV_aVS9WRCNnfgRNGd";
     public static final String FINAL_SURVEY_URL_OHIO = "https://osu.az1.qualtrics.com/jfe/form/SV_2bPukwuNSojU4Sx";
-    public static final String FINAL_SURVEY_URL = FINAL_SURVEY_URL_NCTU;
+    public static final String FINAL_SURVEY_URL = FINAL_SURVEY_URL_OHIO;
 
-    //TODO: NEED TO CHANGE TO MUI VERSION
-    public static final String HELP_URL = "https://sites.google.com/view/nctudmshelp";
+    public static final String HELP_URL = "http://u.osu.edu/dailymobilitystudy/";
 
 
     public static final String INTERVAL_SAMPLE = "INTERVAL_SAMPLE";

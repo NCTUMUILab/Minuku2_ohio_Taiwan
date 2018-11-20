@@ -475,7 +475,7 @@ public class Sleepingohio extends AppCompatActivity {
 
                             if(sleepStartTimeToCheck > bedUpperBoundTime && sleepStartTimeToCheck < bedLowerBoundTime){
 
-                                Toast.makeText(Sleepingohio.this, "請注意你的就寢時間! 就寢時間必須介於晚上八點到上午四點之間", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Sleepingohio.this, "請注意你的就寢時間! 就寢時間必須介於晚上八點到上午四點之間", Toast.LENGTH_LONG).show();
                             }else {
 
                                 sleepStartTimeLong = sleepStartTimeToCheck;
