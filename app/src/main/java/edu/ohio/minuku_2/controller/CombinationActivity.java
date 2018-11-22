@@ -150,7 +150,6 @@ public class CombinationActivity extends Activity {
 
                 //update the background data with the corresponding sessionids
 //                DBHelper.updateRecordsInSessionConcat(DBHelper.STREAM_TYPE_LOCATION, sessionid, sessionToCombineId);
-                DBHelper.updateRecordsInSessionConcat(DBHelper.STREAM_TYPE_LOCATION, sessionid, sessionToCombineId);
                 DBHelper.updateRecordsInSession(DBHelper.STREAM_TYPE_LOCATION, sessionid, newSessionId);
                 if(index == 0){
                     referenceId += sessionid;
