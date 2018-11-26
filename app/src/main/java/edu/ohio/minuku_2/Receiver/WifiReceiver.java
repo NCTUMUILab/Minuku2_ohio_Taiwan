@@ -86,14 +86,14 @@ public class WifiReceiver extends BroadcastReceiver {
     public static final int SOCKET_TIMEOUT = 20 * (int) Constants.MILLISECONDS_PER_SECOND;
 
     private static final String SERVER_OHIO = "http://mcog.asc.ohio-state.edu/apps/";
-    private static final String SERVER_NCTU = "http://cmogflaskbackend.minuku.org:8080/";
+    private static final String SERVER_NCTU = "http://cmogflaskbackend.minuku.org:80/";
 
     private static final String postTripUrl = SERVER_NCTU+"tripdump/";
     private static final String postDumpUrl = SERVER_NCTU+"devicedump/";
     private static final String postSurveyLinkUrl = SERVER_NCTU+"surveydump/";
 
-    private static final String querySurveyLinkUrl = "http://cmogflaskbackend.minuku.org:8080/surveycheck?userid=";
-    private static final String queryTripUrl = "http://cmogflaskbackend.minuku.org:8080/tripcheck?userid=";
+    private static final String querySurveyLinkUrl = "http://cmogflaskbackend.minuku.org:80/surveycheck?userid=";
+    private static final String queryTripUrl = "http://cmogflaskbackend.minuku.org:80/tripcheck?userid=";
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -308,7 +308,7 @@ public class WifiReceiver extends BroadcastReceiver {
                             data.toString(),
                             "Trip",
                             curr).get();
-
+                Log.d("TripDumpJson", data.toString());
                 //if it was updated successfully, return the end time
                 Log.d(TAG, "[show data response] Trip lastTimeInServer : " + lastTimeInServer);
 
@@ -785,7 +785,6 @@ public class WifiReceiver extends BroadcastReceiver {
                         data.toString(),
                         "Dump",
                         curr).get();
-
             Log.d(TAG, "[show data response] Dump lastTimeInServer : "+lastTimeInServer);
 
             JSONObject lasttimeInServerJson = new JSONObject(lastTimeInServer);
@@ -1707,7 +1706,6 @@ public class WifiReceiver extends BroadcastReceiver {
                             data.toString(),
                             "Trip",
                             curr).get();
-
                 //if it was updated successfully, return the end time
                 Log.d(TAG, "[show data response] Trip lastTimeInServer : " + lastTimeInServer);
 

@@ -30,6 +30,7 @@ public class CSVHelper {
     public static final String CSV_CHECK_DATAUPLOADED = "DataUploaded.csv";
     public static final String CSV_CHECK_DATAFORMAT = "DataFormat.csv";
     public static final String CSV_CHECK_CHECK_IN = "CheckCheckin.csv";
+    public static final String CSV_TRIP_DUMP = "TripDump.csv";
 
     public static final String CSV_SERVER_DATA_STATE = "ServerDataState.csv";
     public static final String CSV_UserInteract = "UserInteraction.csv";

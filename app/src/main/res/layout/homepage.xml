@@ -44,7 +44,8 @@
     <LinearLayout
         android:id="@+id/layout_userinform"
         android:layout_width="match_parent"
-        android:layout_height="104dp"
+        android:layout_height="wrap_content"
+        android:padding="24dp"
         android:orientation="horizontal"
         android:layout_centerHorizontal="true"
         android:layout_below="@id/toolbar">
@@ -55,7 +56,6 @@
             android:layout_height="match_parent"
             android:layout_gravity="center_horizontal"
             android:layout_weight="1"
-            android:layout_marginLeft="24dp"
             android:gravity="center_vertical|center"
             android:text="認證編號:"
             android:textColor="@color/text_color_light"
@@ -70,10 +70,17 @@
             android:text="123456"
             android:gravity="center_vertical|center"
             android:textColor="@color/text_color_light"
-            android:layout_marginRight="24dp"
             android:textSize="30sp" />
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/button_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="24dp"
+        android:orientation="vertical"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/layout_userinform">
     <TextView
         android:id="@+id/sleepingTime"
         android:layout_width="match_parent"
@@ -91,10 +98,11 @@
 
     <Button
         android:id="@+id/Annotate"
-        android:layout_width="196dp"
+        android:layout_width="match_parent"
         android:layout_height="64dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="32dp"
+        android:layout_marginHorizontal="24"
         android:background="@drawable/button_style"
         android:text="行程紀錄"
         android:textAlignment="center"
@@ -185,5 +193,5 @@
         android:text="v1.0.0"
         android:textColor="#ffffff"
         android:textSize="14sp" />-->
-
+    </LinearLayout>
 </RelativeLayout>
