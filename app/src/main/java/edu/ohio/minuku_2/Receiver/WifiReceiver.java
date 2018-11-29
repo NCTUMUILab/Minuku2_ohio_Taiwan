@@ -308,7 +308,7 @@ public class WifiReceiver extends BroadcastReceiver {
                             data.toString(),
                             "Trip",
                             curr).get();
-
+                Log.d("TripDumpJson", data.toString());
                 //if it was updated successfully, return the end time
                 Log.d(TAG, "[show data response] Trip lastTimeInServer : " + lastTimeInServer);
 
@@ -785,7 +785,6 @@ public class WifiReceiver extends BroadcastReceiver {
                         data.toString(),
                         "Dump",
                         curr).get();
-
             Log.d(TAG, "[show data response] Dump lastTimeInServer : "+lastTimeInServer);
 
             JSONObject lasttimeInServerJson = new JSONObject(lastTimeInServer);
@@ -1707,7 +1706,6 @@ public class WifiReceiver extends BroadcastReceiver {
                             data.toString(),
                             "Trip",
                             curr).get();
-
                 //if it was updated successfully, return the end time
                 Log.d(TAG, "[show data response] Trip lastTimeInServer : " + lastTimeInServer);
 
