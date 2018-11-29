@@ -7,8 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/theme_background_color"
     android:orientation="vertical"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:statusBarColor="#FF00FF">
+    android:paddingBottom="@dimen/activity_vertical_margin">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -56,9 +55,10 @@
             android:layout_height="match_parent"
             android:layout_gravity="center_horizontal"
             android:layout_weight="1"
-            android:gravity="center_vertical|center"
-            android:text="認證編號:"
+            android:gravity="center_vertical|left"
+            android:text="認證編號"
             android:textColor="@color/text_color_light"
+            android:layout_marginHorizontal="8dp"
             android:textSize="30sp" />
 
         <TextView
@@ -68,8 +68,9 @@
             android:layout_gravity="center_horizontal"
             android:layout_weight="1"
             android:text="123456"
-            android:gravity="center_vertical|center"
+            android:gravity="center_vertical|right"
             android:textColor="@color/text_color_light"
+            android:layout_marginHorizontal="8dp"
             android:textSize="30sp" />
     </LinearLayout>
 
@@ -89,9 +90,7 @@
         android:gravity="center_vertical|center_horizontal"
         android:textColor="@color/text_color_light"
         android:textSize="20sp"
-        android:layout_marginTop="0dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginHorizontal="8dp"
         android:layout_below="@id/layout_userinform"
         android:text="睡眠時間: 00:00 AM 到 00:00 PM"
         android:layout_centerHorizontal="true"/>
@@ -99,29 +98,32 @@
     <Button
         android:id="@+id/Annotate"
         android:layout_width="match_parent"
-        android:layout_height="64dp"
+        android:layout_height="wrap_content"
+        android:paddingVertical="12dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="32dp"
-        android:layout_marginHorizontal="24"
+        android:layout_marginHorizontal="8dp"
         android:background="@drawable/button_style"
         android:text="行程紀錄"
         android:textAlignment="center"
         android:textColor="@color/button_text_color"
-        android:textSize="28sp"
+        android:textSize="18sp"
         android:layout_below="@id/sleepingTime"
         android:layout_centerHorizontal="true"/>
 
     <Button
         android:id="@+id/linkList"
-        android:layout_width="196dp"
-        android:layout_height="64dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="12dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="8dp"
+        android:layout_marginHorizontal="8dp"
         android:background="@drawable/button_style"
         android:text="問卷"
         android:textAlignment="center"
         android:textColor="@color/button_text_color"
-        android:textSize="28sp"
+        android:textSize="18sp"
         android:visibility="visible"
         android:layout_below="@id/Annotate"
         android:layout_centerHorizontal="true"/>
@@ -130,42 +132,49 @@
 
     <Button
         android:id="@+id/settingSleepTime"
-        android:layout_width="196dp"
-        android:layout_height="64dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="12dp"
         android:layout_gravity="center_horizontal"
+        android:layout_marginTop="8dp"
+        android:layout_marginHorizontal="8dp"
         android:background="@drawable/button_style"
         android:text="睡眠時間設定"
         android:textAlignment="center"
         android:textColor="@color/button_text_color"
-        android:textSize="28sp"
-        android:layout_marginTop="8dp"
+        android:textSize="18sp"
         android:layout_below="@id/linkList"
         android:layout_centerHorizontal="true"/>
 
     <Button
         android:id="@+id/help"
-        android:layout_width="196dp"
-        android:layout_height="64dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="12dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="8dp"
+        android:layout_marginHorizontal="8dp"
         android:background="@drawable/button_style"
         android:text="說明"
         android:textAlignment="center"
         android:textColor="@color/button_text_color"
-        android:textSize="28sp"
+        android:textSize="18sp"
         android:layout_below="@id/settingSleepTime"
         android:layout_centerHorizontal="true"/>
     <Button
         android:id="@+id/testServer"
-        android:layout_width="196dp"
-        android:layout_height="64dp"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="8dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="8dp"
+        android:layout_marginHorizontal="8dp"
         android:background="@drawable/button_style"
         android:text="TEST"
         android:textAlignment="center"
         android:textColor="@color/button_text_color"
-        android:textSize="28sp"
+        android:textSize="6mm"
         android:layout_below="@id/help"
         android:layout_centerHorizontal="true"/>
     <Button
@@ -176,7 +185,7 @@
         android:background="@drawable/button_style"
         android:text="關閉服務"
         android:textColor="@color/text_color_light"
-        android:textSize="18sp"
+        android:textSize="18dp"
         android:visibility="gone"
         android:layout_below="@id/help"
         android:layout_centerHorizontal="true"/>
@@ -194,4 +203,5 @@
         android:textColor="#ffffff"
         android:textSize="14sp" />-->
     </LinearLayout>
+
 </RelativeLayout>
