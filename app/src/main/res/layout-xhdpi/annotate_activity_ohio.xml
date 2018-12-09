@@ -1,0 +1,363 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1"
+    android:background="@color/theme_background_color">
+
+    <fragment
+        class="com.google.android.gms.maps.MapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="209dp"
+        android:id="@+id/Mapfragment" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal" >
+
+                <Button
+                    android:id="@+id/combine"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_style"
+                    android:textColor="@color/button_text_color"
+                    android:textSize="24sp"
+                    android:text="合併" />
+
+                <Button
+                    android:id="@+id/split"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_style"
+                    android:textColor="@color/button_text_color"
+                    android:textSize="24sp"
+                    android:text="拆分" />
+
+                <Button
+                    android:id="@+id/delete"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_style"
+                    android:textColor="@color/button_text_color"
+                    android:textSize="24sp"
+                    android:text="刪除" />
+            </LinearLayout>
+
+            <TextView
+                android:text="時間:"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/Time"
+                android:textColor="@color/text_color_light"
+                android:paddingTop="16dp"
+                android:paddingLeft="16dp" />
+
+            <TextView
+                android:text="請確認並標記這趟行程"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_color_light"
+                android:id="@+id/question1"
+                android:paddingTop="16dp"
+                android:paddingLeft="16dp"
+                android:textSize="18sp" />
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/ques1"
+                android:paddingLeft="16dp"
+                android:paddingTop="5dp">
+
+                <RadioButton
+                    android:text="在戶外走路"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/text_color_light"
+                    android:buttonTint="@color/radio_button_tint"
+                    android:id="@+id/ans1_1"
+                    android:layout_weight="1" />
+                <RadioButton
+                    android:text="在室內走路"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/text_color_light"
+                    android:buttonTint="@color/radio_button_tint"
+                    android:id="@+id/ans1_2"
+                    android:layout_weight="2" />
+
+                <RadioButton
+                    android:text="騎自行車"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/text_color_light"
+                    android:buttonTint="@color/radio_button_tint"
+                    android:id="@+id/ans1_3"
+                    android:layout_weight="3" />
+
+                <RadioButton
+                    android:text="騎摩托車"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/text_color_light"
+                    android:buttonTint="@color/radio_button_tint"
+                    android:id="@+id/ans1_4"
+                    android:layout_weight="4" />
+
+                <RadioButton
+                    android:text="開車(身為駕駛)"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/text_color_light"
+                    android:buttonTint="@color/radio_button_tint"
+                    android:id="@+id/ans1_5"
+                    android:layout_weight="5" />
+                <RadioButton
+                    android:text="坐車(身為乘客)"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/text_color_light"
+                    android:buttonTint="@color/radio_button_tint"
+                    android:id="@+id/ans1_6"
+                    android:layout_weight="6" />
+
+                <RadioButton
+                    android:text="搭巴士"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/text_color_light"
+                    android:buttonTint="@color/radio_button_tint"
+                    android:id="@+id/ans1_7"
+                    android:layout_weight="7" />
+
+                <RadioButton
+                    android:text="其他交通方式"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/text_color_light"
+                    android:buttonTint="@color/radio_button_tint"
+                    android:id="@+id/ans1_8"
+                    android:layout_weight="3" />
+
+            </RadioGroup>
+
+            <TextView
+                android:text="這趟行程你獨自行動嗎?"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/question2"
+                android:textColor="@color/text_color_light"
+                android:paddingTop="16dp"
+                android:paddingLeft="16dp"
+                android:textSize="18sp"
+                android:layout_weight="1" />
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:id="@+id/ques2"
+                android:paddingLeft="16dp"
+                android:paddingTop="5dp">
+
+                <RadioButton
+                    android:text="是，我獨自行動"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/text_color_light"
+                    android:buttonTint="@color/radio_button_tint"
+                    android:id="@+id/ans2_1"
+                    android:layout_weight="1" />
+
+                <RadioButton
+                    android:text="不，我和別人一起"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/text_color_light"
+                    android:buttonTint="@color/radio_button_tint"
+                    android:id="@+id/ans2_2"
+                    android:layout_weight="1" />
+
+            </RadioGroup>
+
+            <TextView
+                android:text="這條路線對你有多陌生或是熟悉呢?"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_color_light"
+                android:id="@+id/question3"
+                android:paddingTop="16dp"
+                android:paddingLeft="16dp"
+                android:textSize="18sp"
+                android:layout_weight="1" />
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:id="@+id/ques3"
+                android:paddingLeft="16dp"
+                android:paddingTop="5dp">
+
+                <RadioButton
+                    android:text="非常陌生"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/text_color_light"
+                    android:buttonTint="@color/radio_button_tint"
+                    android:id="@+id/ans3_1"
+                    android:layout_weight="1" />
+
+                <RadioButton
+                    android:text="有點陌生"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/text_color_light"
+                    android:buttonTint="@color/radio_button_tint"
+                    android:id="@+id/ans3_2"
+                    android:layout_weight="1" />
+
+                <RadioButton
+                    android:text="有點熟悉"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/text_color_light"
+                    android:buttonTint="@color/radio_button_tint"
+                    android:id="@+id/ans3_3"
+                    android:layout_weight="1" />
+
+                <RadioButton
+                    android:text="非常熟悉"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/text_color_light"
+                    android:buttonTint="@color/radio_button_tint"
+                    android:id="@+id/ans3_4"
+                    android:layout_weight="1" />
+
+            </RadioGroup>
+
+            <TextView
+                android:id="@+id/question4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:paddingTop="16dp"
+                android:textColor="@color/text_color_light"
+                android:text="你甚麼時候做出決定選擇要前往這個地方的? "
+                android:textSize="18sp" />
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/ques4"
+                android:paddingLeft="16dp"
+                android:paddingTop="5dp">
+
+                <RadioButton
+                    android:text='這是我常會到的地方之一'
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/text_color_light"
+                    android:buttonTint="@color/radio_button_tint"
+                    android:id="@+id/ans4_1"
+                    android:layout_weight="1" />
+
+                <RadioButton
+                    android:text='就在不久前決定來這裡的'
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/text_color_light"
+                    android:buttonTint="@color/radio_button_tint"
+                    android:id="@+id/ans4_2"
+                    android:layout_weight="1" />
+
+                <RadioButton
+                    android:text='在今天的稍早決定的'
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/text_color_light"
+                    android:buttonTint="@color/radio_button_tint"
+                    android:id="@+id/ans4_3"
+                    android:layout_weight="1" />
+
+                <RadioButton
+                    android:text='在今天之前就決定的'
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/text_color_light"
+                    android:buttonTint="@color/radio_button_tint"
+                    android:id="@+id/ans4_4"
+                    android:layout_weight="1" />
+            </RadioGroup>
+
+            <TextView
+                android:id="@+id/question5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@color/text_color_light"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:paddingTop="16dp"
+                android:text="註記:"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/optionalNote"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_color_light"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="20dp" />
+
+            <Button
+                android:text="送出"
+                android:textSize="24sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/submit"
+                android:background="@drawable/button_style"
+                android:textColor="@color/button_text_color"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:paddingTop="0dp" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="20dp" />
+
+
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

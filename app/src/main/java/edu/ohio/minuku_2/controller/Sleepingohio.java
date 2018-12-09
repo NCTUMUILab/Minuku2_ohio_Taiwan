@@ -86,6 +86,8 @@ public class Sleepingohio extends AppCompatActivity {
 
         sleepStartTimeLong = sharedPrefs.getLong("sleepStartTimeLong", sleepStartTimeLong);
         sleepEndTimeLong = sharedPrefs.getLong("sleepEndTimeLong", sleepEndTimeLong);
+        sleepStartTimeLong = checkDate(sleepStartTimeLong);
+        sleepEndTimeLong = checkDate(sleepEndTimeLong);
 
         if((sleepStartTimeLong != Constants.INVALID_IN_LONG) && (sleepEndTimeLong != Constants.INVALID_IN_LONG)){
 
@@ -663,6 +665,20 @@ public class Sleepingohio extends AppCompatActivity {
         return wakeUpLowerBoundTime;
     }
 
+    public long checkDate(long time){
 
+        SimpleDateFormat sdf_date = new SimpleDateFormat(Constants.DATE_FORMAT_NOW_DAY);
+        String timeDate = ScheduleAndSampleManager.getTimeString(time, sdf_date);
+        String currentDate = ScheduleAndSampleManager.getTimeString(ScheduleAndSampleManager.getCurrentTimeInMillis(), sdf_date);
 
+        if(!timeDate.equals(currentDate)){
+
+            SimpleDateFormat sdf_HHmmss = new SimpleDateFormat(Constants.DATE_FORMAT_HOUR_MIN_SECOND);
+            String timeHHmmss = ScheduleAndSampleManager.getTimeString(time, sdf_HHmmss);
+
+            time = ScheduleAndSampleManager.getTimeInMillis(currentDate + " " + timeHHmmss, new SimpleDateFormat(Constants.DATE_FORMAT_NOW_NO_ZONE));
+        }
+
+        return time;
+    }
 }

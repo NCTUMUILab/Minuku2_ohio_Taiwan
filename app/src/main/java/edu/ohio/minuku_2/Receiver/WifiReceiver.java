@@ -88,9 +88,9 @@ public class WifiReceiver extends BroadcastReceiver {
     private static final String SERVER_OHIO = "http://mcog.asc.ohio-state.edu/apps/";
     private static final String SERVER_NCTU = "http://cmogflaskbackend.minuku.org:80/";
 
-    private static final String postTripUrl = SERVER_NCTU+"tripdump/";
-    private static final String postDumpUrl = SERVER_NCTU+"devicedump/";
-    private static final String postSurveyLinkUrl = SERVER_NCTU+"surveydump/";
+    private static final String postTripUrl = SERVER_NCTU+"tripdump";
+    private static final String postDumpUrl = SERVER_NCTU+"devicedump";
+    private static final String postSurveyLinkUrl = SERVER_NCTU+"surveydump";
 
     private static final String querySurveyLinkUrl = "http://cmogflaskbackend.minuku.org:80/surveycheck?userid=";
     private static final String queryTripUrl = "http://cmogflaskbackend.minuku.org:80/tripcheck?userid=";
@@ -264,10 +264,11 @@ public class WifiReceiver extends BroadcastReceiver {
 
             Log.d(TAG,"before send dump data EndTimeString : " + ScheduleAndSampleManager.getTimeString(endTime));
 
-            sendingDumpData();
-
+            boolean sendDataSuccessfully = false;
+            sendDataSuccessfully = sendingDumpData();
             //update nowTime
             setNowTime();
+            if (sendDataSuccessfully == false) break;
         }
 
         sendingTripData(nowTime);
@@ -695,7 +696,7 @@ public class WifiReceiver extends BroadcastReceiver {
         return surveyDay;
     }
 
-    public void sendingDumpData(){
+    public boolean sendingDumpData(){
 
         //Log.d(TAG, "sendingDumpData") ;
 
@@ -823,11 +824,13 @@ public class WifiReceiver extends BroadcastReceiver {
 
                 //update the last data's startTime.
                 sharedPrefs.edit().putLong("lastSentStarttime", startTime).apply();
+                return true;
             }
         } catch (InterruptedException e) {
         } catch (ExecutionException e) {
         } catch (JSONException e){
         }
+        return false;
     }
 
     private void setNowTime(){
