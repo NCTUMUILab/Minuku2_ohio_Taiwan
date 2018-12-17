@@ -18,11 +18,11 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(dir: '../app/libs', include: ['*.jar'])
     testImplementation 'junit:junit:4.12'
     api 'com.android.support:appcompat-v7:24.2.1'
 
     /* Google Guava */
-    api 'com.google.guava:guava:19.0'
+    api 'com.google.guava:guava:25.0-android'
 
 }
