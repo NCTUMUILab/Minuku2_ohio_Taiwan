@@ -160,9 +160,6 @@ public class CombinationActivity extends Activity {
 
             referenceId += ","+sessionToCombineId;
 
-//            DBHelper.updateSessionTable(sessionToCombineId, currentStartTime, currentEndTime);
-//            DBHelper.updateSessionTableToCombined(sessionToCombineId, Constants.SESSION_SUBJECTIVELY_COMBINE_FLAG);
-
             DBHelper.hideSessionTable(sessionToCombineId, Constants.SESSION_TYPE_CHANGED);
             DBHelper.updateRecordsInSession(DBHelper.STREAM_TYPE_LOCATION, sessionToCombineId, newSessionId);
             Session session = new Session(sessionToCombineId);

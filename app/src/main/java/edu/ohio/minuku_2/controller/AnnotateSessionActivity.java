@@ -196,8 +196,8 @@ public class AnnotateSessionActivity extends Activity implements OnMapReadyCallb
 
                             try {
 
-                                //update the session into two different sessions
-                                //1st session
+                                //TODO add the information to show they are from the same trip.
+                                //keep the original one hided
                                 DBHelper.hideSessionTable(mSessionId, Constants.SESSION_TYPE_CHANGED);
 
                                 //update the session into two different sessions
@@ -875,7 +875,7 @@ public class AnnotateSessionActivity extends Activity implements OnMapReadyCallb
 //                            DBHelper.deleteSessionTable(mSessionId);
 
                             //update the background data corresponding, -1 indicated that it was gone
-                            DBHelper.updateRecordsInSession(DBHelper.STREAM_TYPE_LOCATION, mSessionId, -1);
+//                            DBHelper.updateRecordsInSession(DBHelper.STREAM_TYPE_LOCATION, mSessionId, -1);
 
                             Toast.makeText(AnnotateSessionActivity.this, getResources().getString(R.string.reminder_trip_deleted), Toast.LENGTH_SHORT).show();
 

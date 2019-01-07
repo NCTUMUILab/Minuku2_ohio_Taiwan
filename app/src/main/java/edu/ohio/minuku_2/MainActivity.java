@@ -136,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
             setContentView(R.layout.homepage_complete);
             Button finalSurvey = (Button) findViewById(R.id.finalSurvey);
 
-            boolean isFinalButtonClicked = sharedPrefs.getBoolean("finalButtonClicked", false);
+//            boolean isFinalButtonClicked = sharedPrefs.getBoolean("finalButtonClicked", false);
 
             String finalButtonText = "PART C\n20 minutes";
             Spannable spannable = new SpannableString(finalButtonText);
@@ -146,29 +146,29 @@ public class MainActivity extends AppCompatActivity {
             finalSurvey.setText(spannable);
             finalSurvey.setTransformationMethod(null);
 
-            if(isFinalButtonClicked){
+//            if(isFinalButtonClicked){
+//
+//                finalSurvey.setBackground(getResources().getDrawable(R.drawable.survey_button_completed));
+//                finalSurvey.setTextColor(getResources().getColor(R.color.survey_text_color_completed));
+//
+//                finalSurvey.setClickable(false);
+//            }else {
 
-                finalSurvey.setBackground(getResources().getDrawable(R.drawable.survey_button_completed));
-                finalSurvey.setTextColor(getResources().getColor(R.color.survey_text_color_completed));
+            finalSurvey.setOnClickListener(new View.OnClickListener() {
 
-                finalSurvey.setClickable(false);
-            }else {
+                @Override
+                public void onClick(View view) {
 
-                finalSurvey.setOnClickListener(new View.OnClickListener() {
+                    String url = Constants.FINAL_SURVEY_URL+"?d="+ Config.daysInSurvey+"&p="+ Config.USER_ID;
+                    Intent intent = new Intent(Intent.ACTION_VIEW);
+                    intent.setData(Uri.parse(url));
+                    startActivity(intent);
 
-                    @Override
-                    public void onClick(View view) {
-
-                        String url = Constants.FINAL_SURVEY_URL+"?d="+ Config.daysInSurvey+"&p="+ Config.USER_ID;
-                        Intent intent = new Intent(Intent.ACTION_VIEW);
-                        intent.setData(Uri.parse(url));
-                        startActivity(intent);
-
-                        //TODO set the value in sharedpreference to the boolean value representing the button was clicked
-                        sharedPrefs.edit().putBoolean("finalButtonClicked", true).apply();
-                    }
-                });
-            }
+                    //TODO set the value in sharedpreference to the boolean value representing the button was clicked
+                    sharedPrefs.edit().putBoolean("finalButtonClicked", true).apply();
+                }
+            });
+//            }
 
             user_id = (TextView) findViewById(R.id.userid);
             Config.USER_ID = sharedPrefs.getString("userid","NA");
@@ -217,7 +217,7 @@ public class MainActivity extends AppCompatActivity {
             setContentView(R.layout.homepage_complete);
             Button finalSurvey = (Button) findViewById(R.id.finalSurvey);
 
-            boolean isFinalButtonClicked = sharedPrefs.getBoolean("finalButtonClicked", false);
+//            boolean isFinalButtonClicked = sharedPrefs.getBoolean("finalButtonClicked", false);
             //TODO check the word looks like
             String finalButtonText = "PART C\n20 分鐘";
             Spannable spannable = new SpannableString(finalButtonText);
@@ -227,29 +227,29 @@ public class MainActivity extends AppCompatActivity {
             finalSurvey.setText(spannable);
             finalSurvey.setTransformationMethod(null);
 
-            if(isFinalButtonClicked){
+//            if(isFinalButtonClicked){
+//
+//                finalSurvey.setBackground(getResources().getDrawable(R.drawable.survey_button_completed));
+//                finalSurvey.setTextColor(getResources().getColor(R.color.survey_text_color_completed));
+//
+//                finalSurvey.setClickable(false);
+//            }else {
 
-                finalSurvey.setBackground(getResources().getDrawable(R.drawable.survey_button_completed));
-                finalSurvey.setTextColor(getResources().getColor(R.color.survey_text_color_completed));
+            finalSurvey.setOnClickListener(new View.OnClickListener() {
 
-                finalSurvey.setClickable(false);
-            }else {
+                @Override
+                public void onClick(View view) {
 
-                finalSurvey.setOnClickListener(new View.OnClickListener() {
+                    String url = Constants.FINAL_SURVEY_URL+"?d="+ Config.daysInSurvey+"&p="+ Config.USER_ID;
+                    Intent intent = new Intent(Intent.ACTION_VIEW);
+                    intent.setData(Uri.parse(url));
+                    startActivity(intent);
 
-                    @Override
-                    public void onClick(View view) {
-
-                        String url = Constants.FINAL_SURVEY_URL+"?d="+ Config.daysInSurvey+"&p="+ Config.USER_ID;
-                        Intent intent = new Intent(Intent.ACTION_VIEW);
-                        intent.setData(Uri.parse(url));
-                        startActivity(intent);
-
-                        //TODO set the value in sharedpreference to the boolean value representing the button was clicked
-                        sharedPrefs.edit().putBoolean("finalButtonClicked", true).apply();
-                    }
-                });
-            }
+                    //TODO set the value in sharedpreference to the boolean value representing the button was clicked
+                    sharedPrefs.edit().putBoolean("finalButtonClicked", true).apply();
+                }
+            });
+//            }
 
             user_id = (TextView) findViewById(R.id.userid);
             Config.USER_ID = sharedPrefs.getString("userid","NA");
@@ -544,8 +544,8 @@ public class MainActivity extends AppCompatActivity {
                             Config.Email = sharedPrefs.getString("Email", "NA");
 
 
-//                            boolean isEmailValid = checkUserInform();
-                            boolean isEmailValid = true;
+                            boolean isEmailValid = checkUserInform();
+//                            boolean isEmailValid = true;
                             //TODO for testing
 //                            isEmailValid = true;
 //                            Config.daysInSurvey = 0;
@@ -624,7 +624,7 @@ public class MainActivity extends AppCompatActivity {
 
             userInform = new JSONObject(userInformInString);
 
-            Log.d(TAG, "user inform : "+ userInform);
+            Log.d(TAG, "[check reinstall] user inform : "+ userInform);
 
             String email = userInform.getString("email");
 

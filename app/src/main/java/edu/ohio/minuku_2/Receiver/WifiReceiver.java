@@ -80,7 +80,8 @@ public class WifiReceiver extends BroadcastReceiver {
 
     public Context context;
 
-    private String versionNumber = "v1.0.0";
+    private String versionNumber = "v1.0.1";
+    private String wavesNumber = "1";
 
     public static final int HTTP_TIMEOUT = 10 * (int) Constants.MILLISECONDS_PER_SECOND;
     public static final int SOCKET_TIMEOUT = 20 * (int) Constants.MILLISECONDS_PER_SECOND;
@@ -158,8 +159,8 @@ public class WifiReceiver extends BroadcastReceiver {
                     continue;
 
                 String createdTime = tripDataPiece.getString("CreatedTime");
-//                Log.d(TAG, "Sent createdTime : "+createdTime);
-//                CSVHelper.storeToCSV(CSVHelper.CSV_SERVER_DATA_STATE, "Sent createdTime : "+createdTime);
+                Log.d(TAG, "Sent createdTime : "+createdTime);
+                CSVHelper.storeToCSV(CSVHelper.CSV_SERVER_DATA_STATE, "Sent createdTime : "+createdTime);
 
                 DBHelper.updateSessionTableByCreatedTime(Long.valueOf(createdTime), Constants.SESSION_IS_ALREADY_SENT_FLAG);
             }
@@ -182,12 +183,12 @@ public class WifiReceiver extends BroadcastReceiver {
                 int d = surveyDataPiece.getInt("d");
                 int n = surveyDataPiece.getInt("n");
 
-                Log.d(TAG, "surveyDataPiece d : " + d + ", n : " + n);
+//                Log.d(TAG, "surveyDataPiece d : " + d + ", n : " + n);
 
                 DBHelper.updateSurveyBydn(d, n);
             }
         }catch (JSONException e){
-            e.printStackTrace();
+//            e.printStackTrace();
         }
     }
 
@@ -258,17 +259,18 @@ public class WifiReceiver extends BroadcastReceiver {
 
         Log.d(TAG,"NowTimeString : " + ScheduleAndSampleManager.getTimeString(nowTime));
 
-        while(nowTime > endTime) {
+        boolean tryToSendData = true;
+
+        while(nowTime > endTime && tryToSendData) {
 
             Log.d(TAG,"before send dump data NowTimeString : " + ScheduleAndSampleManager.getTimeString(nowTime));
 
             Log.d(TAG,"before send dump data EndTimeString : " + ScheduleAndSampleManager.getTimeString(endTime));
 
-            boolean sendDataSuccessfully = false;
-            sendDataSuccessfully = sendingDumpData();
+            tryToSendData = sendingDumpData();
+
             //update nowTime
             setNowTime();
-            if (sendDataSuccessfully == false) break;
         }
 
         sendingTripData(nowTime);
@@ -309,7 +311,7 @@ public class WifiReceiver extends BroadcastReceiver {
                             data.toString(),
                             "Trip",
                             curr).get();
-                Log.d("TripDumpJson", data.toString());
+
                 //if it was updated successfully, return the end time
                 Log.d(TAG, "[show data response] Trip lastTimeInServer : " + lastTimeInServer);
 
@@ -323,7 +325,8 @@ public class WifiReceiver extends BroadcastReceiver {
                 CSVHelper.storeToCSV(CSVHelper.CSV_CHECK_DATAUPLOADED,"Trip", "EndTime == lastinsert ? "+data.getString("EndTime").equals(lasttimeInServerJson.getString("lastinsert")));
 
                 if(data.getString("EndTime").equals(lasttimeInServerJson.getString("lastinsert"))){
-
+                    Log.d(TAG, "Trip sent successfully, EndTime "+ScheduleAndSampleManager.getTimeString(Long.valueOf(lasttimeInServerJson.getString("lastinsert")) * Constants.MILLISECONDS_PER_SECOND));
+                    CSVHelper.storeToCSV(CSVHelper.CSV_CHECK_DATAUPLOADED,"Trip sent successfully, EndTime "+ScheduleAndSampleManager.getTimeString(Long.valueOf(lasttimeInServerJson.getString("lastinsert")) * Constants.MILLISECONDS_PER_SECOND));
                     //update the sent Session to already be sent
 //                    String sentSessionId = data.getString("sessionid");
 //                    DataHandler.updateSession(Integer.valueOf(sentSessionId), Constants.SESSION_IS_ALREADY_SENT_FLAG);
@@ -371,6 +374,7 @@ public class WifiReceiver extends BroadcastReceiver {
                     annotatedtripdata.put("group_number", Config.GROUP_NUM);
                     annotatedtripdata.put("device_id", Config.DEVICE_ID);
                     annotatedtripdata.put("version", versionNumber);
+                    annotatedtripdata.put("w", wavesNumber);
                     annotatedtripdata.put("android_ver", Build.VERSION.SDK_INT);
                     annotatedtripdata.put("build", getBuildInform());
 
@@ -481,7 +485,9 @@ public class WifiReceiver extends BroadcastReceiver {
 
         return sessionJsons;
     }
+
     public String getSessionTypeName(int type){
+
         switch(type) {
             case Constants.SESSION_TYPE_ORIGINAL:
                 return "original";
@@ -548,6 +554,7 @@ public class WifiReceiver extends BroadcastReceiver {
                     surveyJson.put("group_number", Config.GROUP_NUM);
                     surveyJson.put("device_id", Config.DEVICE_ID);
                     surveyJson.put("version", versionNumber);
+                    surveyJson.put("w", wavesNumber);
                     surveyJson.put("dataType", "SurveyLink");
                     surveyJson.put("android_ver", Build.VERSION.SDK_INT);
                     surveyJson.put("build", getBuildInform());
@@ -594,8 +601,8 @@ public class WifiReceiver extends BroadcastReceiver {
 //                    CSVHelper.storeToCSV(CSVHelper.CSV_CHECK_DATAFORMAT, "SurveyLink", surveyJson.toString());
 
                     try {
-
-                        CSVHelper.storeToCSV(CSVHelper.CSV_CHECK_DATAUPLOADED,"Survey Link", "Before sending, from the server, the latest EndTime : "+surveyJson.getString("triggerTimeString"));
+                        CSVHelper.storeToCSV(CSVHelper.CSV_CHECK_DATAUPLOADED,"Survey Link", "Before sending to the server, the survey completeType : "+surveyJson.get("completeType"));
+                        CSVHelper.storeToCSV(CSVHelper.CSV_CHECK_DATAUPLOADED,"Survey Link", "Before sending to the server, the latest EndTime : "+surveyJson.getString("triggerTimeString"));
                     }catch (JSONException e){
                         e.printStackTrace();
                     }
@@ -636,7 +643,8 @@ public class WifiReceiver extends BroadcastReceiver {
 
                         if(timeOfData == fromServer){
 
-                            Log.d(TAG, "[check query] survey sent successfully ");
+                            Log.d(TAG, "[check query] survey sent successfully, time : "+ScheduleAndSampleManager.getTimeString(fromServer * Constants.MILLISECONDS_PER_SECOND));
+                            CSVHelper.storeToCSV(CSVHelper.CSV_CHECK_DATAUPLOADED,"Survey sent successfully, time : "+ScheduleAndSampleManager.getTimeString(fromServer * Constants.MILLISECONDS_PER_SECOND));
 
 //                            String id = surveyCursor.getString(DBHelper.COL_INDEX_ID);
 
@@ -711,6 +719,7 @@ public class WifiReceiver extends BroadcastReceiver {
             data.put("device_id", Config.DEVICE_ID);
             data.put("email", Config.Email);
             data.put("version", versionNumber);
+            data.put("w", wavesNumber);
             data.put("dataType", "Dump");
             data.put("android_ver", Build.VERSION.SDK_INT);
 
@@ -720,7 +729,7 @@ public class WifiReceiver extends BroadcastReceiver {
             data.put("StartTime", startTimeInSec);
             data.put("EndTime", endTimeInSec);
 
-            SimpleDateFormat sdf_now = new SimpleDateFormat(Constants.DATE_FORMAT_NOW_Dash);
+            SimpleDateFormat sdf_now = new SimpleDateFormat(Constants.DATE_FORMAT_NOW_DASH);
 
             data.put("StartTimeString", ScheduleAndSampleManager.getTimeString(startTime, sdf_now));
             data.put("EndTimeString", ScheduleAndSampleManager.getTimeString(endTime, sdf_now));
@@ -1760,6 +1769,8 @@ public class WifiReceiver extends BroadcastReceiver {
                     annotatedtripdata.put("group_number", Config.GROUP_NUM);
                     annotatedtripdata.put("device_id", Config.DEVICE_ID);
                     annotatedtripdata.put("version", versionNumber);
+                    annotatedtripdata.put("w", wavesNumber);
+
                     annotatedtripdata.put("android_ver", Build.VERSION.SDK_INT);
                     annotatedtripdata.put("build", getBuildInform());
 
