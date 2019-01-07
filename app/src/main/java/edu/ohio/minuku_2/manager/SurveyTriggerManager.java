@@ -692,6 +692,8 @@ public class SurveyTriggerManager {
                         //setting up the parameter for the survey LINK
                         setUpSurveyLink();
                     }
+                    lastTimeSend_today = today;
+                    sharedPrefs.edit().putString("lastTimeSend_today", lastTimeSend_today).apply();
                 }
 
                 checkIsWalkingSurvey(startSleepingTime, endSleepingTime);

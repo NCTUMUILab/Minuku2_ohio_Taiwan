@@ -164,8 +164,7 @@ public class MainActivity extends AppCompatActivity {
                     intent.setData(Uri.parse(url));
                     startActivity(intent);
 
-                    //TODO set the value in sharedpreference to the boolean value representing the button was clicked
-                    sharedPrefs.edit().putBoolean("finalButtonClicked", true).apply();
+//                    sharedPrefs.edit().putBoolean("finalButtonClicked", true).apply();
                 }
             });
 //            }
@@ -545,7 +544,6 @@ public class MainActivity extends AppCompatActivity {
 
 
                             boolean isEmailValid = checkUserInform();
-//                            boolean isEmailValid = true;
                             //TODO for testing
 //                            isEmailValid = true;
 //                            Config.daysInSurvey = 0;
@@ -624,7 +622,7 @@ public class MainActivity extends AppCompatActivity {
 
             userInform = new JSONObject(userInformInString);
 
-            Log.d(TAG, "[check reinstall] user inform : "+ userInform);
+            Log.d(TAG, "user inform : "+ userInform);
 
             String email = userInform.getString("email");
 
@@ -687,7 +685,8 @@ public class MainActivity extends AppCompatActivity {
 
             userInform = new JSONObject(userInformInString);
 
-            Log.d(TAG, "user inform : "+ userInform);
+            Log.d(TAG, "[check reinstall] user inform : "+ userInform);
+
 
             //In order to set the survey link
             setDaysInSurveyAndTheDayTodayIs(userInform);
