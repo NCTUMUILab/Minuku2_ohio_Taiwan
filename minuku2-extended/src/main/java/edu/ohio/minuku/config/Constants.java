@@ -34,7 +34,7 @@ public class Constants {
     public static final long MILLISECONDS_PER_DAY = HOURS_PER_DAY *MINUTES_PER_HOUR*SECONDS_PER_MINUTE*MILLISECONDS_PER_SECOND;
     public static final long MILLISECONDS_PER_HOUR = MINUTES_PER_HOUR*SECONDS_PER_MINUTE*MILLISECONDS_PER_SECOND;
     public static final long MILLISECONDS_PER_MINUTE = SECONDS_PER_MINUTE*MILLISECONDS_PER_SECOND;
-    public final static String DATE_FORMAT_NOW_Dash = "yyyy-MM-dd HH:mm:ss Z";
+    public final static String DATE_FORMAT_NOW_DASH = "yyyy-MM-dd HH:mm:ss Z";
     public final static String DATE_FORMAT_NOW_SLASH = "yyyy/MM/dd HH:mm:ss Z";
     public final static String DATE_FORMAT_NOW_MINUTE_SLASH = "yyyy/MM/dd HH:mm";
     public static final String DATE_FORMAT_NOW_NO_ZONE_Slash = "yyyy/MM/dd HH:mm:ss";
@@ -141,9 +141,9 @@ public class Constants {
     public static final String NOTIFICATION_TEXT_AFTER_FINAL_DAY_PLUS_1_WAIT_DATA_TRANSFER
             = "Connect your phone to WiFi to finish the study.";
 
-    public static final long DATA_TRANSFER_TIMEOUT = 10 * MILLISECONDS_PER_SECOND; // 1 * 10 * 1000
+    public static final long DATA_TRANSFER_TIMEOUT = 10 * MILLISECONDS_PER_SECOND;
 
-    public static final long INTERNAL_LOCATION_UPDATE_FREQUENCY = 1 * 10 * MILLISECONDS_PER_SECOND; // 1 * 10 * 1000
+    public static final long INTERNAL_LOCATION_UPDATE_FREQUENCY = 1 * 10 * MILLISECONDS_PER_SECOND;
 
     public static final String NOT_A_NUMBER = "NA";
 
@@ -161,6 +161,7 @@ public class Constants {
 
     public static final int FINALDAY = 14; //real: 14, test: 3
 
+    public static final long INVALID_TIME_VALUE = -1;
 
     public static final String CHECK_IN_URL = "http://mcog.asc.ohio-state.edu/apps/servicerec?";
     public static final String CHECK_IN_URL_USER_INFORM = "http://mcog.asc.ohio-state.edu/apps/useridcheck?";
