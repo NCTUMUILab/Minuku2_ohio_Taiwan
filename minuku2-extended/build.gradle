@@ -1,54 +1,28 @@
-apply plugin: 'com.android.library'
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
 
-android {
-    compileSdkVersion 24
-    buildToolsVersion '26.0.2'
-
-    defaultConfig {
-        minSdkVersion 16
-        targetSdkVersion 24
-        versionCode 1
-        versionName "1.0"
-    }
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+buildscript {
+    repositories {
+        jcenter()
+        maven {
+            url 'https://maven.google.com/'
+            name 'Google'
         }
     }
-    buildTypes.each {
-        it.buildConfigField 'String', 'UNIQUE_FIREBASE_ROOT_URL', UniqueFirebaseRootUrl
-    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.0.1'
+        classpath 'com.google.gms:google-services:3.0.0'
 
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
 }
 
-dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:24.2.0'
-    compile project(':minukucore')
-    /* Firebase SDK */
-    compile 'com.firebase:firebase-client-android:2.4.0'
-    /* Firebase UI */
-    compile 'com.firebaseui:firebase-ui:0.2.2'
-    /*CSV*/
-    compile project(':opencsv-3.10')
-    /* For Google Play Services */
-    compile 'com.google.android.gms:play-services-safetynet:9.2.1'
-    compile 'com.google.android.gms:play-services-auth:9.2.1'
-    /*compile 'com.google.android.gms:play-services:8.3.0'*/
-    compile 'com.google.android.gms:play-services:9.2.1'
-    /* For Google Maps */
-    /*compile 'com.google.android.gms:play-services-maps:8.3.0'*/
-    compile 'com.google.android.gms:play-services-maps:9.2.1'
-    compile 'com.google.android.gms:play-services-location:9.2.1'
-    /* Google Guava */
-    compile 'com.google.guava:guava:19.0'
-    compile 'org.greenrobot:eventbus:3.0.0'
-    compile 'com.github.dkharrat.nexusdialog:nexusdialog:0.4.0'
-    /*GSON to store objects in user preferences*/
-    compile 'com.google.code.gson:gson:2.7'
-    /*Logger*/
-    compile 'com.bugfender.sdk:android:0.+'
-    implementation files('/Users/Lawrence/Desktop/program/Android/minuku2forOhio/javatuples-1.2.jar')
+allprojects {
+    repositories {
+        jcenter()
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
 }
