@@ -139,12 +139,19 @@ public class WifiReceiver extends BroadcastReceiver {
                 updateTripState();
 
                 uploadData();
+            }else {
+
+                CSVHelper.storeToCSV(CSVHelper.CSV_TEST_WIFI_CONNECTION, "activeNetwork != null ? "+(activeNetwork != null));
+                CSVHelper.storeToCSV(CSVHelper.CSV_TEST_WIFI_CONNECTION, "activeNetwork type == wifi ? "+(activeNetwork.getType() == ConnectivityManager.TYPE_WIFI));
+                CSVHelper.storeToCSV(CSVHelper.CSV_TEST_WIFI_CONNECTION, "Not in Wifi.");
             }
         }
 
     }
 
     private void updateTripState(){
+
+        CSVHelper.storeToCSV(CSVHelper.CSV_TEST_WIFI_CONNECTION, "updateTripState...");
 
         try {
 
@@ -170,6 +177,8 @@ public class WifiReceiver extends BroadcastReceiver {
     }
 
     private void updateSurveyLinkState(){
+
+        CSVHelper.storeToCSV(CSVHelper.CSV_TEST_WIFI_CONNECTION, "updateSurveyLinkState...");
 
         try {
 
@@ -227,15 +236,17 @@ public class WifiReceiver extends BroadcastReceiver {
 
     private void uploadData(){
 
-        //dump only can be sent when wifi is connected
-        long lastSentStarttime = sharedPrefs.getLong("lastSentStarttime", 0);
+        CSVHelper.storeToCSV(CSVHelper.CSV_TEST_WIFI_CONNECTION, "update Data...");
 
-        if(lastSentStarttime == 0){
+        //dump only can be sent when wifi is connected
+        long lastSentStarttime = sharedPrefs.getLong("lastSentStarttime", Constants.INVALID_IN_LONG);
+
+        if(lastSentStarttime == Constants.INVALID_IN_LONG){
 
             //if it doesn't response the setting with initialize ones
             //initialize
             long startstartTime = getSpecialTimeInMillis(makingDataFormat(year,month,day,hour,0));
-            startTime = sharedPrefs.getLong("StartTime", startstartTime); //default
+            startTime = sharedPrefs.getLong("StartTime", startstartTime);
             Log.d(TAG, "[show data response] current iteration startTime : " + ScheduleAndSampleManager.getTimeString(startTime));
 
             //initialize
@@ -261,6 +272,9 @@ public class WifiReceiver extends BroadcastReceiver {
 
         boolean tryToSendData = true;
 
+        CSVHelper.storeToCSV(CSVHelper.CSV_TEST_WIFI_CONNECTION, "going to send device Data...");
+        CSVHelper.storeToCSV(CSVHelper.CSV_TEST_WIFI_CONNECTION, "nowTime > endTime ? "+(nowTime > endTime));
+
         while(nowTime > endTime && tryToSendData) {
 
             Log.d(TAG,"before send dump data NowTimeString : " + ScheduleAndSampleManager.getTimeString(nowTime));
@@ -273,7 +287,11 @@ public class WifiReceiver extends BroadcastReceiver {
             setNowTime();
         }
 
+        CSVHelper.storeToCSV(CSVHelper.CSV_TEST_WIFI_CONNECTION, "going to send trip Data...");
+
         sendingTripData(nowTime);
+
+        CSVHelper.storeToCSV(CSVHelper.CSV_TEST_WIFI_CONNECTION, "going to send survey Data...");
 
         sendingSurveyLinkData(nowTime);
     }
@@ -401,7 +419,15 @@ public class WifiReceiver extends BroadcastReceiver {
 
                     annotatedtripdata.put("TripMin", sessionToSend.isLongEnough());
                     annotatedtripdata.put("type", getSessionTypeName(sessionToSend.getType()));
-                    annotatedtripdata.put("referenceId", sessionToSend.getReferenceId());
+
+                    String referenceId = sessionToSend.getReferenceId();
+
+                    if(referenceId.equals("")){
+
+                        referenceId = Constants.INVALID_IN_STRING;
+                    }
+
+                    annotatedtripdata.put("referenceId", referenceId);
                     annotatedtripdata.put("displayed", sessionToSend.isToShow());
 
                     //getting the answers in the annotation.
@@ -469,6 +495,20 @@ public class WifiReceiver extends BroadcastReceiver {
 
 //                    annotatedtripdata.put("PeriodNumber", sessionToSend.getPeriodNum());
                     annotatedtripdata.put("d", sessionToSend.getSurveyDay());
+
+                    Config.finalDayEndTime = sharedPrefs.getLong("finalDayEndTime", Config.finalDayEndTime);
+
+                    CSVHelper.storeToCSV(CSVHelper.CSV_CHECK_DATAUPLOADED, "Going to send a piece of trip data.");
+
+                    //imply that currently over day 14
+                    if(sessionEndTime > Config.finalDayEndTime){
+
+                        CSVHelper.storeToCSV(CSVHelper.CSV_CHECK_DATAUPLOADED, "sessionEndTime is bigger than finalDayEndTime");
+                        CSVHelper.storeToCSV(CSVHelper.CSV_CHECK_DATAUPLOADED, "endTime : "+ScheduleAndSampleManager.getTimeString(sessionEndTime));
+                        CSVHelper.storeToCSV(CSVHelper.CSV_CHECK_DATAUPLOADED, "finalDayEndTime : "+ScheduleAndSampleManager.getTimeString(Config.finalDayEndTime));
+
+                        continue;
+                    }
 
                 } catch (JSONException e) {
 
@@ -566,6 +606,20 @@ public class WifiReceiver extends BroadcastReceiver {
                     surveyJson.put("triggerTimeString", ScheduleAndSampleManager.getTimeString(Long.valueOf(timestamp)));
 
                     surveyJson.put("clickedtime", clickedtime);
+
+                    Config.finalDayEndTime = sharedPrefs.getLong("finalDayEndTime", Config.finalDayEndTime);
+
+                    CSVHelper.storeToCSV(CSVHelper.CSV_CHECK_DATAUPLOADED, "Going to send a piece of survey data.");
+
+                    //imply that currently over day 14
+                    if(Long.valueOf(timestamp) > Config.finalDayEndTime){
+
+                        CSVHelper.storeToCSV(CSVHelper.CSV_CHECK_DATAUPLOADED, "survey time is bigger than finalDayEndTime");
+                        CSVHelper.storeToCSV(CSVHelper.CSV_CHECK_DATAUPLOADED, "endTime : "+ScheduleAndSampleManager.getTimeString(Long.valueOf(timestamp)));
+                        CSVHelper.storeToCSV(CSVHelper.CSV_CHECK_DATAUPLOADED, "finalDayEndTime : "+ScheduleAndSampleManager.getTimeString(Config.finalDayEndTime));
+
+                        continue;
+                    }
 
                     if(clickedtime != null && !clickedtime.isEmpty()){
 
@@ -712,6 +766,9 @@ public class WifiReceiver extends BroadcastReceiver {
 
         //Log.d(TAG, "sendingDumpData") ;
 
+        CSVHelper.storeToCSV(CSVHelper.CSV_CHECK_DATAUPLOADED, "Going to send a piece of device data.");
+
+
         JSONObject data = new JSONObject();
 
         long endTimeOfJson = -999;
@@ -754,6 +811,24 @@ public class WifiReceiver extends BroadcastReceiver {
 
         }
 
+        Config.finalDayEndTime = sharedPrefs.getLong("finalDayEndTime", Config.finalDayEndTime);
+
+
+        Log.d(TAG, "[show data response] endTimeOfJson : "+ScheduleAndSampleManager.getTimeString(endTime));
+        Log.d(TAG, "[show data response] final endtime : "+ScheduleAndSampleManager.getTimeString(Config.finalDayEndTime));
+
+        Log.d(TAG, "[show data response] endtime over day 15 ? "+(endTime > Config.finalDayEndTime));
+
+        //imply that currently over day 14
+        if(endTime > Config.finalDayEndTime){
+
+            CSVHelper.storeToCSV(CSVHelper.CSV_CHECK_DATAUPLOADED, "endTime is bigger than finalDayEndTime");
+            CSVHelper.storeToCSV(CSVHelper.CSV_CHECK_DATAUPLOADED, "endTime : "+ScheduleAndSampleManager.getTimeString(endTime));
+            CSVHelper.storeToCSV(CSVHelper.CSV_CHECK_DATAUPLOADED, "finalDayEndTime : "+ScheduleAndSampleManager.getTimeString(Config.finalDayEndTime));
+
+            return false;
+        }
+
         storeTransporatation(data);
         storeLocation(data);
         storeActivityRecognition(data);
@@ -763,7 +838,7 @@ public class WifiReceiver extends BroadcastReceiver {
         storeAppUsage(data);
         storeActionLog(data);
 
-        Log.d(TAG,"[show data response] checking data Dump : "+ data.toString());
+//        Log.d(TAG,"[show data response] checking data Dump : "+ data.toString());
 
 //        CSVHelper.storeToCSV(CSVHelper.CSV_CHECK_DATAFORMAT,"Dump", data.toString());
 
@@ -1511,8 +1586,6 @@ public class WifiReceiver extends BroadcastReceiver {
             CSVHelper.storeToCSV(CSVHelper.CSV_PULLING_DATA_CHECK, "ActionLog");
             CSVHelper.storeToCSV(CSVHelper.CSV_PULLING_DATA_CHECK, Utils.getStackTrace(e));
         }
-
-        Log.d(TAG,"ActionLog data : "+ data.toString());
 
         CSVHelper.storeToCSV(CSVHelper.CSV_SESSION_ACTIONLOG_FORMAT, data.toString());
 
