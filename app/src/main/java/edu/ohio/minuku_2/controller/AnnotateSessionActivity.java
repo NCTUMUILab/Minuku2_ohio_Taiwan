@@ -920,7 +920,7 @@ public class AnnotateSessionActivity extends Activity implements OnMapReadyCallb
         Annotation annotation = new Annotation();
 
         JSONObject esmContentJSON = new JSONObject();
-
+        mESMSubmitTime = ScheduleAndSampleManager.getCurrentTimeInMillis();
         try {
 
             esmContentJSON.put("openTimes", mESMOpenTimes.toString());

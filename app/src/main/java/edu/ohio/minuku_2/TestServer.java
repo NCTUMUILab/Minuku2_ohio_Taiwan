@@ -6,6 +6,5 @@ public class TestServer {
 
     public void testServer() {
         WifiReceiver wifiReceiver = new WifiReceiver();
-        wifiReceiver.testSendingTripData();
     }
 }

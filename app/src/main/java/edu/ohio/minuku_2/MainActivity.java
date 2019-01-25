@@ -244,8 +244,7 @@ public class MainActivity extends AppCompatActivity {
                     intent.setData(Uri.parse(url));
                     startActivity(intent);
 
-                    //TODO set the value in sharedpreference to the boolean value representing the button was clicked
-                    sharedPrefs.edit().putBoolean("finalButtonClicked", true).apply();
+//                    sharedPrefs.edit().putBoolean("finalButtonClicked", true).apply();
                 }
             });
 //            }
@@ -308,7 +307,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void settingHomepageView() {
-//        super.getTheme().applyStyle(R.style.ThemePurple, true);
         setContentView(R.layout.homepage);
 
         /* alertdialog for checking userid */
@@ -543,7 +541,8 @@ public class MainActivity extends AppCompatActivity {
                             Config.Email = sharedPrefs.getString("Email", "NA");
 
 
-                            boolean isEmailValid = checkUserInform();
+                            boolean isEmailValid = true;
+//                            boolean isEmailValid = checkUserInform();
                             //TODO for testing
 //                            isEmailValid = true;
 //                            Config.daysInSurvey = 0;
@@ -693,6 +692,8 @@ public class MainActivity extends AppCompatActivity {
 
             setDownloadedDaysInSurveyIs(userInform);
 
+            setFinalDaysUnixTime();
+
             setMidnightStart(userInform);
 
         } catch (InterruptedException e) {
@@ -743,6 +744,21 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+    }
+
+    private void setFinalDaysUnixTime() {
+
+        Config.downloadedDayInSurvey = sharedPrefs.getInt("downloadedDayInSurvey", Config.downloadedDayInSurvey);
+
+        long daysBeforeFinalDay = (Constants.FINALDAY - Config.downloadedDayInSurvey + 1) * Constants.MILLISECONDS_PER_DAY;
+
+        Log.d(TAG, "[check finalday end time] CurrentMidNightTimeInMillis : " + ScheduleAndSampleManager.getCurrentMidNightTimeString());
+
+        Config.finalDayEndTime = ScheduleAndSampleManager.getCurrentMidNightTimeInMillis() + daysBeforeFinalDay;
+
+        Log.d(TAG, "[check finalday end time] final end time : " + ScheduleAndSampleManager.getTimeString(Config.finalDayEndTime));
+
+        sharedPrefs.edit().putLong("finalDayEndTime", Config.finalDayEndTime).apply();
     }
 
     private void setDownloadedDaysInSurveyIs(JSONObject userInform){
@@ -797,31 +813,6 @@ public class MainActivity extends AppCompatActivity {
         }catch (JSONException e){
             e.printStackTrace();
         }
-    }
-
-    private void setMidnightStart(long firstcheckin){
-
-        SimpleDateFormat sdf_now = new SimpleDateFormat(Constants.DATE_FORMAT_NOW_DAY);
-
-        long firstcheckinAfteraDay = firstcheckin + Constants.MILLISECONDS_PER_DAY;
-
-//        Log.d(TAG, "firstcheckinAfteraDay : "+ firstcheckinAfteraDay);
-
-        String firstresearchdate = ScheduleAndSampleManager.getTimeString(firstcheckinAfteraDay, sdf_now);
-
-        firstresearchdate = firstresearchdate + " 00:00:00";
-
-//        Log.d(TAG, "firstcheckinAfteraDay String : "+ firstresearchdate);
-
-        long firstresearchday = ScheduleAndSampleManager.getTimeInMillis(firstresearchdate,sdf_now);
-
-        Config.midnightstart = firstresearchday;
-
-        sharedPrefs.edit().putLong("midnightstart", Config.midnightstart).apply();
-
-//        Log.d(TAG, "midnightstart : "+ Config.midnightstart);
-
-        sharedPrefs.edit().putBoolean("resetIntervalSurveyFlag", true).apply();
     }
 
     @Override
